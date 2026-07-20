@@ -1,0 +1,55 @@
+---
+import "@fontsource-variable/inter";
+import "@fontsource-variable/noto-sans-mono";
+import "../styles/site.css";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import { withBase } from "../utils/paths";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const iconUrl = withBase("icon.png");
+const heroBackgrounds = [
+  `--hero-grid-image: url('${withBase("hero-grid.webp")}')`,
+  `--hero-grid-dark-image: url('${withBase("hero-grid-dark.webp")}')`,
+  `--hero-fade-image: url('${withBase("hero-fade.webp")}')`,
+  `--hero-fade-dark-image: url('${withBase("hero-fade-dark.webp")}')`,
+].join(";");
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f7f6f3" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href={iconUrl} />
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem("pi-site-theme");
+          const dark = saved === "dark" || (!saved && matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", dark);
+          document.documentElement.dataset.theme = dark ? "dark" : "light";
+        } catch {}
+      })();
+    </script>
+  </head>
+  <body style={heroBackgrounds}>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <SiteHeader />
+    <slot />
+    <SiteFooter />
+    <script>
+      import "../scripts/site";
+    </script>
+  </body>
+</html>

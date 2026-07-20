@@ -1,0 +1,116 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="更新日志 — Pi Agent Desktop" description="Pi Agent Desktop 的版本更新记录。">
+  <main id="main-content">
+    <section class="page-head">
+      <div class="container">
+        <h1>更新日志</h1>
+        <p>记录 Pi Agent Desktop 每个版本的重要变化。完整的发布说明与资产请见 GitHub Releases。</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="cl-list">
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.3</span>
+            <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-07-20">2026-07-20</time>
+          </div>
+          <p>本次版本重点引入跨平台开发工具管理，并补齐 Linux 官方发布包，让技能、插件和 Agent 脚本在不同用户环境中获得更稳定、一致的运行体验。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />主要更新</h2>
+          <ul>
+            <li>新增统一的“开发工具”设置，按 JavaScript、Python、CLI 基础工具分类，以左侧列表、右侧详情的方式管理工具状态、来源和版本。</li>
+            <li>优先发现并验证用户已安装的 Node.js、npm / npx、Python、uv / uvx、Git / Bash、Bun、jq 等工具，覆盖 macOS 从 Finder 启动时 PATH 不完整、Windows 常见安装位置等场景。</li>
+            <li>用户确认后可安装应用私有的 Node.js LTS、CPython、uv、PortableGit、Bun 和 jq；不会修改系统 PATH、Shell 配置或注册表。</li>
+            <li>内置并校验目标平台专用的 ripgrep 与 fd，为 Agent 提供稳定、高性能的文件搜索能力。</li>
+            <li>技能与插件统一使用解析后的绝对 Node / npm 路径；插件的 npm 操作移入隔离 Worker，缺失工具时返回结构化安装引导。</li>
+            <li>新增工具下载、安装、修复、移除、取消、缓存查看和诊断能力，并加强重定向白名单、校验和、启动验证、回滚与日志脱敏。</li>
+            <li>更新中英文 README 和应用截图。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />平台与下载</h2>
+          <ul>
+            <li>新增 Linux x64 AppImage 正式发布，并与 macOS Apple Silicon / Intel、Windows x64 一起纳入完整 CI、产物启动 E2E 和发布校验。</li>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.3-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.3-x64.dmg</code></li>
+            <li>Windows x64：<code>Pi-Agent-Desktop-Setup-0.1.3.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.3-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>应用私有工具按需安装，并且只在用户确认后执行；文件保存在 Pi Agent Desktop 的应用数据目录。</li>
+            <li>Windows 安装包目前未签名，首次运行可能出现 SmartScreen 提示。</li>
+            <li>Linux AppImage 当前使用手动更新。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.2</span>
+            <time class="cl-date" datetime="2026-07-17">2026-07-17</time>
+          </div>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />新增</h2>
+          <ul>
+            <li>为 Windows x64 新增应用内更新，可直接在应用中检查、下载和安装新版本。</li>
+            <li>Windows 更新无需代码签名证书，并使用完整的 NSIS 安装程序代替 Web Installer。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />安全与可靠性</h2>
+          <ul>
+            <li>安装前根据 GitHub Release 元数据和 SHA-512 校验和验证更新包。</li>
+            <li>加强 Windows 更新配置检查，确保未签名构建不会包含无效的 <code>publisherName</code>。</li>
+            <li>CI 增加安装程序、更新元数据与 blockmap 一致性验证；macOS 继续执行代码签名、Apple 公证和产物完整性验证。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.1</span>
+            <time class="cl-date" datetime="2026-07-17">2026-07-17</time>
+          </div>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />修复</h2>
+          <ul>
+            <li>模型请求失败时直接在对话中展示错误，不再静默渲染空白的助手回复；保留提供商的错误详情（例如 API key 无效），提供商未返回详情时给出可操作的回退提示。</li>
+            <li>会话分组与重新加载后仍保留失败的助手消息，同时继续隐藏无害的空响应。</li>
+            <li>为提供商失败、缺失错误详情以及正常的空助手消息补充回归测试。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />变更</h2>
+          <ul>
+            <li><code>main</code> 分支推送仅运行测试与完整质量门，不再打包临时安装包。</li>
+            <li>Pull Request 与手动触发的 workflow 继续提供临时构建产物。</li>
+            <li>tag 发布的桌面版本在签名并公证的 macOS 产物之外，新增 Windows x64 NSIS 安装程序、blockmap 与更新元数据。</li>
+            <li>加强 macOS 与 Windows 软件包的发布资产校验。</li>
+            <li>更新中英文发布文档，并忽略本地 <code>temp/</code> 目录。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />平台说明</h2>
+          <ul>
+            <li>macOS 发布包已签名并公证；稳定版应用内更新使用 release workflow 生成的 GitHub Release 元数据。</li>
+            <li>Windows 安装程序为正式发布资产，但当前未配置 Authenticode 签名，安装时可能出现未知发布者或 SmartScreen 提示。</li>
+            <li>Windows 应用内更新保持禁用，请从 GitHub Releases 手动下载安装新版本。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.0</span>
+            <time class="cl-date" datetime="2026-07-17">2026-07-17</time>
+          </div>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />首次发布</h2>
+          <ul>
+            <li>首个正式发布版本，提供 macOS Apple Silicon（arm64）与 Intel（x64）的签名公证安装包（DMG / ZIP）。</li>
+            <li>包含完整的 Agent 工作台：会话管理、项目文件体验、模型与扩展管理、微信 / Telegram / 飞书消息渠道、托盘与通知、崩溃恢复与诊断导出。</li>
+          </ul>
+        </article>
+
+        <div class="cl-more">
+          <a class="btn btn-secondary" href="https://github.com/DLYZZT/pi-desktop/releases" target="_blank" rel="noopener noreferrer">
+            <Icon name="simple-icons:github" aria-hidden="true" />
+            在 GitHub 查看完整发布历史
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

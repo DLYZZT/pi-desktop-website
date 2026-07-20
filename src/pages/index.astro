@@ -1,0 +1,201 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/paths";
+
+const features = [
+  {
+    icon: "ph:chats-circle",
+    title: "完整的会话体验",
+    description:
+      "创建、搜索、按日期分组管理会话，持续展示流式回复、工具调用与上下文压缩状态，支持排队消息与 Steer / Follow-up 交互。",
+  },
+  {
+    icon: "ph:folder-simple",
+    title: "围绕项目的文件体验",
+    description:
+      "原生选择项目目录，管理 Git 分支与 Worktree；Markdown、代码高亮、Mermaid、KaTeX 与 Word 文档预览一应俱全。",
+  },
+  {
+    icon: "ph:sliders-horizontal",
+    title: "模型与扩展统一管理",
+    description:
+      "管理模型提供商与配置，支持浏览器 OAuth 登录；搜索、安装和配置 Skills，并沿用 Pi Agent 的 Plugins 扩展体系。",
+  },
+  {
+    icon: "ph:paper-plane-tilt",
+    title: "IM 消息渠道",
+    description:
+      "个人微信、Telegram 与飞书 / Lark 接入，私聊配对与群聊白名单，图片、文件、语音全类型收发，随时随地驱动 Agent。",
+  },
+  {
+    icon: "ph:clock-clockwise",
+    title: "为长期运行而设计",
+    description:
+      "单实例、系统托盘、桌面通知与角标，窗口状态记忆、系统主题跟随，Agent Host 崩溃自动恢复与诊断信息导出。",
+  },
+  {
+    icon: "ph:shield-check",
+    title: "安全默认开启",
+    description:
+      "Renderer sandbox、严格 CSP 与类型化 IPC 契约；不监听任何本地端口，会话与配置始终留在本机。",
+  },
+];
+
+const checks = [
+  ["数据本地留存", "会话与 Pi 配置默认保存在本机", "~/.pi/agent/"],
+  ["零本地端口", "UI 通信不额外开放任何本地网络端口"],
+  ["最小暴露面", "Renderer sandbox + 严格 CSP + 受控 preload 桥接"],
+  ["凭证加密", "渠道 token 由 Electron safeStorage 加密，不回传 Renderer"],
+  ["只发起出站连接", "无 webhook，无本地监听端口"],
+  ["可信更新", "更新配置固定于正式包内，不接收外部更新地址"],
+];
+---
+
+<BaseLayout
+  title="Pi Agent Desktop — 把 Pi Coding Agent 变成真正的桌面工作台"
+  description="Pi Agent Desktop 是 Pi Coding Agent 的桌面工作台：本地优先、零本地服务器、跨平台应用，支持 macOS、Windows 与 Linux。"
+>
+  <main id="main-content">
+    <section class="hero">
+      <div class="container">
+        <img class="hero-icon" src={withBase("icon.png")} alt="Pi Agent Desktop 图标" width="104" height="104" />
+        <h1>把 Pi Coding Agent 变成<br />真正的桌面工作台</h1>
+        <p class="hero-sub">会话、文件、模型与消息渠道，统一收进一个本地优先的桌面应用。无需命令行，安装即用。</p>
+        <div class="hero-tags" aria-label="产品特点">
+          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />本地优先</span>
+          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />零本地服务器</span>
+          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />跨平台应用</span>
+        </div>
+        <div class="hero-cta">
+          <a class="btn btn-primary" data-hero-download href="https://github.com/DLYZZT/pi-desktop/releases">
+            <Icon name="ph:download-simple" aria-hidden="true" />
+            <span data-hero-label>下载 Pi Agent Desktop</span>
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/DLYZZT/pi-desktop" target="_blank" rel="noopener noreferrer">
+            <Icon name="simple-icons:github" aria-hidden="true" />
+            GitHub
+          </a>
+        </div>
+        <p class="hero-meta">
+          当前版本 <span data-version>v0.1.3</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
+        </p>
+
+        <div class="app-window app-window-raster">
+          <img
+            class="app-interface"
+            src={withBase("app-workspace.jpg")}
+            alt="Pi Agent Desktop 真实工作界面，展示会话管理、助手回复、文件资源管理器和代码预览"
+            width="1513"
+            height="768"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head-center">
+          <p class="eyebrow">Features</p>
+          <h2 class="section-title">一个完整的 Agent 工作台</h2>
+          <p class="section-desc">从会话管理到文件预览，从模型配置到消息渠道，桌面端把日常开发所需的一切收进同一个窗口。</p>
+        </div>
+        <div class="feature-grid">
+          {
+            features.map((feature) => (
+              <article class="feature-card">
+                <div class="feature-icon"><Icon name={feature.icon} aria-hidden="true" /></div>
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head-center">
+          <p class="eyebrow">Channels</p>
+          <h2 class="section-title">不在电脑前，也能继续对话</h2>
+          <p class="section-desc">绑定微信、Telegram 或飞书 / Lark 后，外部对话默认使用独立会话，也可以与当前窗口共用上下文。</p>
+        </div>
+        <div class="channel-strip">
+          <span class="channel-chip"><Icon class="channel-dot dot-wechat" name="ph:circle-fill" aria-hidden="true" />个人微信 · 二维码登录</span>
+          <span class="channel-chip"><Icon class="channel-dot dot-tg" name="ph:circle-fill" aria-hidden="true" />Telegram · Bot Token</span>
+          <span class="channel-chip"><Icon class="channel-dot dot-lark" name="ph:circle-fill" aria-hidden="true" />飞书 / Lark · 企业自建应用</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head-center">
+          <p class="eyebrow">Architecture</p>
+          <h2 class="section-title">三进程隔离，各司其职</h2>
+          <p class="section-desc">高权限桌面能力、Agent 运行时和 UI 被隔离开来，生产环境不监听 TCP 端口，也不需要附带 Web Server。</p>
+        </div>
+        <div class="arch-flow">
+          <div class="arch-box">
+            <h4>Main 主进程</h4>
+            <p>窗口 · 托盘 · 通知 · 更新<br />Agent Host 监督</p>
+          </div>
+          <Icon class="arch-arrow" name="ph:arrow-right" aria-hidden="true" />
+          <div class="arch-box">
+            <h4>Agent Host</h4>
+            <p>utilityProcess 中运行<br />Pi Coding Agent</p>
+          </div>
+          <Icon class="arch-arrow" name="ph:arrows-left-right" aria-hidden="true" />
+          <div class="arch-box">
+            <h4>Renderer</h4>
+            <p>React 19 UI<br />受控 preload 桥接</p>
+          </div>
+        </div>
+        <div class="arch-note">
+          <span class="chip">类型化 MessagePort IPC</span>
+          <span class="chip">零本地端口</span>
+          <span class="chip">数据留在 ~/.pi/agent/</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head-center">
+          <p class="eyebrow">Privacy &amp; Security</p>
+          <h2 class="section-title">你的数据，留在你的机器上</h2>
+          <p class="section-desc">本地优先不是口号，而是默认行为。</p>
+        </div>
+        <div class="check-grid">
+          {
+            checks.map(([title, text, code]) => (
+              <div class="check-item">
+                <Icon name="ph:check" aria-hidden="true" />
+                <span>
+                  <b>{title}</b> — {text} {code && <code>{code}</code>}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-panel">
+          <h2>准备好让 Pi Agent 常驻桌面了吗？</h2>
+          <p>内置 Pi Coding Agent 运行时，安装并配置模型提供商后即可使用。</p>
+          <a class="btn btn-primary" href={withBase("download/")}>
+            <Icon name="ph:download-simple" aria-hidden="true" />
+            免费下载
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

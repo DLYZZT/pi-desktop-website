@@ -1,0 +1,67 @@
+---
+import { Icon } from "astro-icon/components";
+import { withBase } from "../utils/paths";
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src={withBase("icon.png")} alt="" width="26" height="26" />
+          <span>Pi Agent Desktop</span>
+        </div>
+        <p class="footer-desc">把 Pi Coding Agent 变成真正的桌面工作台。本地优先 · 零本地服务器 · 跨平台应用。</p>
+        <div class="footer-socials" aria-label="社交媒体">
+          <a
+            class="icon-btn"
+            href="https://github.com/DLYZZT/pi-desktop"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub 仓库"
+          >
+            <Icon name="simple-icons:github" aria-hidden="true" />
+          </a>
+          <a
+            class="icon-btn"
+            href="https://x.com/dlyzzt"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="在 X 上关注 DLYZZT"
+          >
+            <Icon name="simple-icons:x" aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+      <div>
+        <h5>产品</h5>
+        <ul>
+          <li><a href={withBase("download/")}>下载</a></li>
+          <li><a href={withBase("changelog/")}>更新日志</a></li>
+          <li><a href={withBase("docs/#requirements")}>系统要求</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>资源</h5>
+        <ul>
+          <li><a href={withBase("docs/")}>使用文档</a></li>
+          <li><a href="https://github.com/DLYZZT/pi-desktop" target="_blank" rel="noopener noreferrer">GitHub 仓库</a></li>
+          <li><a href="https://x.com/dlyzzt" target="_blank" rel="noopener noreferrer">X / Twitter</a></li>
+          <li><a href="https://github.com/DLYZZT/pi-desktop/releases" target="_blank" rel="noopener noreferrer">Releases</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>开发</h5>
+        <ul>
+          <li><a href="https://github.com/DLYZZT/pi-desktop/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
+          <li><a href="https://github.com/DLYZZT/pi-desktop/pulls" target="_blank" rel="noopener noreferrer">Pull Requests</a></li>
+          <li><a href="https://github.com/DLYZZT/pi-desktop/actions/workflows/build-desktop.yml" target="_blank" rel="noopener noreferrer">构建状态</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 DLYZZT · 基于 Apache License 2.0 开源</span>
+      <span data-version>v0.1.3</span>
+    </div>
+  </div>
+</footer>

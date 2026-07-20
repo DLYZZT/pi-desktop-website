@@ -1,0 +1,324 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqItem from "../components/FaqItem.astro";
+import { withBase } from "../utils/paths";
+
+const repoUrl = "https://github.com/DLYZZT/pi-desktop";
+const channelGuideUrl = `${repoUrl}/blob/main/docs/im-channel-user-guide.md`;
+---
+
+<BaseLayout
+  title="使用指南 — Pi Agent Desktop"
+  description="面向普通用户的 Pi Agent Desktop 使用指南：下载安装、认识主界面、配置模型、Skills、Plugins、消息渠道与开发工具。"
+>
+  <main id="main-content" class="container">
+    <div class="docs-layout">
+      <aside class="docs-side" aria-label="使用指南目录">
+        <a href="#install">下载安装</a>
+        <a href="#workspace">认识主界面</a>
+        <a href="#models">配置模型</a>
+        <a href="#skills">Skills</a>
+        <a href="#plugins">Plugins</a>
+        <a href="#channels">消息渠道</a>
+        <a href="#tools">开发工具</a>
+        <a href="#updates">更新与数据</a>
+        <a href="#faq">常见问题</a>
+      </aside>
+
+      <article class="docs-article">
+        <h1>Pi Agent Desktop 使用指南</h1>
+        <p class="lead">这是一份面向普通用户的上手指南。无需使用命令行，按下面的顺序操作，就可以完成安装、模型配置并开始第一次对话。</p>
+
+        <div class="guide-steps" aria-label="快速上手步骤">
+          <a class="guide-step" href="#install"><span>1</span><b>安装应用</b><small>选择适合系统的安装包</small></a>
+          <a class="guide-step" href="#models"><span>2</span><b>配置模型</b><small>登录账号或填写 API Key</small></a>
+          <a class="guide-step" href="#workspace"><span>3</span><b>选择项目</b><small>创建第一条会话</small></a>
+          <a class="guide-step" href="#skills"><span>4</span><b>按需扩展</b><small>添加技能、插件或消息渠道</small></a>
+        </div>
+
+        <section id="install">
+          <h2>下载安装</h2>
+          <p>打开<a href={withBase("download/")}>下载页面</a>，网站会优先推荐当前系统对应的安装包。桌面安装包已经内置 Pi Coding Agent 运行时，日常使用不需要另外安装 Pi CLI。</p>
+
+          <div class="guide-grid guide-grid-three">
+            <article class="guide-card">
+              <h3>macOS</h3>
+              <p>Apple Silicon（M 系列）选择 arm64，Intel Mac 选择 x64。下载 DMG 后拖入“应用程序”。</p>
+            </article>
+            <article class="guide-card">
+              <h3>Windows</h3>
+              <p>支持 Windows 10 / 11 x64。运行 EXE 安装程序，按安装向导完成安装。</p>
+            </article>
+            <article class="guide-card">
+              <h3>Linux</h3>
+              <p>支持 Linux x64 AppImage。下载后添加可执行权限，再双击或从应用菜单启动。</p>
+            </article>
+          </div>
+
+          <h3>macOS 安装</h3>
+          <ol>
+            <li>根据芯片类型下载 Apple Silicon 或 Intel 版本的 DMG。</li>
+            <li>打开 DMG，把 Pi Agent Desktop 拖到“应用程序”文件夹。</li>
+            <li>从“应用程序”打开。正式发布包已经签名并通过 Apple 公证。</li>
+          </ol>
+
+          <h3>Windows 安装</h3>
+          <ol>
+            <li>下载 Windows x64 安装程序并运行。</li>
+            <li>按安装向导完成安装。</li>
+            <li>当前安装包尚未配置代码签名；如果 SmartScreen 显示“未知发布者”，确认文件来自项目的 <a href={`${repoUrl}/releases`} target="_blank" rel="noopener noreferrer">GitHub Releases</a> 后，选择“更多信息 → 仍要运行”。</li>
+          </ol>
+
+          <h3>Linux 安装</h3>
+          <ol>
+            <li>下载 Linux x64 AppImage。</li>
+            <li>在文件属性中允许“作为程序执行”，或运行 <code>chmod +x Pi-Agent-Desktop-*.AppImage</code>。</li>
+            <li>打开 AppImage。Linux 版本当前使用手动更新。</li>
+          </ol>
+
+          <div class="note-box"><b>第一次启动：</b>先选择一个项目目录，再进入“设置 → 模型”完成模型配置。没有用过 Pi CLI 也可以直接开始。</div>
+        </section>
+
+        <section id="workspace">
+          <h2>认识主界面</h2>
+          <figure class="guide-figure">
+            <img src={withBase("app-workspace.jpg")} alt="Pi Agent Desktop 主界面，包含会话列表、对话区、资源管理器和文件预览" width="1513" height="768" loading="lazy" />
+            <figcaption>主界面由左侧会话区、中间对话区和右侧文件区组成。</figcaption>
+          </figure>
+
+          <div class="guide-grid guide-grid-three">
+            <article class="guide-card">
+              <h3>左侧：项目与会话</h3>
+              <ul>
+                <li>选择或切换项目目录</li>
+                <li>点击“新建会话”开始新任务</li>
+                <li>搜索、切换、重命名或删除会话</li>
+                <li>从底部打开设置</li>
+              </ul>
+            </article>
+            <article class="guide-card">
+              <h3>中间：对话工作区</h3>
+              <ul>
+                <li>输入问题并查看流式回复</li>
+                <li>查看思考、工具调用与执行结果</li>
+                <li>切换模型、推理等级和工具预设</li>
+                <li>添加图片或使用 <code>@</code> 引用文件</li>
+              </ul>
+            </article>
+            <article class="guide-card">
+              <h3>右侧：文件与预览</h3>
+              <ul>
+                <li>浏览当前项目文件</li>
+                <li>用标签页打开多个文件</li>
+                <li>预览代码、Markdown、图表和文档</li>
+                <li>拖动分隔线调整面板宽度</li>
+              </ul>
+            </article>
+          </div>
+
+          <h3>开始第一条会话</h3>
+          <ol>
+            <li>在左侧选择项目目录。</li>
+            <li>点击“新建会话”。</li>
+            <li>确认输入框下方已经选择可用模型。</li>
+            <li>描述你的目标，例如“介绍这个项目”或“帮我查找登录页面”。</li>
+          </ol>
+          <p>如果只是聊天或处理临时任务，也可以选择一个空目录。只有在你明确授权工具后，Agent 才能读取或修改相应项目文件。</p>
+        </section>
+
+        <section id="models">
+          <h2>配置模型</h2>
+          <p class="guide-path"><b>入口</b><span>设置</span><i>→</i><span>模型</span></p>
+          <p>Pi Agent Desktop 本身不提供模型额度。你需要连接已有的模型服务账号，或填写模型服务商提供的 API Key。</p>
+
+          <h3>使用 API Key</h3>
+          <ol>
+            <li>打开“设置 → 模型”，点击“添加服务商”。</li>
+            <li>选择你的模型服务商。</li>
+            <li>粘贴 API Key，点击“保存”。</li>
+            <li>选择要使用的模型；如果界面提供“测试”，可以先测试连接。</li>
+            <li>关闭设置，在会话输入框下方选择刚配置的模型。</li>
+          </ol>
+
+          <h3>使用 OAuth 登录</h3>
+          <ol>
+            <li>在“添加服务商”中选择支持 OAuth 的服务商。</li>
+            <li>点击“登录”，按提示在浏览器中完成授权。</li>
+            <li>回到应用，确认服务商显示为已连接。</li>
+          </ol>
+
+          <h3>自定义兼容服务</h3>
+          <p>如果你使用的是兼容 OpenAI、Anthropic 或 Google API 的自建服务，可以添加自定义服务商，并填写 Base URL、API 类型、API Key 和模型信息。这部分只在普通服务商列表无法满足需求时使用。</p>
+
+          <div class="note-box"><b>配置失败？</b>先检查 API Key 是否完整、账号是否有可用额度、网络是否能访问服务商，再使用模型卡片中的“测试”查看错误信息。</div>
+        </section>
+
+        <section id="skills">
+          <h2>使用 Skills</h2>
+          <p class="guide-path"><b>入口</b><span>选择项目</span><i>→</i><span>设置</span><i>→</i><span>技能</span></p>
+          <p>Skill 是一组供 Agent 按需读取的专业说明和工作流程，例如前端开发、测试、部署或数据分析。它不会像普通应用一样独立运行。</p>
+
+          <figure class="guide-figure">
+            <img src={withBase("app-skills.jpg")} alt="Pi Agent Desktop 技能管理界面" width="1513" height="768" loading="lazy" />
+            <figcaption>技能页可以查看来源、启用状态、说明和 SKILL.md 内容。</figcaption>
+          </figure>
+
+          <h3>查看和启用技能</h3>
+          <ol>
+            <li>先在左侧选择项目，再打开“设置 → 技能”。</li>
+            <li>从左侧列表选择 Skill，右侧会显示说明和文件内容。</li>
+            <li>使用右上角开关控制 Skill 是否对模型可见。</li>
+            <li>修改内容后点击“保存更改”。不确定时不要修改原始内容。</li>
+          </ol>
+
+          <h3>添加技能</h3>
+          <ol>
+            <li>点击左下角“添加技能”。</li>
+            <li>输入关键词搜索，例如 <code>react</code>、<code>testing</code> 或 <code>deploy</code>。</li>
+            <li>选择安装范围，然后点击“安装”。</li>
+          </ol>
+
+          <div class="table-scroll" tabindex="0" role="region" aria-label="技能安装范围">
+            <table>
+              <thead><tr><th>安装范围</th><th>适合场景</th></tr></thead>
+              <tbody>
+                <tr><td>全局</td><td>所有项目都需要使用的通用技能。</td></tr>
+                <tr><td>当前项目</td><td>只与当前仓库或团队工作方式相关的技能。</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note-box"><b>安全建议：</b>安装前先查看 Skill 的来源和内容。Skill 可能引导 Agent 调用工具，因此只安装你信任的内容。</div>
+        </section>
+
+        <section id="plugins">
+          <h2>使用 Plugins</h2>
+          <p class="guide-path"><b>入口</b><span>选择项目</span><i>→</i><span>设置</span><i>→</i><span>插件</span></p>
+          <p>Plugin 是可以扩展 Agent 能力的代码包。与主要提供说明的 Skill 不同，Plugin 可能实际执行代码、注册工具或读取项目数据。</p>
+
+          <h3>安装插件</h3>
+          <ol>
+            <li>先选择项目，再打开“设置 → 插件”。</li>
+            <li>点击“添加插件”。</li>
+            <li>填写插件来源。应用支持 npm 包、Git 仓库和本地绝对路径。</li>
+            <li>选择“全局”或“当前项目”，然后点击“安装”。</li>
+            <li>安装完成后打开一个会话，并点击“重新加载会话”让变更生效。</li>
+          </ol>
+
+          <p>已安装插件可以启用、禁用、更新或移除。插件发生变化后，当前正在运行的会话通常需要重新加载。</p>
+          <div class="note-box"><b>安全建议：</b>Plugin 可以执行代码。不要安装来源不明的 npm 包、Git 仓库或本地文件；安装前应了解它会提供哪些工具和权限。</div>
+        </section>
+
+        <section id="channels">
+          <h2>连接消息渠道</h2>
+          <p class="guide-path"><b>入口</b><span>设置</span><i>→</i><span>消息渠道</span></p>
+          <p>连接个人微信、Telegram 或飞书 / Lark 后，可以从手机向本机 Agent 发送消息。消息渠道依赖桌面应用运行，请先配置模型，并保持应用运行或最小化到托盘。</p>
+
+          <div class="table-scroll" tabindex="0" role="region" aria-label="消息渠道连接方式">
+            <table>
+              <thead><tr><th>渠道</th><th>准备内容</th><th>连接方式</th></tr></thead>
+              <tbody>
+                <tr><td>个人微信</td><td>可扫码登录的微信账号</td><td>点击“连接微信”，使用手机扫码并确认。</td></tr>
+                <tr><td>Telegram</td><td>从 BotFather 获取的 Bot Token</td><td>点击“连接 Telegram”，粘贴 Token 并保存。</td></tr>
+                <tr><td>飞书 / Lark</td><td>企业自建应用的 App ID 与 App Secret</td><td>选择正确平台，导入所需权限并配置长连接事件。</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>第一次连接的通用流程</h3>
+          <ol>
+            <li>选择渠道并完成登录，确认账号状态为“运行中”。</li>
+            <li>点击“测试连接”。这个按钮只检查连接，不会发送消息。</li>
+            <li>从手机端向机器人发送第一条文本消息。</li>
+            <li>手机端会收到六位配对码；回到“配对请求”核对并批准。</li>
+            <li>批准后，从同一账号再发送一条新消息。第一条触发配对的消息不会交给 Agent。</li>
+            <li>需要共用当前项目上下文时，在会话顶部把该消息对话绑定到当前桌面会话。</li>
+          </ol>
+
+          <h3>建议保留的安全设置</h3>
+          <ul>
+            <li>私聊保持“需要配对”。</li>
+            <li>群聊先保持禁用；需要时再使用群 ID 允许名单，并保留“必须 @提及”。</li>
+            <li>远程会话的默认工具权限先使用“禁用工具”或“只读工具”。</li>
+            <li>只批准你认识的用户，不要公开 Token、App Secret、二维码或配对码。</li>
+          </ul>
+
+          <p>Telegram 群聊、飞书权限与事件订阅等详细步骤，请查看<a href={channelGuideUrl} target="_blank" rel="noopener noreferrer">消息渠道完整使用手册</a>。</p>
+        </section>
+
+        <section id="tools">
+          <h2>管理开发工具</h2>
+          <p class="guide-path"><b>入口</b><span>设置</span><i>→</i><span>开发工具</span></p>
+          <p>Skills、Plugins 和 Agent 命令可能需要 Node.js、Python、Git 等工具。Pi Agent Desktop 会自动扫描电脑上已有的工具，并统一显示它们是否可用。</p>
+
+          <figure class="guide-figure">
+            <img src={withBase("app-developer-tools.jpg")} alt="Pi Agent Desktop 开发工具管理界面" width="1513" height="768" loading="lazy" />
+            <figcaption>开发工具页会显示状态、来源、版本和可选择的工具路径。</figcaption>
+          </figure>
+
+          <div class="guide-grid guide-grid-three">
+            <article class="guide-card"><h3>JavaScript</h3><p>Node.js、npm、npx 和 Bun。</p></article>
+            <article class="guide-card"><h3>Python</h3><p>Python、uv 和 uvx。</p></article>
+            <article class="guide-card"><h3>CLI 基础工具</h3><p>Bash、PowerShell、Git、ripgrep、fd、jq 和 curl。</p></article>
+          </div>
+
+          <h3>遇到“缺少工具”时</h3>
+          <ol>
+            <li>打开“设置 → 开发工具”，点击“重新扫描”。</li>
+            <li>选择缺失的工具，查看右侧检测结果。</li>
+            <li>电脑已经安装时，保持“自动”或选择正确来源；也可以点击“选择”指定路径。</li>
+            <li>电脑没有安装时，可在应用提供托管版本的情况下点击“安装”。安装只会在你确认后开始。</li>
+            <li>安装完成后重新扫描；如果文件损坏，可使用“修复”。</li>
+          </ol>
+
+          <div class="note-box"><b>不会修改系统：</b>应用管理的工具保存在 Pi Agent Desktop 私有目录，不会修改系统 PATH、Shell 配置或 Windows 注册表。已有工具全部可用时，无需额外安装。</div>
+        </section>
+
+        <section id="updates">
+          <h2>更新、后台运行与本地数据</h2>
+
+          <h3>检查更新</h3>
+          <p>打开“设置 → 关于”，可以检查稳定版更新。macOS 与 Windows 支持在应用内下载并安装；Linux AppImage 当前需要从下载页面手动获取新版本。</p>
+
+          <h3>保持消息渠道在线</h3>
+          <p>在“设置 → 通用”开启“关闭窗口时最小化到托盘”。关闭主窗口后消息渠道会继续运行；从托盘菜单选择“退出”才会真正停止应用。</p>
+
+          <h3>本地数据</h3>
+          <ul>
+            <li>会话和 Pi 配置默认保存在本机 <code>~/.pi/agent/</code>。</li>
+            <li>已经使用 Pi CLI 的用户可以直接复用原有会话和配置。</li>
+            <li>模型请求仍会发送给你所选择的模型服务商，请同时了解该服务商的隐私政策。</li>
+            <li>消息渠道凭证使用操作系统安全存储加密保存，不会在设置页中重新显示。</li>
+          </ul>
+        </section>
+
+        <section id="faq">
+          <h2>常见问题</h2>
+          <FaqItem summary="普通使用需要安装 Node.js 或 Pi CLI 吗？">
+            <p>不需要。桌面安装包已经内置 Pi Coding Agent 运行时。只有某些 Skills、Plugins 或 Agent 命令依赖额外工具时，才需要在“设置 → 开发工具”中检查或安装。</p>
+          </FaqItem>
+          <FaqItem summary="为什么“技能”和“插件”页面提示先选择项目？">
+            <p>Skills 和 Plugins 可以按项目安装，因此应用需要先知道当前项目目录。回到主界面左侧选择一个项目，再重新打开设置即可。</p>
+          </FaqItem>
+          <FaqItem summary="配置模型后仍然无法发送消息？">
+            <p>确认输入框下方已经选择模型，然后检查 API Key、账号额度和网络连接。回到“设置 → 模型”，使用“测试”查看服务商返回的具体错误。</p>
+          </FaqItem>
+          <FaqItem summary="消息渠道批准配对后为什么没有回复？">
+            <p>触发配对的第一条消息不会进入 Agent。批准后，请让同一个用户再发送一条新消息。</p>
+          </FaqItem>
+          <FaqItem summary="关闭窗口后消息渠道为什么离线？">
+            <p>打开“设置 → 通用”，启用“关闭窗口时最小化到托盘”。如果从托盘或应用菜单选择了“退出”，所有消息渠道都会停止。</p>
+          </FaqItem>
+          <FaqItem summary="Windows 安装时出现 SmartScreen 提示怎么办？">
+            <p>当前 Windows 安装包尚未配置代码签名。请确认安装包来自项目的 <a href={`${repoUrl}/releases`} target="_blank" rel="noopener noreferrer">GitHub Releases</a>，再选择“更多信息 → 仍要运行”。</p>
+          </FaqItem>
+          <FaqItem summary="支持 Linux 吗？">
+            <p>支持 Linux x64 AppImage。当前暂不提供 Linux ARM64 构建，更新时需要手动下载新的 AppImage。</p>
+          </FaqItem>
+          <FaqItem summary="遇到问题如何反馈？">
+            <p>先记录应用版本、操作系统和错误提示，然后前往 <a href={`${repoUrl}/issues`} target="_blank" rel="noopener noreferrer">GitHub Issues</a>。请勿上传 API Key、Token、App Secret 或其他敏感信息。</p>
+          </FaqItem>
+        </section>
+      </article>
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  summary: string;
+}
+
+const { summary } = Astro.props;
+---
+
+<details>
+  <summary>
+    <span class="faq-icon" aria-hidden="true">
+      <Icon class="faq-plus" name="ph:plus" />
+      <Icon class="faq-minus" name="ph:minus" />
+    </span>
+    {summary}
+  </summary>
+  <div><slot /></div>
+</details>

@@ -1,0 +1,154 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const releasesUrl = "https://github.com/DLYZZT/pi-desktop/releases";
+const platformCards = [
+  {
+    key: "macArmDmg",
+    icon: "ph:apple-logo-fill",
+    title: "macOS",
+    requirement: "Apple Silicon（M 系列芯片）",
+    requirementDetail: "macOS 12 Monterey 或更高",
+    downloadKey: "macArmDmg",
+    buttonLabel: "下载 DMG",
+    alternateKey: "macArmZip",
+    alternateLabel: "下载 ZIP 存档",
+    meta: "arm64 · 已签名公证",
+  },
+  {
+    key: "macX64Dmg",
+    icon: "ph:apple-logo-fill",
+    title: "macOS",
+    requirement: "Intel 芯片",
+    requirementDetail: "macOS 12 Monterey 或更高",
+    downloadKey: "macX64Dmg",
+    buttonLabel: "下载 DMG",
+    alternateKey: "macX64Zip",
+    alternateLabel: "下载 ZIP 存档",
+    meta: "x64 · 已签名公证",
+  },
+  {
+    key: "winExe",
+    icon: "ph:windows-logo-fill",
+    title: "Windows",
+    requirement: "Windows 10 / 11 · 64 位（x64）",
+    requirementDetail: "暂不提供 32 位或 ARM64 版本",
+    downloadKey: "winExe",
+    buttonLabel: "下载安装程序",
+    alternateLabel: "NSIS 安装程序（.exe）",
+    meta: "x64",
+  },
+  {
+    key: "linuxAppImage",
+    icon: "ph:linux-logo-fill",
+    title: "Linux",
+    requirement: "64 位 Linux（x64）",
+    requirementDetail: "AppImage · 暂不提供 ARM64 版本",
+    downloadKey: "linuxAppImage",
+    buttonLabel: "下载 AppImage",
+    alternateLabel: "下载后添加可执行权限",
+    meta: "x64 · AppImage",
+  },
+];
+
+const infoCards = [
+  {
+    title: "macOS 安装说明",
+    items: [
+      "打开 DMG，将 Pi Agent Desktop 拖入「应用程序」",
+      "发布包已经 Apple 签名并公证，可直接打开",
+      "ZIP 存档解压后同样拖入「应用程序」即可",
+    ],
+  },
+  {
+    title: "Windows 安装提示",
+    items: [
+      "当前未配置 Authenticode 代码签名",
+      "安装时可能出现「未知发布者」或 SmartScreen 提示",
+      "确认安装包来自 GitHub Releases 后，选择「仍要运行」即可",
+    ],
+  },
+  {
+    title: "Linux 安装说明",
+    items: [
+      "下载 x64 AppImage 文件",
+      "执行 chmod +x Pi-Agent-Desktop-*.AppImage 添加可执行权限",
+      "当前使用手动更新，请从本页下载新版覆盖旧文件",
+    ],
+  },
+  {
+    title: "如何更新",
+    items: [
+      "macOS：应用内可定时或手动检查稳定版更新，确认后自动下载安装",
+      "Windows：支持在应用内检查、下载并安装稳定版更新",
+      "Linux：AppImage 当前使用手动更新",
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="下载 — Pi Agent Desktop"
+  description="下载 Pi Agent Desktop：macOS（Apple Silicon / Intel）、Windows x64 与 Linux x64 安装包，内置 Pi Coding Agent 运行时。"
+>
+  <main id="main-content">
+    <section class="page-head">
+      <div class="container">
+        <h1>下载 Pi Agent Desktop</h1>
+        <p>安装包已内置 Pi Coding Agent 运行时，无需单独安装 Pi CLI、Node.js 或 npm，配置模型提供商后即可使用。</p>
+      </div>
+    </section>
+
+    <section class="download-content">
+      <div class="container">
+        <div class="detect-banner" data-detect-banner hidden>
+          已检测到您的系统：<b data-detect-os></b>，已为您推荐对应的安装包
+        </div>
+
+        <div class="dl-grid">
+          {
+            platformCards.map((card) => (
+              <article class="dl-card" data-platform-card={card.key}>
+                <span class="dl-badge" data-rec-badge hidden>推荐 · 当前系统</span>
+                <div class="dl-os-icon"><Icon name={card.icon} aria-hidden="true" /></div>
+                <h2>{card.title}</h2>
+                <p class="dl-req">{card.requirement}<br />{card.requirementDetail}</p>
+                <a class="btn btn-primary btn-block" data-dl={card.downloadKey} href={releasesUrl}>
+                  <Icon name="ph:download-simple" aria-hidden="true" />
+                  {card.buttonLabel}
+                </a>
+                <div class="dl-alt">
+                  {
+                    card.alternateKey ? (
+                      <a data-dl={card.alternateKey} href={releasesUrl}>{card.alternateLabel}</a>
+                    ) : (
+                      card.alternateLabel
+                    )
+                  }
+                </div>
+                <div class="dl-ver"><span data-version>v0.1.3</span> · {card.meta}</div>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="info-grid">
+          {
+            infoCards.map((card) => (
+              <article class="info-card">
+                <h2>{card.title}</h2>
+                <ul>{card.items.map((item) => <li>{item}</li>)}</ul>
+              </article>
+            ))
+          }
+        </div>
+
+        <p class="release-note">
+          需要历史版本、blockmap 或更新元数据？请访问
+          <a href={releasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
