@@ -1,0 +1,204 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqItem from "../../components/FaqItem.astro";
+import AppPreview from "../../components/AppPreview.astro";
+import SettingsPreview from "../../components/SettingsPreview.astro";
+import { localizedPath } from "../../i18n";
+
+const repoUrl = "https://github.com/DLYZZT/pi-desktop";
+---
+
+<BaseLayout
+  lang="en"
+  title="User Guide — Pi Agent Desktop"
+  description="Learn how to install Pi Agent Desktop, use the workspace, configure models, and manage Skills, Plugins, messaging channels, and developer tools."
+>
+  <main id="main-content" class="container">
+    <div class="docs-layout">
+      <aside class="docs-side" aria-label="User guide contents">
+        <a href="#install">Download and install</a>
+        <a href="#workspace">Main workspace</a>
+        <a href="#models">Configure models</a>
+        <a href="#skills">Skills settings</a>
+        <a href="#plugins">Plugins settings</a>
+        <a href="#channels">Messaging channels</a>
+        <a href="#tools">Developer tools</a>
+        <a href="#updates">Updates and data</a>
+        <a href="#faq">FAQ</a>
+      </aside>
+
+      <article class="docs-article">
+        <h1>Pi Agent Desktop User Guide</h1>
+        <p class="lead">Follow these steps to install the app, configure a model, and start your first conversation.</p>
+
+        <div class="guide-steps" aria-label="Quick start steps">
+          <a class="guide-step" href="#install"><span>1</span><b>Install the app</b><small>Choose the package for your system</small></a>
+          <a class="guide-step" href="#models"><span>2</span><b>Configure a model</b><small>Sign in or enter an API key</small></a>
+          <a class="guide-step" href="#workspace"><span>3</span><b>Choose a project</b><small>Create your first session</small></a>
+          <a class="guide-step" href="#skills"><span>4</span><b>Add extensions</b><small>Install Skills, Plugins, or channels</small></a>
+        </div>
+
+        <section id="install">
+          <h2>Download and install</h2>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. Desktop packages include the Pi Coding Agent runtime, so normal use does not require a separate Pi CLI installation.</p>
+
+          <div id="requirements" class="guide-grid guide-grid-three">
+            <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
+            <article class="guide-card"><h3>Windows</h3><p>Windows 10 and 11 x64 are supported. Run the EXE installer and follow the setup wizard.</p></article>
+            <article class="guide-card"><h3>Linux</h3><p>Linux x64 is available as an AppImage. Make it executable, then open it from your file manager or application menu.</p></article>
+          </div>
+
+          <h3>Install on macOS</h3>
+          <ol>
+            <li>Download the Apple Silicon or Intel DMG for your Mac.</li>
+            <li>Open the DMG and drag Pi Agent Desktop to the Applications folder.</li>
+            <li>Open it from Applications. Production builds are signed and notarized by Apple.</li>
+          </ol>
+
+          <h3>Install on Windows</h3>
+          <ol>
+            <li>Download and run the Windows x64 installer.</li>
+            <li>Follow the setup wizard.</li>
+            <li>The installer is not code-signed yet. If SmartScreen shows “Unknown publisher,” confirm the file came from <a href={`${repoUrl}/releases`} target="_blank" rel="noopener noreferrer">GitHub Releases</a>, then choose More info → Run anyway.</li>
+          </ol>
+
+          <h3>Install on Linux</h3>
+          <ol>
+            <li>Download the Linux x64 AppImage.</li>
+            <li>Allow the file to run as a program in its properties, or run <code>chmod +x Pi-Agent-Desktop-*.AppImage</code>.</li>
+            <li>Open the AppImage. Linux updates are currently manual.</li>
+          </ol>
+
+          <div class="note-box"><b>First launch:</b> Choose a project folder, then open Settings → Models and configure a model. You can start even if you have never used Pi CLI.</div>
+        </section>
+
+        <section id="workspace">
+          <h2>Meet the main workspace</h2>
+          <figure class="guide-figure">
+            <AppPreview variant="docs" lang="en" />
+            <figcaption>The workspace contains sessions on the left, the conversation in the center, and files on the right.</figcaption>
+          </figure>
+
+          <div class="guide-grid guide-grid-three">
+            <article class="guide-card">
+              <h3>Left: projects and sessions</h3>
+              <ul><li>Choose or switch the project folder</li><li>Create a new session</li><li>Search, switch, rename, or delete sessions</li><li>Open Settings at the bottom</li></ul>
+            </article>
+            <article class="guide-card">
+              <h3>Center: conversation</h3>
+              <ul><li>Send prompts and read streaming replies</li><li>Inspect reasoning and tool-call results</li><li>Choose the model, reasoning level, and tool preset</li><li>Add images or reference files with <code>@</code></li></ul>
+            </article>
+            <article class="guide-card">
+              <h3>Right: files and previews</h3>
+              <ul><li>Browse files in the current project</li><li>Open several files in tabs</li><li>Preview code, Markdown, diagrams, and documents</li><li>Drag dividers to resize panels</li></ul>
+            </article>
+          </div>
+
+          <h3>Start your first session</h3>
+          <ol><li>Choose a project folder in the left sidebar.</li><li>Select New session.</li><li>Make sure an available model is selected below the composer.</li><li>Describe a goal, such as “Explain this project” or “Find the login page.”</li></ol>
+          <p>For chat or temporary work, you can choose an empty folder. The Agent can read or modify project files only when you authorize the relevant tools.</p>
+        </section>
+
+        <section id="models">
+          <h2>Configure models</h2>
+          <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
+          <p>Pi Agent Desktop does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+
+          <h3>Use an API key</h3>
+          <ol><li>Open Settings → Models and select Add provider.</li><li>Choose your model provider.</li><li>Paste the API key and save.</li><li>Select a model. If a Test action is available, use it to verify the connection.</li><li>Close Settings and choose the model below the conversation composer.</li></ol>
+
+          <h3>Use OAuth</h3>
+          <ol><li>Choose a provider that supports OAuth.</li><li>Select Sign in and complete authorization in your browser.</li><li>Return to the app and confirm the provider shows as connected.</li></ol>
+
+          <h3>Use a compatible custom service</h3>
+          <p>For self-hosted services compatible with the OpenAI, Anthropic, or Google API, add a custom provider and enter its Base URL, API type, API key, and model information. Use this only when a standard provider does not meet your needs.</p>
+
+          <div class="note-box"><b>Connection failed?</b> Check that the API key is complete, your account has credits, and your network can reach the provider. Then use the model card's Test action to see the provider error.</div>
+        </section>
+
+        <section id="skills">
+          <h2>Skills settings</h2>
+          <p class="guide-path"><b>Open</b><span>Choose a project</span><i>→</i><span>Settings</span><i>→</i><span>Skills</span></p>
+          <p>This section focuses on settings. Each Skill's own documentation explains its capabilities and usage.</p>
+          <SettingsPreview section="skills" lang="en" />
+          <ol><li>Choose a project, then open Settings → Skills.</li><li>Select an installed Skill and use the switch to control whether it is visible to the model.</li><li>To add one, select Add skill, search by name, choose Global or Current project, and install.</li><li>Edit the content only when you need custom instructions, then save your changes.</li></ol>
+          <div class="note-box"><b>Tip:</b> Use Global for reusable Skills and Current project for repository-specific Skills.</div>
+        </section>
+
+        <section id="plugins">
+          <h2>Plugins settings</h2>
+          <p class="guide-path"><b>Open</b><span>Choose a project</span><i>→</i><span>Settings</span><i>→</i><span>Plugins</span></p>
+          <p>The Plugins page lets you configure a source, installation scope, and enabled state.</p>
+          <SettingsPreview section="plugins" lang="en" />
+          <ol><li>Choose a project, then open Settings → Plugins.</li><li>Select Add plugin and enter an npm package, Git repository, or absolute local path.</li><li>Choose Global or Current project, then install.</li><li>Enable, disable, update, or remove Plugins from the installed list.</li><li>After changing Plugin settings, reload the current session.</li></ol>
+          <div class="note-box"><b>Important:</b> Plugins can execute code. Install only from sources you trust.</div>
+        </section>
+
+        <section id="channels">
+          <h2>Messaging channel settings</h2>
+          <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Messaging channels</span></p>
+          <p>Choose a channel and enter only the account information that channel requires:</p>
+          <SettingsPreview section="channels" lang="en" />
+
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Messaging channel connection methods">
+            <table><thead><tr><th>Channel</th><th>Configuration</th></tr></thead><tbody>
+              <tr><td>WeChat</td><td>Select Connect WeChat, then scan the QR code and confirm on your phone.</td></tr>
+              <tr><td>Telegram</td><td>Enter the Bot Token created with BotFather.</td></tr>
+              <tr><td>Feishu / Lark</td><td>Choose the platform and enter the App ID and App Secret for a custom enterprise app.</td></tr>
+            </tbody></table>
+          </div>
+          <ol><li>Save the account and configure its default project directory and access policy as needed.</li><li>Start the account and confirm its status is Running.</li><li>Use Test connection. Bind a messaging conversation only when it should share context with the current desktop session.</li></ol>
+        </section>
+
+        <section id="tools">
+          <h2>Developer tools settings</h2>
+          <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Developer Tools</span></p>
+          <p>The app scans required tools automatically. Most users only need to act on items marked Missing or Unavailable.</p>
+          <SettingsPreview section="tools" lang="en" />
+          <ol><li>Select Rescan to see each tool's status, source, and version.</li><li>Leave installed tools on Auto. If detection is wrong, use Choose to select a path.</li><li>When a managed version is available for a missing tool, select Install. Use Repair if managed files are damaged.</li></ol>
+          <div class="note-box"><b>You do not need everything:</b> Leave healthy tools alone. Managed tools stay in Pi Desktop's private directory and do not change the system PATH.</div>
+        </section>
+
+        <section id="updates">
+          <h2>Updates, background operation, and local data</h2>
+          <h3>Check for updates</h3>
+          <p>Open Settings → About to check for stable releases. macOS and Windows can download and install updates in the app. Linux AppImage users currently download new versions manually.</p>
+
+          <h3>Keep messaging channels online</h3>
+          <p>Enable Minimize to tray when closing in Settings → General. Closing the main window then keeps channels running; choosing Quit from the tray fully stops the app.</p>
+
+          <h3>Local data</h3>
+          <ul><li>Sessions and Pi configuration are stored locally in <code>~/.pi/agent/</code> by default.</li><li>Existing Pi CLI users can reuse their current sessions and configuration.</li><li>Model requests still go to your selected model provider, so review that provider's privacy policy.</li><li>Messaging credentials are encrypted with the operating system's secure storage and are never displayed again in Settings.</li></ul>
+        </section>
+
+        <section id="faq">
+          <h2>Frequently asked questions</h2>
+          <FaqItem summary="Do I need to install Node.js or Pi CLI?">
+            <p>No. Desktop packages include the Pi Coding Agent runtime. Check Settings → Developer Tools only when a Skill, Plugin, or Agent command requires an additional tool.</p>
+          </FaqItem>
+          <FaqItem summary="Why do Skills and Plugins ask me to choose a project first?">
+            <p>Skills and Plugins can be installed per project, so the app needs the current project folder. Choose one in the main sidebar, then reopen Settings.</p>
+          </FaqItem>
+          <FaqItem summary="Why can’t I send a message after configuring a model?">
+            <p>Confirm a model is selected below the composer, then check the API key, account credits, and network connection. Use Test on the provider card to see the exact error.</p>
+          </FaqItem>
+          <FaqItem summary="Why is there no reply after approving channel pairing?">
+            <p>The first message triggers pairing and is not sent to the Agent. After approval, ask the same user to send a new message.</p>
+          </FaqItem>
+          <FaqItem summary="Why does a messaging channel go offline when I close the window?">
+            <p>Enable Minimize to tray when closing in Settings → General. Choosing Quit from the tray or application menu stops all channels.</p>
+          </FaqItem>
+          <FaqItem summary="What should I do when Windows SmartScreen appears?">
+            <p>The Windows installer is not code-signed yet. Confirm it came from <a href={`${repoUrl}/releases`} target="_blank" rel="noopener noreferrer">GitHub Releases</a>, then select More info → Run anyway.</p>
+          </FaqItem>
+          <FaqItem summary="Is Linux supported?">
+            <p>Yes, on Linux x64 through AppImage. Linux ARM64 builds are not available yet, and AppImage updates are currently manual.</p>
+          </FaqItem>
+          <FaqItem summary="How do I report a problem?">
+            <p>Record the app version, operating system, and error message, then open a <a href={`${repoUrl}/issues`} target="_blank" rel="noopener noreferrer">GitHub Issue</a>. Never include API keys, tokens, app secrets, or other credentials.</p>
+          </FaqItem>
+        </section>
+      </article>
+    </div>
+  </main>
+</BaseLayout>

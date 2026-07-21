@@ -5,23 +5,25 @@ type Section = "skills" | "plugins" | "channels" | "tools";
 
 interface Props {
   section: Section;
+  lang?: "zh" | "en";
 }
 
-const { section } = Astro.props;
+const { section, lang = "zh" } = Astro.props;
+const isEnglish = lang === "en";
 const tabs = [
-  { id: "general", label: "通用", icon: "ph:sliders-horizontal" },
-  { id: "models", label: "模型", icon: "ph:brain" },
-  { id: "skills", label: "技能", icon: "ph:lightning" },
-  { id: "plugins", label: "插件", icon: "ph:puzzle-piece" },
-  { id: "channels", label: "消息渠道", icon: "ph:chats-circle" },
-  { id: "tools", label: "开发工具", icon: "ph:wrench" },
-  { id: "about", label: "关于", icon: "ph:info" },
+  { id: "general", label: isEnglish ? "General" : "通用", icon: "ph:sliders-horizontal" },
+  { id: "models", label: isEnglish ? "Models" : "模型", icon: "ph:brain" },
+  { id: "skills", label: isEnglish ? "Skills" : "技能", icon: "ph:lightning" },
+  { id: "plugins", label: isEnglish ? "Plugins" : "插件", icon: "ph:puzzle-piece" },
+  { id: "channels", label: isEnglish ? "Channels" : "消息渠道", icon: "ph:chats-circle" },
+  { id: "tools", label: isEnglish ? "Dev Tools" : "开发工具", icon: "ph:wrench" },
+  { id: "about", label: isEnglish ? "About" : "关于", icon: "ph:info" },
 ] as const;
 const ariaLabels: Record<Section, string> = {
-  skills: "Pi Agent Desktop 技能设置界面，左侧选择 Skill，右侧编辑启用状态和 SKILL.md",
-  plugins: "Pi Agent Desktop 插件设置界面，展示插件来源、安装范围和安装按钮",
-  channels: "Pi Agent Desktop 消息渠道设置界面，展示 Telegram 账号、默认目录和访问策略",
-  tools: "Pi Agent Desktop 开发工具设置界面，展示 Node.js 的检测状态、来源和托管运行时",
+  skills: isEnglish ? "Pi Agent Desktop Skills settings with a Skill list, enabled state, and SKILL.md editor" : "Pi Agent Desktop 技能设置界面，左侧选择 Skill，右侧编辑启用状态和 SKILL.md",
+  plugins: isEnglish ? "Pi Agent Desktop Plugins settings with source, installation scope, and install action" : "Pi Agent Desktop 插件设置界面，展示插件来源、安装范围和安装按钮",
+  channels: isEnglish ? "Pi Agent Desktop messaging channel settings with a Telegram account, default directory, and access policies" : "Pi Agent Desktop 消息渠道设置界面，展示 Telegram 账号、默认目录和访问策略",
+  tools: isEnglish ? "Pi Agent Desktop Developer Tools settings with Node.js status, provider, and managed runtime" : "Pi Agent Desktop 开发工具设置界面，展示 Node.js 的检测状态、来源和托管运行时",
 };
 
 const skillNames = [
@@ -39,7 +41,7 @@ const skillNames = [
 const toolGroups = [
   { title: "JAVASCRIPT", count: "4/4", tools: ["Node.js", "npm", "npx", "Bun"] },
   { title: "PYTHON", count: "3/3", tools: ["Python", "uv", "uvx"] },
-  { title: "CLI 基础工具", count: "4/7", tools: ["Bash", "PowerShell", "Git", "ripgrep", "fd", "jq", "curl"] },
+  { title: isEnglish ? "CLI ESSENTIALS" : "CLI 基础工具", count: "4/7", tools: ["Bash", "PowerShell", "Git", "ripgrep", "fd", "jq", "curl"] },
 ];
 ---
 
@@ -47,13 +49,13 @@ const toolGroups = [
   <div class="settings-window" role="img" aria-label={ariaLabels[section]}>
     <div class="settings-header" aria-hidden="true">
       <div>
-        <b>设置</b>
-        <span>管理 Pi Agent Desktop 的偏好、连接与扩展</span>
+        <b>{isEnglish ? "Settings" : "设置"}</b>
+        <span>{isEnglish ? "Manage Pi Agent Desktop preferences, connections, and extensions" : "管理 Pi Agent Desktop 的偏好、连接与扩展"}</span>
       </div>
       <Icon name="ph:x" />
     </div>
 
-    <div class="settings-tabs" aria-hidden="true">
+    <div class="settings-tabs" data-preview-label={isEnglish ? "Settings preview" : "设置项预览"} aria-hidden="true">
       {tabs.map((tab) => (
         <span class:list={["settings-tab", tab.id === section && "is-active"]}>
           <Icon name={tab.icon} />
@@ -75,7 +77,7 @@ const toolGroups = [
                 </div>
               ))}
             </div>
-            <div class="list-footer"><Icon name="ph:plus" />添加技能</div>
+            <div class="list-footer"><Icon name="ph:plus" />{isEnglish ? "Add skill" : "添加技能"}</div>
           </aside>
 
           <section class="settings-detail skill-detail">
@@ -83,19 +85,19 @@ const toolGroups = [
               <div><span class="scope-tag">global</span><code>~/.agents/skills/agents-sdk</code></div>
               <span class="switch is-on"><i></i></span>
             </div>
-            <label>名称</label>
+            <label>{isEnglish ? "Name" : "名称"}</label>
             <div class="field mono">agents-sdk</div>
-            <div class="label-row"><label>SKILL.md</label><small>技能说明与使用规则</small></div>
+            <div class="label-row"><label>SKILL.md</label><small>{isEnglish ? "Skill instructions and usage rules" : "技能说明与使用规则"}</small></div>
             <div class="code-field">
               <b>Agents SDK</b>
               <span>Build AI agents on Cloudflare Workers using the Agents SDK.</span>
               <span>Use this skill for stateful agents, durable workflows,</span>
               <span>real-time WebSocket connections, and scheduled tasks.</span>
             </div>
-            <div class="detail-actions"><span class="primary-button">保存更改</span></div>
+            <div class="detail-actions"><span class="primary-button">{isEnglish ? "Save changes" : "保存更改"}</span></div>
             <div class="description-box">
-              <b>说明</b>
-              <span>开启后，该 Skill 会在适用的任务中提供给模型。全局 Skill 可用于所有项目。</span>
+              <b>{isEnglish ? "Description" : "说明"}</b>
+              <span>{isEnglish ? "When enabled, this Skill is available to the model for relevant tasks. Global Skills work in every project." : "开启后，该 Skill 会在适用的任务中提供给模型。全局 Skill 可用于所有项目。"}</span>
             </div>
           </section>
         </>
@@ -109,24 +111,24 @@ const toolGroups = [
               <div class="list-row plugin-row"><i class="is-on"></i><span><b>npm:@pi/desktop-tools</b><small>2 tools · 1 skill</small></span></div>
               <div class="list-row plugin-row"><i class="is-on"></i><span><b>git:github.com/example/plugin</b><small>1 command</small></span></div>
               <div class="list-group-heading"><span>PROJECT</span><span>1</span></div>
-              <div class="list-row plugin-row"><i></i><span><b>./plugins/project-helper</b><small>已停用</small></span></div>
+              <div class="list-row plugin-row"><i></i><span><b>./plugins/project-helper</b><small>{isEnglish ? "Disabled" : "已停用"}</small></span></div>
             </div>
-            <div class="list-footer is-selected"><Icon name="ph:plus" />添加插件</div>
+            <div class="list-footer is-selected"><Icon name="ph:plus" />{isEnglish ? "Add plugin" : "添加插件"}</div>
           </aside>
 
           <section class="settings-detail plugin-detail">
-            <div class="detail-title"><span class="round-icon"><Icon name="ph:puzzle-piece" /></span><div><b>添加插件</b><small>从 npm、Git 仓库或本地目录安装</small></div></div>
-            <label>插件来源</label>
-            <div class="input-row"><div class="field mono muted">npm:@scope/package</div><span class="primary-button">安装</span></div>
+            <div class="detail-title"><span class="round-icon"><Icon name="ph:puzzle-piece" /></span><div><b>{isEnglish ? "Add Plugin" : "添加插件"}</b><small>{isEnglish ? "Install from npm, a Git repository, or a local directory" : "从 npm、Git 仓库或本地目录安装"}</small></div></div>
+            <label>{isEnglish ? "Plugin source" : "插件来源"}</label>
+            <div class="input-row"><div class="field mono muted">npm:@scope/package</div><span class="primary-button">{isEnglish ? "Install" : "安装"}</span></div>
             <div class="example-list">
               <code>npm:@scope/pi-plugin</code>
               <code>git:https://github.com/user/repo</code>
               <code>/absolute/path/to/plugin</code>
             </div>
-            <label>安装范围</label>
+            <label>{isEnglish ? "Installation scope" : "安装范围"}</label>
             <div class="segmented"><span class="is-active">global</span><span>project</span></div>
-            <div class="install-path"><Icon name="ph:folder-simple" /><div><small>安装位置</small><code>~/.pi/agent/&#123;npm,git&#125;</code></div></div>
-            <div class="description-box warning"><Icon name="ph:shield-check" /><span>Plugin 可以执行代码，请只安装可信来源。</span></div>
+            <div class="install-path"><Icon name="ph:folder-simple" /><div><small>{isEnglish ? "Install location" : "安装位置"}</small><code>~/.pi/agent/&#123;npm,git&#125;</code></div></div>
+            <div class="description-box warning"><Icon name="ph:shield-check" /><span>{isEnglish ? "Plugins can execute code. Install only from sources you trust." : "Plugin 可以执行代码，请只安装可信来源。"}</span></div>
           </section>
         </>
       )}
@@ -134,25 +136,25 @@ const toolGroups = [
       {section === "channels" && (
         <section class="channels-detail">
           <div class="channels-heading">
-            <div><b>消息渠道</b><span>连接即时通讯账号、控制访问权限，并绑定 Pi 会话。</span></div>
-            <div class="channel-add-buttons"><span>连接飞书 / Lark</span><span>连接 Telegram</span><span class="primary-button">连接微信</span></div>
+            <div><b>{isEnglish ? "Messaging channels" : "消息渠道"}</b><span>{isEnglish ? "Connect accounts, control access, and bind conversations to Pi sessions." : "连接即时通讯账号、控制访问权限，并绑定 Pi 会话。"}</span></div>
+            <div class="channel-add-buttons"><span>{isEnglish ? "Connect Feishu / Lark" : "连接飞书 / Lark"}</span><span>{isEnglish ? "Connect Telegram" : "连接 Telegram"}</span><span class="primary-button">{isEnglish ? "Connect WeChat" : "连接微信"}</span></div>
           </div>
 
           <div class="channel-account-card">
             <div class="channel-account-head">
               <div class="telegram-logo"><Icon name="ph:telegram-logo" /></div>
               <div><b>Pi Telegram Bot</b><span>Telegram · @pi_desktop_bot</span></div>
-              <span class="status-pill"><i></i>运行中</span>
+              <span class="status-pill"><i></i>{isEnglish ? "Running" : "运行中"}</span>
             </div>
             <div class="channel-form-grid">
-              <div><label>账号名称</label><div class="field">Pi Telegram Bot</div></div>
-              <div><label>默认工具</label><div class="field select">标准<Icon name="ph:caret-down" /></div></div>
-              <div class="wide-field"><label>默认项目目录</label><div class="field path-field"><Icon name="ph:folder-simple" />~/Documents/pi-workspace<span>选择…</span></div></div>
-              <div><label>私聊访问</label><div class="field select">需要配对<Icon name="ph:caret-down" /></div></div>
-              <div><label>群聊访问</label><div class="field select">仅白名单<Icon name="ph:caret-down" /></div></div>
+              <div><label>{isEnglish ? "Account name" : "账号名称"}</label><div class="field">Pi Telegram Bot</div></div>
+              <div><label>{isEnglish ? "Default tools" : "默认工具"}</label><div class="field select">{isEnglish ? "Standard" : "标准"}<Icon name="ph:caret-down" /></div></div>
+              <div class="wide-field"><label>{isEnglish ? "Default project directory" : "默认项目目录"}</label><div class="field path-field"><Icon name="ph:folder-simple" />~/Documents/pi-workspace<span>{isEnglish ? "Choose…" : "选择…"}</span></div></div>
+              <div><label>{isEnglish ? "Private chat access" : "私聊访问"}</label><div class="field select">{isEnglish ? "Pairing required" : "需要配对"}<Icon name="ph:caret-down" /></div></div>
+              <div><label>{isEnglish ? "Group access" : "群聊访问"}</label><div class="field select">{isEnglish ? "Allowlist only" : "仅白名单"}<Icon name="ph:caret-down" /></div></div>
             </div>
-            <div class="credential-row"><div><label>Bot Token</label><span>凭证由系统安全存储保护</span></div><div class="field mono muted">新的 BotFather Token</div><span class="soft-button">更新 Token</span></div>
-            <div class="channel-actions"><span class="primary-button">保存</span><span class="soft-button">停止</span><span class="soft-button"><Icon name="ph:activity" />测试连接</span></div>
+            <div class="credential-row"><div><label>Bot Token</label><span>{isEnglish ? "Protected by secure system storage" : "凭证由系统安全存储保护"}</span></div><div class="field mono muted">{isEnglish ? "New BotFather token" : "新的 BotFather Token"}</div><span class="soft-button">{isEnglish ? "Update token" : "更新 Token"}</span></div>
+            <div class="channel-actions"><span class="primary-button">{isEnglish ? "Save" : "保存"}</span><span class="soft-button">{isEnglish ? "Stop" : "停止"}</span><span class="soft-button"><Icon name="ph:activity" />{isEnglish ? "Test connection" : "测试连接"}</span></div>
           </div>
         </section>
       )}
@@ -173,21 +175,21 @@ const toolGroups = [
                 </div>
               ))}
             </div>
-            <div class="tools-footer"><small>darwin-arm64 · r4</small><span><Icon name="ph:arrow-clockwise" />重新扫描</span></div>
+            <div class="tools-footer"><small>darwin-arm64 · r4</small><span><Icon name="ph:arrow-clockwise" />{isEnglish ? "Rescan" : "重新扫描"}</span></div>
           </aside>
 
           <section class="settings-detail tool-detail">
-            <div class="provider-row"><div><span class="scope-tag managed">Pi 托管</span><code>~/Library/Application Support/Pi Desktop/tools/node</code></div><span class="available"><i></i>可用</span></div>
-            <div class="tool-title"><span class="round-icon"><Icon name="ph:brackets-curly" /></span><div><b>Node.js</b><span>为 Skills、Plugins、Agent 命令与项目操作提供 JavaScript 运行时。</span></div></div>
+            <div class="provider-row"><div><span class="scope-tag managed">{isEnglish ? "Pi managed" : "Pi 托管"}</span><code>~/Library/Application Support/Pi Desktop/tools/node</code></div><span class="available"><i></i>{isEnglish ? "Available" : "可用"}</span></div>
+            <div class="tool-title"><span class="round-icon"><Icon name="ph:brackets-curly" /></span><div><b>Node.js</b><span>{isEnglish ? "JavaScript runtime for Skills, Plugins, Agent commands, and project operations." : "为 Skills、Plugins、Agent 命令与项目操作提供 JavaScript 运行时。"}</span></div></div>
             <div class="detail-section">
-              <b>工具解析</b>
-              <div class="detail-pairs"><span>状态</span><strong class="success">可用</strong><span>来源</span><strong>Pi 托管</strong><span>版本</span><code>v22.19.0</code><span>检测到的候选</span><strong>2</strong></div>
-              <div class="resolution-row"><div><small>优先来源</small><div class="field select">自动（推荐）<Icon name="ph:caret-down" /></div></div><span class="soft-button">选择…</span></div>
+              <b>{isEnglish ? "Tool resolution" : "工具解析"}</b>
+              <div class="detail-pairs"><span>{isEnglish ? "Status" : "状态"}</span><strong class="success">{isEnglish ? "Available" : "可用"}</strong><span>{isEnglish ? "Source" : "来源"}</span><strong>{isEnglish ? "Pi managed" : "Pi 托管"}</strong><span>{isEnglish ? "Version" : "版本"}</span><code>v22.19.0</code><span>{isEnglish ? "Detected candidates" : "检测到的候选"}</span><strong>2</strong></div>
+              <div class="resolution-row"><div><small>{isEnglish ? "Preferred source" : "优先来源"}</small><div class="field select">{isEnglish ? "Auto (recommended)" : "自动（推荐）"}<Icon name="ph:caret-down" /></div></div><span class="soft-button">{isEnglish ? "Choose…" : "选择…"}</span></div>
             </div>
             <div class="detail-section managed-runtime">
-              <b>托管运行时</b>
-              <div class="runtime-card"><div><span>Node.js LTS + npm</span><small>官方来源 · 已安装</small></div><code>v22.19.0</code><span class="soft-button">修复</span></div>
-              <small class="fine-print">托管工具保存在 Pi Desktop 私有目录中，不会修改系统 PATH。</small>
+              <b>{isEnglish ? "Managed runtime" : "托管运行时"}</b>
+              <div class="runtime-card"><div><span>Node.js LTS + npm</span><small>{isEnglish ? "Official source · Installed" : "官方来源 · 已安装"}</small></div><code>v22.19.0</code><span class="soft-button">{isEnglish ? "Repair" : "修复"}</span></div>
+              <small class="fine-print">{isEnglish ? "Managed tools stay in Pi Desktop's private directory and do not modify the system PATH." : "托管工具保存在 Pi Desktop 私有目录中，不会修改系统 PATH。"}</small>
             </div>
           </section>
         </>
@@ -424,7 +426,7 @@ const toolGroups = [
     .settings-tabs { height: 43px; padding: 5px 8px; }
     .settings-tab { display: none; }
     .settings-tab.is-active { display: flex; max-width: 124px; flex: 0 0 124px; }
-    .settings-tabs::after { display: flex; align-items: center; margin-left: auto; color: var(--sp-dim); content: "设置项预览"; font-size: 8px; }
+    .settings-tabs::after { display: flex; align-items: center; margin-left: auto; color: var(--sp-dim); content: attr(data-preview-label); font-size: 8px; }
     .settings-body { height: calc(100% - 87px); }
     .settings-list { display: none; }
     .settings-detail { padding: 13px; }

@@ -4,16 +4,85 @@ import { withBase } from "../utils/paths";
 
 interface Props {
   variant?: "hero" | "docs";
+  lang?: "zh" | "en";
 }
 
-const { variant = "hero" } = Astro.props;
+const { variant = "hero", lang = "zh" } = Astro.props;
+const isEnglish = lang === "en";
+const copy = isEnglish
+  ? {
+      aria: "High-resolution Pi Agent Desktop preview with projects and sessions on the left, an Agent conversation in the center, and files and code on the right",
+      newSession: "New session",
+      sessions: "Sessions",
+      search: "Search sessions...",
+      today: "Today",
+      settings: "Settings",
+      channelStatus: "Messaging connected · 3 conversations",
+      prior: [
+        ["Stack:", "Native HTML, CSS, and JavaScript"],
+        ["Format:", "Responsive single-page site with no dependencies"],
+        ["Entry:", "index.html"],
+      ],
+      run: "Open index.html directly in a browser to run it.",
+      userMessage: "Create a website that introduces DLYZZT/pi-desktop",
+      process: "Process details · 7 messages · 11 tool calls",
+      answer: "The page is now a product site for DLYZZT/pi-desktop.",
+      highlights: "Highlights include:",
+      items: [
+        "Pi Agent Desktop positioning and download entry points",
+        "Sessions, tool calls, project files, models, and extensions",
+        "WeChat, Telegram, and Feishu / Lark messaging channels",
+        "Electron's three-process architecture and local privacy model",
+        "macOS, Windows, and Linux support",
+        "Links to GitHub, releases, and installation docs",
+      ],
+      files: "Files:",
+      composer: "Message... Type / for commands or @ to reference files",
+      send: "Send",
+      reasoning: "High",
+      preset: "Standard",
+      compact: "Compact context",
+    }
+  : {
+      aria: "Pi Agent Desktop 高清界面预览，左侧为项目和会话，中间为 Agent 对话，右侧为文件与代码预览",
+      newSession: "新建会话",
+      sessions: "会话",
+      search: "搜索会话...",
+      today: "今天",
+      settings: "设置",
+      channelStatus: "已连接到消息渠道 · 3 个对话",
+      prior: [
+        ["技术：", "原生 HTML、CSS、JavaScript"],
+        ["形式：", "响应式单页网站，无需安装依赖"],
+        ["入口文件：", "index.html"],
+      ],
+      run: "直接在浏览器中打开 index.html 即可运行。",
+      userMessage: "介绍 DLYZZT/pi-desktop 这个项目的网页",
+      process: "过程详情 · 7 条消息 · 11 次工具调用",
+      answer: "已将网页改为介绍 DLYZZT/pi-desktop 项目的产品官网。",
+      highlights: "主要内容包括：",
+      items: [
+        "Pi Agent Desktop 核心定位与下载入口",
+        "会话、工具调用、项目文件、模型及扩展管理",
+        "微信、Telegram、飞书/Lark 消息渠道",
+        "Electron 三进程架构及本地隐私策略",
+        "macOS、Windows 与 Linux 系统支持",
+        "GitHub、Release 和安装文档链接",
+      ],
+      files: "文件：",
+      composer: "输入消息... 输入 / 查看命令，输入 @ 引用文件",
+      send: "发送",
+      reasoning: "高",
+      preset: "标准",
+      compact: "压缩上下文",
+    };
 ---
 
 <div
   id={`app-preview-${variant}`}
   class:list={["app-preview", `app-preview-${variant}`]}
   role="img"
-  aria-label="Pi Agent Desktop 高清界面预览，左侧为项目和会话，中间为 Agent 对话，右侧为文件与代码预览"
+  aria-label={copy.aria}
 >
   <div class="preview-titlebar" aria-hidden="true">
     <div class="preview-window-controls">
@@ -30,13 +99,13 @@ const { variant = "hero" } = Astro.props;
         <Icon name="ph:arrow-clockwise" />
       </div>
 
-      <div class="preview-new-session"><Icon name="ph:plus" />新建会话</div>
+      <div class="preview-new-session"><Icon name="ph:plus" />{copy.newSession}</div>
       <div class="preview-project-path">~/Desktop/show-pi-desktop</div>
       <div class="preview-git-row"><Icon name="ph:git-branch" />Git repo root only</div>
 
-      <div class="preview-session-heading"><span>会话</span><span>2</span></div>
-      <div class="preview-session-search"><Icon name="ph:magnifying-glass" />搜索会话...</div>
-      <div class="preview-day-label">今天</div>
+      <div class="preview-session-heading"><span>{copy.sessions}</span><span>2</span></div>
+      <div class="preview-session-search"><Icon name="ph:magnifying-glass" />{copy.search}</div>
+      <div class="preview-day-label">{copy.today}</div>
 
       <div class="preview-session preview-session-active">
         <span class="preview-presence"></span>
@@ -56,14 +125,14 @@ const { variant = "hero" } = Astro.props;
         <Icon name="ph:dots-three" />
       </div>
 
-      <div class="preview-settings"><Icon name="ph:gear-six" />设置</div>
+      <div class="preview-settings"><Icon name="ph:gear-six" />{copy.settings}</div>
     </aside>
 
     <section class="preview-chat">
       <header class="preview-chat-header">
         <div><Icon name="ph:sidebar-simple" /><Icon name="ph:moon" /><b>hi</b></div>
         <div>
-          <span class="preview-channel-status"><i></i>已连接到消息渠道 · 3 个对话</span>
+          <span class="preview-channel-status"><i></i>{copy.channelStatus}</span>
           <span class="preview-token"><Icon name="ph:circle" />297K Token</span>
         </div>
       </header>
@@ -77,32 +146,23 @@ const { variant = "hero" } = Astro.props;
         <div class="preview-conversation">
           <div class="preview-prior-answer">
             <ul>
-              <li><b>技术：</b>原生 HTML、CSS、JavaScript</li>
-              <li><b>形式：</b>响应式单页网站，无需安装依赖</li>
-              <li><b>入口文件：</b><code>index.html</code></li>
+              {copy.prior.map(([label, text], index) => <li><b>{label}</b>{index === 2 ? <code>{text}</code> : text}</li>)}
             </ul>
-            <p>直接在浏览器中打开 <code>index.html</code> 即可运行。</p>
+            <p>{isEnglish ? <>Open <code>index.html</code> directly in a browser to run it.</> : <>直接在浏览器中打开 <code>index.html</code> 即可运行。</>}</p>
           </div>
           <div class="preview-message-meta"><span>11,044 in · 147 out · $0.0596</span><span>06:33</span></div>
 
-          <div class="preview-user-message">介绍 DLYZZT/pi-desktop 这个项目的网页</div>
+          <div class="preview-user-message">{copy.userMessage}</div>
           <div class="preview-user-time">06:35</div>
 
-          <div class="preview-process-row"><Icon name="ph:caret-right" /><b>过程详情 · 7 条消息 · 11 次工具调用</b></div>
+          <div class="preview-process-row"><Icon name="ph:caret-right" /><b>{copy.process}</b></div>
           <div class="preview-model-label">GPT-5.6 Sol</div>
 
           <article class="preview-assistant-card">
-            <p>已将网页改为介绍 <b>DLYZZT/pi-desktop</b> 项目的产品官网。</p>
-            <p>主要内容包括：</p>
-            <ul>
-              <li>Pi Agent Desktop 核心定位与下载入口</li>
-              <li>会话、工具调用、项目文件、模型及扩展管理</li>
-              <li>微信、Telegram、飞书/Lark 消息渠道</li>
-              <li>Electron 三进程架构及本地隐私策略</li>
-              <li>macOS 与 Windows 系统支持</li>
-              <li>GitHub、Release 和安装文档链接</li>
-            </ul>
-            <p>文件：</p>
+            <p>{isEnglish ? <>The page is now a product site for <b>DLYZZT/pi-desktop</b>.</> : <>已将网页改为介绍 <b>DLYZZT/pi-desktop</b> 项目的产品官网。</>}</p>
+            <p>{copy.highlights}</p>
+            <ul>{copy.items.map((item) => <li>{item}</li>)}</ul>
+            <p>{copy.files}</p>
             <ul class="preview-file-list">
               <li><code>index.html</code></li>
               <li><code>assets/icon.png</code></li>
@@ -112,14 +172,14 @@ const { variant = "hero" } = Astro.props;
         </div>
 
         <div class="preview-composer">
-          <div class="preview-composer-main"><span>输入消息... 输入 / 查看命令，输入 @ 引用文件</span><b>发送</b></div>
+          <div class="preview-composer-main"><span>{copy.composer}</span><b>{copy.send}</b></div>
           <div class="preview-composer-tools">
             <span><Icon name="ph:image" /></span>
             <span><i></i>GPT-5.6 Sol</span>
             <span class="preview-composer-spacer"></span>
-            <span><Icon name="ph:lightbulb" />高</span>
-            <span><Icon name="ph:paper-plane-tilt" />标准</span>
-            <span><Icon name="ph:arrows-in-line-horizontal" />压缩上下文</span>
+            <span><Icon name="ph:lightbulb" />{copy.reasoning}</span>
+            <span><Icon name="ph:paper-plane-tilt" />{copy.preset}</span>
+            <span><Icon name="ph:arrows-in-line-horizontal" />{copy.compact}</span>
           </div>
         </div>
       </div>
@@ -136,7 +196,7 @@ const { variant = "hero" } = Astro.props;
       <div class="preview-code">
         <ol>
           <li><code><span class="syn-punc">&lt;!</span><span class="syn-tag">doctype</span> <span class="syn-attr">html</span><span class="syn-punc">&gt;</span></code></li>
-          <li><code><span class="syn-punc">&lt;</span><span class="syn-tag">html</span> <span class="syn-attr">lang</span>=<span class="syn-string">"zh-CN"</span><span class="syn-punc">&gt;</span></code></li>
+          <li><code><span class="syn-punc">&lt;</span><span class="syn-tag">html</span> <span class="syn-attr">lang</span>=<span class="syn-string">"{isEnglish ? "en" : "zh-CN"}"</span><span class="syn-punc">&gt;</span></code></li>
           <li><code><span class="syn-punc">&lt;</span><span class="syn-tag">head</span><span class="syn-punc">&gt;</span></code></li>
           <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">meta</span> <span class="syn-attr">charset</span>=<span class="syn-string">"UTF-8"</span> <span class="syn-punc">/&gt;</span></code></li>
           <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">meta</span> <span class="syn-attr">name</span>=<span class="syn-string">"viewport"</span></code></li>

@@ -1,0 +1,172 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import AppPreview from "../../components/AppPreview.astro";
+import { localizedPath } from "../../i18n";
+import { withBase } from "../../utils/paths";
+
+const features = [
+  {
+    icon: "ph:chats-circle",
+    title: "A complete conversation experience",
+    description: "Create, search, and group sessions by date. Follow streaming replies, tool calls, and context compaction, with queued messages and Steer / Follow-up interactions.",
+  },
+  {
+    icon: "ph:folder-simple",
+    title: "A project-centered file experience",
+    description: "Choose project folders natively, manage Git branches and worktrees, and preview Markdown, highlighted code, Mermaid, KaTeX, and Word documents.",
+  },
+  {
+    icon: "ph:sliders-horizontal",
+    title: "Models and extensions in one place",
+    description: "Manage model providers and configuration, use browser OAuth, search and install Skills, and keep using Pi Agent's Plugin ecosystem.",
+  },
+  {
+    icon: "ph:paper-plane-tilt",
+    title: "Messaging channels",
+    description: "Connect WeChat, Telegram, and Feishu / Lark with private-chat pairing, group allowlists, and support for images, files, and voice messages.",
+  },
+  {
+    icon: "ph:clock-clockwise",
+    title: "Designed to keep running",
+    description: "Single-instance behavior, system tray, notifications, badges, remembered window state, system theme support, automatic Agent Host recovery, and diagnostics export.",
+  },
+  {
+    icon: "ph:shield-check",
+    title: "Secure by default",
+    description: "Renderer sandboxing, a strict CSP, and typed IPC contracts. No local ports are opened, and sessions and configuration remain on your machine.",
+  },
+];
+
+const checks = [
+  ["Local data", "Sessions and Pi configuration stay on your machine by default", "~/.pi/agent/"],
+  ["No local ports", "The UI does not open additional local network ports"],
+  ["Minimal exposure", "Renderer sandbox + strict CSP + controlled preload bridge"],
+  ["Encrypted credentials", "Channel tokens are encrypted with Electron safeStorage and never returned to the Renderer"],
+  ["Outbound connections only", "No webhooks and no local listening ports"],
+  ["Trusted updates", "Update settings are fixed in production builds and do not accept external update URLs"],
+];
+---
+
+<BaseLayout
+  lang="en"
+  title="Pi Agent Desktop — A true desktop workspace for Pi Coding Agent"
+  description="Pi Agent Desktop is a local-first, cross-platform workspace for Pi Coding Agent with no local web server. Available for macOS, Windows, and Linux."
+>
+  <main id="main-content">
+    <section class="hero">
+      <div class="container">
+        <img class="hero-icon" src={withBase("icon.png")} alt="Pi Agent Desktop icon" width="104" height="104" />
+        <h1>Pi Coding Agent<br />Desktop Workspace</h1>
+        <p class="hero-sub">Sessions, files, models, and messaging channels in one local-first desktop app. No command line required—install and start working.</p>
+        <div class="hero-tags" aria-label="Product highlights">
+          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />Local-first</span>
+          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />No local server</span>
+          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />Cross-platform</span>
+        </div>
+        <div class="hero-cta">
+          <a class="btn btn-primary" data-hero-download href="https://github.com/DLYZZT/pi-desktop/releases">
+            <Icon name="ph:download-simple" aria-hidden="true" />
+            <span data-hero-label>Download Pi Agent Desktop</span>
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/DLYZZT/pi-desktop" target="_blank" rel="noopener noreferrer">
+            <Icon name="simple-icons:github" aria-hidden="true" />
+            GitHub
+          </a>
+        </div>
+        <p class="hero-meta">
+          Current version <span data-version>v0.1.3</span><span class="dot">·</span>macOS, Windows, and Linux<span class="dot">·</span><a href={localizedPath("en", "changelog/")}>View changelog</a>
+        </p>
+
+        <AppPreview lang="en" />
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head-center">
+          <p class="eyebrow">Features</p>
+          <h2 class="section-title">A complete Agent workspace</h2>
+          <p class="section-desc">From session management and file previews to model configuration and messaging channels, everything you need for everyday development lives in one window.</p>
+        </div>
+        <div class="feature-grid">
+          {features.map((feature) => (
+            <article class="feature-card">
+              <div class="feature-icon"><Icon name={feature.icon} aria-hidden="true" /></div>
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head-center">
+          <p class="eyebrow">Channels</p>
+          <h2 class="section-title">Keep the conversation going away from your desk</h2>
+          <p class="section-desc">Connect WeChat, Telegram, or Feishu / Lark. Remote conversations use isolated sessions by default, or can share context with the current desktop session.</p>
+        </div>
+        <div class="channel-strip">
+          <span class="channel-chip"><Icon class="channel-dot dot-wechat" name="ph:circle-fill" aria-hidden="true" />WeChat · QR sign-in</span>
+          <span class="channel-chip"><Icon class="channel-dot dot-tg" name="ph:circle-fill" aria-hidden="true" />Telegram · Bot Token</span>
+          <span class="channel-chip"><Icon class="channel-dot dot-lark" name="ph:circle-fill" aria-hidden="true" />Feishu / Lark · Custom app</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head-center">
+          <p class="eyebrow">Architecture</p>
+          <h2 class="section-title">Three isolated processes, each with one job</h2>
+          <p class="section-desc">Privileged desktop capabilities, the Agent runtime, and the UI are isolated. Production builds listen on no TCP ports and bundle no web server.</p>
+        </div>
+        <div class="arch-flow">
+          <div class="arch-box"><h4>Main process</h4><p>Window · Tray · Notifications · Updates<br />Agent Host supervision</p></div>
+          <Icon class="arch-arrow" name="ph:arrow-right" aria-hidden="true" />
+          <div class="arch-box"><h4>Agent Host</h4><p>Pi Coding Agent inside<br />an Electron utilityProcess</p></div>
+          <Icon class="arch-arrow" name="ph:arrows-left-right" aria-hidden="true" />
+          <div class="arch-box"><h4>Renderer</h4><p>React 19 UI<br />Controlled preload bridge</p></div>
+        </div>
+        <div class="arch-note">
+          <span class="chip">Typed MessagePort IPC</span>
+          <span class="chip">No local ports</span>
+          <span class="chip">Data stays in ~/.pi/agent/</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head-center">
+          <p class="eyebrow">Privacy &amp; Security</p>
+          <h2 class="section-title">Your data stays on your machine</h2>
+          <p class="section-desc">Local-first is the default behavior, not a slogan.</p>
+        </div>
+        <div class="check-grid">
+          {checks.map(([title, text, code]) => (
+            <div class="check-item">
+              <Icon name="ph:check" aria-hidden="true" />
+              <span><b>{title}</b> — {text} {code && <code>{code}</code>}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-panel">
+          <h2>Ready to keep Pi Agent on your desktop?</h2>
+          <p>The Pi Coding Agent runtime is included. Install the app, configure a model provider, and start working.</p>
+          <a class="btn btn-primary" href={localizedPath("en", "download/")}>
+            <Icon name="ph:download-simple" aria-hidden="true" />
+            Download free
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

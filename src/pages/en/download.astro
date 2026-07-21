@@ -1,0 +1,70 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const releasesUrl = "https://github.com/DLYZZT/pi-desktop/releases";
+const platformCards = [
+  { key: "macArmDmg", icon: "ph:apple-logo-fill", title: "macOS", requirement: "Apple Silicon (M-series)", requirementDetail: "macOS 12 Monterey or later", downloadKey: "macArmDmg", buttonLabel: "Download DMG", alternateKey: "macArmZip", alternateLabel: "Download ZIP archive", meta: "arm64" },
+  { key: "macX64Dmg", icon: "ph:apple-logo-fill", title: "macOS", requirement: "Intel processor", requirementDetail: "macOS 12 Monterey or later", downloadKey: "macX64Dmg", buttonLabel: "Download DMG", alternateKey: "macX64Zip", alternateLabel: "Download ZIP archive", meta: "x64" },
+  { key: "winExe", icon: "ph:windows-logo-fill", title: "Windows", requirement: "Windows 10 / 11 · 64-bit (x64)", requirementDetail: "32-bit and ARM64 are not yet available", downloadKey: "winExe", buttonLabel: "Download installer", alternateLabel: "NSIS installer (.exe)", meta: "x64" },
+  { key: "linuxAppImage", icon: "ph:linux-logo-fill", title: "Linux", requirement: "64-bit Linux (x64)", requirementDetail: "AppImage · ARM64 is not yet available", downloadKey: "linuxAppImage", buttonLabel: "Download AppImage", alternateLabel: "Make the file executable after downloading", meta: "x64 · AppImage" },
+];
+
+const infoCards = [
+  { title: "Install on macOS", items: ["Open the DMG and drag Pi Agent Desktop to Applications", "Release builds are Apple-signed and can be opened directly", "You can also extract the ZIP archive and move the app to Applications"] },
+  { title: "Install on Windows", items: ["Authenticode code signing is not configured yet", "Windows may show an Unknown Publisher or SmartScreen warning", "Confirm the installer came from GitHub Releases, then choose Run anyway"] },
+  { title: "Install on Linux", items: ["Download the x64 AppImage", "Run chmod +x Pi-Agent-Desktop-*.AppImage to make it executable", "Updates are currently manual; download the new version here and replace the old file"] },
+  { title: "Updating", items: ["macOS: check for stable updates automatically or manually in the app", "Windows: check, download, and install stable updates in the app", "Linux: AppImage updates are currently manual"] },
+];
+---
+
+<BaseLayout
+  lang="en"
+  title="Download — Pi Agent Desktop"
+  description="Download Pi Agent Desktop for macOS (Apple Silicon or Intel), Windows x64, or Linux x64. The Pi Coding Agent runtime is included."
+>
+  <main id="main-content">
+    <section class="page-head">
+      <div class="container">
+        <h1>Download Pi Agent Desktop</h1>
+        <p>The Pi Coding Agent runtime is included. You do not need to install Pi CLI, Node.js, or npm separately—just configure a model provider.</p>
+      </div>
+    </section>
+
+    <section class="download-content">
+      <div class="container">
+        <div class="detect-banner" data-detect-banner hidden>
+          We detected <b data-detect-os></b> and highlighted the recommended installer
+        </div>
+
+        <div class="dl-grid">
+          {platformCards.map((card) => (
+            <article class="dl-card" data-platform-card={card.key}>
+              <span class="dl-badge" data-rec-badge hidden>Recommended · This device</span>
+              <div class="dl-os-icon"><Icon name={card.icon} aria-hidden="true" /></div>
+              <h2>{card.title}</h2>
+              <p class="dl-req">{card.requirement}<br />{card.requirementDetail}</p>
+              <a class="btn btn-primary btn-block" data-dl={card.downloadKey} href={releasesUrl}>
+                <Icon name="ph:download-simple" aria-hidden="true" />{card.buttonLabel}
+              </a>
+              <div class="dl-alt">
+                {card.alternateKey ? <a data-dl={card.alternateKey} href={releasesUrl}>{card.alternateLabel}</a> : card.alternateLabel}
+              </div>
+              <div class="dl-ver"><span data-version>v0.1.3</span> · {card.meta}</div>
+            </article>
+          ))}
+        </div>
+
+        <div class="info-grid">
+          {infoCards.map((card) => (
+            <article class="info-card"><h2>{card.title}</h2><ul>{card.items.map((item) => <li>{item}</li>)}</ul></article>
+          ))}
+        </div>
+
+        <p class="release-note">
+          Looking for older versions, blockmaps, or update metadata? Visit <a href={releasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

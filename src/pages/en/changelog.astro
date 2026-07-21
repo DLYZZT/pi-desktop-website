@@ -1,0 +1,106 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout lang="en" title="Changelog — Pi Agent Desktop" description="Version history and release notes for Pi Agent Desktop.">
+  <main id="main-content">
+    <section class="page-head">
+      <div class="container">
+        <h1>Changelog</h1>
+        <p>Important changes in every Pi Agent Desktop release. Full release notes and assets are available on GitHub Releases.</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="cl-list">
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.3</span>
+            <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-07-20">2026-07-20</time>
+          </div>
+          <p>This release introduces cross-platform developer tool management and an official Linux package, giving Skills, Plugins, and Agent scripts a more consistent runtime across different machines.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Highlights</h2>
+          <ul>
+            <li>Added a unified Developer Tools setting, grouped into JavaScript, Python, and CLI essentials with a tool list and detailed status, source, and version information.</li>
+            <li>Discovers and verifies installed Node.js, npm / npx, Python, uv / uvx, Git / Bash, Bun, jq, and other tools, including incomplete PATH environments when macOS launches from Finder and common Windows installation locations.</li>
+            <li>With confirmation, Pi Desktop can install private copies of Node.js LTS, CPython, uv, PortableGit, Bun, and jq without modifying the system PATH, shell configuration, or registry.</li>
+            <li>Bundles and verifies platform-specific ripgrep and fd builds for stable, high-performance file search.</li>
+            <li>Skills and Plugins now use resolved absolute Node / npm paths. Plugin npm operations run in an isolated Worker and return structured installation guidance when tools are missing.</li>
+            <li>Added download, install, repair, remove, cancel, cache inspection, and diagnostic actions, with stronger redirect allowlists, checksum verification, launch validation, rollback, and log redaction.</li>
+            <li>Updated the English and Chinese README files and application screenshots.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Platforms and downloads</h2>
+          <ul>
+            <li>Added the official Linux x64 AppImage and included it with macOS Apple Silicon / Intel and Windows x64 in full CI, artifact launch E2E, and release validation.</li>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.3-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.3-x64.dmg</code></li>
+            <li>Windows x64: <code>Pi-Agent-Desktop-Setup-0.1.3.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.3-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>Private tools are installed on demand only after confirmation and remain inside the Pi Agent Desktop application data directory.</li>
+            <li>The Windows installer is currently unsigned, so SmartScreen may appear on first launch.</li>
+            <li>Linux AppImage updates are currently manual.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head"><span class="cl-tag">v0.1.2</span><time class="cl-date" datetime="2026-07-17">2026-07-17</time></div>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Added</h2>
+          <ul>
+            <li>Added in-app updates for Windows x64, including checking, downloading, and installing new versions directly in the app.</li>
+            <li>Windows updates work without a code-signing certificate and use a full NSIS installer instead of a Web Installer.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Security and reliability</h2>
+          <ul>
+            <li>Update packages are verified against GitHub Release metadata and SHA-512 checksums before installation.</li>
+            <li>Strengthened Windows update configuration checks so unsigned builds do not include an invalid <code>publisherName</code>.</li>
+            <li>CI now verifies installer, update metadata, and blockmap consistency. macOS continues to enforce code signing, Apple notarization, and artifact integrity checks.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head"><span class="cl-tag">v0.1.1</span><time class="cl-date" datetime="2026-07-17">2026-07-17</time></div>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Fixed</h2>
+          <ul>
+            <li>Model request failures now appear directly in the conversation instead of silently rendering an empty assistant reply. Provider details such as an invalid API key are preserved, with an actionable fallback when no details are returned.</li>
+            <li>Failed assistant messages remain visible after session grouping and reloads, while harmless empty responses stay hidden.</li>
+            <li>Added regression coverage for provider failures, missing error details, and valid empty assistant messages.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Changed</h2>
+          <ul>
+            <li>Pushes to <code>main</code> now run tests and the full quality gate without packaging temporary installers.</li>
+            <li>Pull Requests and manually triggered workflows continue to provide temporary build artifacts.</li>
+            <li>Tagged releases now add the Windows x64 NSIS installer, blockmap, and update metadata alongside signed and notarized macOS artifacts.</li>
+            <li>Strengthened release asset validation for macOS and Windows packages.</li>
+            <li>Updated English and Chinese release documentation and ignored the local <code>temp/</code> directory.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Platform notes</h2>
+          <ul>
+            <li>macOS releases are signed and notarized. Stable in-app updates use GitHub Release metadata from the release workflow.</li>
+            <li>The Windows installer is an official release asset but does not yet have Authenticode signing, so Windows may show Unknown Publisher or SmartScreen prompts.</li>
+            <li>Windows in-app updates remain disabled; download and install new versions manually from GitHub Releases.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head"><span class="cl-tag">v0.1.0</span><time class="cl-date" datetime="2026-07-17">2026-07-17</time></div>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Initial release</h2>
+          <ul>
+            <li>First production release with signed and notarized DMG / ZIP packages for macOS Apple Silicon (arm64) and Intel (x64).</li>
+            <li>Included the complete Agent workspace: session management, project files, model and extension settings, WeChat / Telegram / Feishu channels, tray and notifications, crash recovery, and diagnostic export.</li>
+          </ul>
+        </article>
+
+        <div class="cl-more">
+          <a class="btn btn-secondary" href="https://github.com/DLYZZT/pi-desktop/releases" target="_blank" rel="noopener noreferrer">
+            <Icon name="simple-icons:github" aria-hidden="true" />View the full release history on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

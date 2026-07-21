@@ -20,6 +20,7 @@ type Release = {
 };
 
 const root = document.documentElement;
+const isEnglish = root.lang.toLowerCase().startsWith("en");
 
 function preferredTheme(): "dark" | "light" {
   try {
@@ -153,18 +154,24 @@ function recommendedKey(platform: Platform): keyof Release | null {
 }
 
 function recommendedLabel(platform: Platform) {
-  if (platform.os === "windows") return "下载 Windows 版（x64）";
+  if (platform.os === "windows") return isEnglish ? "Download for Windows (x64)" : "下载 Windows 版（x64）";
   if (platform.os === "mac") {
-    return platform.arch === "x64" ? "下载 macOS 版（Intel）" : "下载 macOS 版（Apple Silicon）";
+    if (platform.arch === "x64") return isEnglish ? "Download for macOS (Intel)" : "下载 macOS 版（Intel）";
+    return isEnglish ? "Download for macOS (Apple Silicon)" : "下载 macOS 版（Apple Silicon）";
   }
-  if (platform.os === "linux" && platform.arch !== "arm64") return "下载 Linux 版（x64 AppImage）";
+  if (platform.os === "linux" && platform.arch !== "arm64") {
+    return isEnglish ? "Download for Linux (x64 AppImage)" : "下载 Linux 版（x64 AppImage）";
+  }
   return null;
 }
 
 function detectedLabel(platform: Platform) {
-  if (platform.os === "windows") return "Windows（x64）";
-  if (platform.os === "mac") return platform.arch === "x64" ? "macOS（Intel）" : "macOS（Apple Silicon）";
-  if (platform.os === "linux") return platform.arch === "arm64" ? "Linux（ARM64，暂不支持）" : "Linux（x64）";
+  if (platform.os === "windows") return isEnglish ? "Windows (x64)" : "Windows（x64）";
+  if (platform.os === "mac") return platform.arch === "x64" ? "macOS (Intel)" : "macOS (Apple Silicon)";
+  if (platform.os === "linux") {
+    if (platform.arch === "arm64") return isEnglish ? "Linux (ARM64, not yet supported)" : "Linux（ARM64，暂不支持）";
+    return isEnglish ? "Linux (x64)" : "Linux（x64）";
+  }
   return null;
 }
 
@@ -186,8 +193,8 @@ function applyRelease(release: Release, platform: Platform) {
     heroButton.href = release[key];
     heroLabel.textContent = label;
   } else if (heroButton && heroLabel) {
-    heroButton.href = withBase("download/");
-    heroLabel.textContent = "前往下载";
+    heroButton.href = withBase(isEnglish ? "en/download/" : "download/");
+    heroLabel.textContent = isEnglish ? "View downloads" : "前往下载";
   }
 
   const banner = document.querySelector<HTMLElement>("[data-detect-banner]");
