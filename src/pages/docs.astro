@@ -1,15 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FaqItem from "../components/FaqItem.astro";
+import AppPreview from "../components/AppPreview.astro";
+import SettingsPreview from "../components/SettingsPreview.astro";
 import { withBase } from "../utils/paths";
 
 const repoUrl = "https://github.com/DLYZZT/pi-desktop";
-const channelGuideUrl = `${repoUrl}/blob/main/docs/im-channel-user-guide.md`;
 ---
 
 <BaseLayout
   title="使用指南 — Pi Agent Desktop"
-  description="面向普通用户的 Pi Agent Desktop 使用指南：下载安装、认识主界面、配置模型、Skills、Plugins、消息渠道与开发工具。"
+  description="Pi Agent Desktop 使用指南：下载安装、认识主界面、配置模型、Skills、Plugins、消息渠道与开发工具。"
 >
   <main id="main-content" class="container">
     <div class="docs-layout">
@@ -17,17 +18,17 @@ const channelGuideUrl = `${repoUrl}/blob/main/docs/im-channel-user-guide.md`;
         <a href="#install">下载安装</a>
         <a href="#workspace">认识主界面</a>
         <a href="#models">配置模型</a>
-        <a href="#skills">Skills</a>
-        <a href="#plugins">Plugins</a>
-        <a href="#channels">消息渠道</a>
-        <a href="#tools">开发工具</a>
+        <a href="#skills">Skills 设置</a>
+        <a href="#plugins">Plugins 设置</a>
+        <a href="#channels">消息渠道设置</a>
+        <a href="#tools">开发工具设置</a>
         <a href="#updates">更新与数据</a>
         <a href="#faq">常见问题</a>
       </aside>
 
       <article class="docs-article">
         <h1>Pi Agent Desktop 使用指南</h1>
-        <p class="lead">这是一份面向普通用户的上手指南。无需使用命令行，按下面的顺序操作，就可以完成安装、模型配置并开始第一次对话。</p>
+        <p class="lead">按下面的顺序操作，就可以完成安装、模型配置并开始第一次对话。</p>
 
         <div class="guide-steps" aria-label="快速上手步骤">
           <a class="guide-step" href="#install"><span>1</span><b>安装应用</b><small>选择适合系统的安装包</small></a>
@@ -82,7 +83,7 @@ const channelGuideUrl = `${repoUrl}/blob/main/docs/im-channel-user-guide.md`;
         <section id="workspace">
           <h2>认识主界面</h2>
           <figure class="guide-figure">
-            <img src={withBase("app-workspace.jpg")} alt="Pi Agent Desktop 主界面，包含会话列表、对话区、资源管理器和文件预览" width="1513" height="768" loading="lazy" />
+            <AppPreview variant="docs" />
             <figcaption>主界面由左侧会话区、中间对话区和右侧文件区组成。</figcaption>
           </figure>
 
@@ -154,123 +155,69 @@ const channelGuideUrl = `${repoUrl}/blob/main/docs/im-channel-user-guide.md`;
         </section>
 
         <section id="skills">
-          <h2>使用 Skills</h2>
+          <h2>Skills 设置</h2>
           <p class="guide-path"><b>入口</b><span>选择项目</span><i>→</i><span>设置</span><i>→</i><span>技能</span></p>
-          <p>Skill 是一组供 Agent 按需读取的专业说明和工作流程，例如前端开发、测试、部署或数据分析。它不会像普通应用一样独立运行。</p>
-
-          <figure class="guide-figure">
-            <img src={withBase("app-skills.jpg")} alt="Pi Agent Desktop 技能管理界面" width="1513" height="768" loading="lazy" />
-            <figcaption>技能页可以查看来源、启用状态、说明和 SKILL.md 内容。</figcaption>
-          </figure>
-
-          <h3>查看和启用技能</h3>
+          <p>这里只介绍设置方法。Skill 的具体能力和使用方式由它自己的说明决定。</p>
+          <SettingsPreview section="skills" />
           <ol>
             <li>先在左侧选择项目，再打开“设置 → 技能”。</li>
-            <li>从左侧列表选择 Skill，右侧会显示说明和文件内容。</li>
-            <li>使用右上角开关控制 Skill 是否对模型可见。</li>
-            <li>修改内容后点击“保存更改”。不确定时不要修改原始内容。</li>
+            <li>选择已有 Skill，使用右上角开关设置它是否对模型可见。</li>
+            <li>需要添加时点击“添加技能”，搜索名称，选择“全局”或“当前项目”，再点击“安装”。</li>
+            <li>只有确实需要自定义说明时才修改内容，并点击“保存更改”。</li>
           </ol>
-
-          <h3>添加技能</h3>
-          <ol>
-            <li>点击左下角“添加技能”。</li>
-            <li>输入关键词搜索，例如 <code>react</code>、<code>testing</code> 或 <code>deploy</code>。</li>
-            <li>选择安装范围，然后点击“安装”。</li>
-          </ol>
-
-          <div class="table-scroll" tabindex="0" role="region" aria-label="技能安装范围">
-            <table>
-              <thead><tr><th>安装范围</th><th>适合场景</th></tr></thead>
-              <tbody>
-                <tr><td>全局</td><td>所有项目都需要使用的通用技能。</td></tr>
-                <tr><td>当前项目</td><td>只与当前仓库或团队工作方式相关的技能。</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="note-box"><b>安全建议：</b>安装前先查看 Skill 的来源和内容。Skill 可能引导 Agent 调用工具，因此只安装你信任的内容。</div>
+          <div class="note-box"><b>建议：</b>通用 Skill 选择“全局”，只服务当前仓库的 Skill 选择“当前项目”。</div>
         </section>
 
         <section id="plugins">
-          <h2>使用 Plugins</h2>
+          <h2>Plugins 设置</h2>
           <p class="guide-path"><b>入口</b><span>选择项目</span><i>→</i><span>设置</span><i>→</i><span>插件</span></p>
-          <p>Plugin 是可以扩展 Agent 能力的代码包。与主要提供说明的 Skill 不同，Plugin 可能实际执行代码、注册工具或读取项目数据。</p>
-
-          <h3>安装插件</h3>
+          <p>插件页只需要配置插件来源、安装范围和启用状态。</p>
+          <SettingsPreview section="plugins" />
           <ol>
             <li>先选择项目，再打开“设置 → 插件”。</li>
-            <li>点击“添加插件”。</li>
-            <li>填写插件来源。应用支持 npm 包、Git 仓库和本地绝对路径。</li>
+            <li>点击“添加插件”，填写 npm 包、Git 仓库或本地绝对路径。</li>
             <li>选择“全局”或“当前项目”，然后点击“安装”。</li>
-            <li>安装完成后打开一个会话，并点击“重新加载会话”让变更生效。</li>
+            <li>在已安装列表中启用、禁用、更新或移除插件。</li>
+            <li>设置发生变化后，点击“重新加载会话”使配置生效。</li>
           </ol>
-
-          <p>已安装插件可以启用、禁用、更新或移除。插件发生变化后，当前正在运行的会话通常需要重新加载。</p>
-          <div class="note-box"><b>安全建议：</b>Plugin 可以执行代码。不要安装来源不明的 npm 包、Git 仓库或本地文件；安装前应了解它会提供哪些工具和权限。</div>
+          <div class="note-box"><b>注意：</b>Plugin 可以执行代码，只添加可信来源。</div>
         </section>
 
         <section id="channels">
-          <h2>连接消息渠道</h2>
+          <h2>消息渠道设置</h2>
           <p class="guide-path"><b>入口</b><span>设置</span><i>→</i><span>消息渠道</span></p>
-          <p>连接个人微信、Telegram 或飞书 / Lark 后，可以从手机向本机 Agent 发送消息。消息渠道依赖桌面应用运行，请先配置模型，并保持应用运行或最小化到托盘。</p>
+          <p>先选择要连接的渠道，只填写该渠道要求的账号信息：</p>
+          <SettingsPreview section="channels" />
 
           <div class="table-scroll" tabindex="0" role="region" aria-label="消息渠道连接方式">
             <table>
-              <thead><tr><th>渠道</th><th>准备内容</th><th>连接方式</th></tr></thead>
+              <thead><tr><th>渠道</th><th>设置内容</th></tr></thead>
               <tbody>
-                <tr><td>个人微信</td><td>可扫码登录的微信账号</td><td>点击“连接微信”，使用手机扫码并确认。</td></tr>
-                <tr><td>Telegram</td><td>从 BotFather 获取的 Bot Token</td><td>点击“连接 Telegram”，粘贴 Token 并保存。</td></tr>
-                <tr><td>飞书 / Lark</td><td>企业自建应用的 App ID 与 App Secret</td><td>选择正确平台，导入所需权限并配置长连接事件。</td></tr>
+                <tr><td>个人微信</td><td>点击“连接微信”，使用手机扫码并确认登录。</td></tr>
+                <tr><td>Telegram</td><td>填写从 BotFather 获取的 Bot Token。</td></tr>
+                <tr><td>飞书 / Lark</td><td>选择平台，填写企业自建应用的 App ID 与 App Secret。</td></tr>
               </tbody>
             </table>
           </div>
 
-          <h3>第一次连接的通用流程</h3>
           <ol>
-            <li>选择渠道并完成登录，确认账号状态为“运行中”。</li>
-            <li>点击“测试连接”。这个按钮只检查连接，不会发送消息。</li>
-            <li>从手机端向机器人发送第一条文本消息。</li>
-            <li>手机端会收到六位配对码；回到“配对请求”核对并批准。</li>
-            <li>批准后，从同一账号再发送一条新消息。第一条触发配对的消息不会交给 Agent。</li>
-            <li>需要共用当前项目上下文时，在会话顶部把该消息对话绑定到当前桌面会话。</li>
+            <li>保存账号信息，并按需设置默认工作目录和访问策略。</li>
+            <li>启动账号，确认状态显示为“运行中”。</li>
+            <li>使用“测试连接”检查配置；需要与当前会话共享上下文时，再绑定对应消息对话。</li>
           </ol>
-
-          <h3>建议保留的安全设置</h3>
-          <ul>
-            <li>私聊保持“需要配对”。</li>
-            <li>群聊先保持禁用；需要时再使用群 ID 允许名单，并保留“必须 @提及”。</li>
-            <li>远程会话的默认工具权限先使用“禁用工具”或“只读工具”。</li>
-            <li>只批准你认识的用户，不要公开 Token、App Secret、二维码或配对码。</li>
-          </ul>
-
-          <p>Telegram 群聊、飞书权限与事件订阅等详细步骤，请查看<a href={channelGuideUrl} target="_blank" rel="noopener noreferrer">消息渠道完整使用手册</a>。</p>
         </section>
 
         <section id="tools">
-          <h2>管理开发工具</h2>
+          <h2>开发工具设置</h2>
           <p class="guide-path"><b>入口</b><span>设置</span><i>→</i><span>开发工具</span></p>
-          <p>Skills、Plugins 和 Agent 命令可能需要 Node.js、Python、Git 等工具。Pi Agent Desktop 会自动扫描电脑上已有的工具，并统一显示它们是否可用。</p>
-
-          <figure class="guide-figure">
-            <img src={withBase("app-developer-tools.jpg")} alt="Pi Agent Desktop 开发工具管理界面" width="1513" height="768" loading="lazy" />
-            <figcaption>开发工具页会显示状态、来源、版本和可选择的工具路径。</figcaption>
-          </figure>
-
-          <div class="guide-grid guide-grid-three">
-            <article class="guide-card"><h3>JavaScript</h3><p>Node.js、npm、npx 和 Bun。</p></article>
-            <article class="guide-card"><h3>Python</h3><p>Python、uv 和 uvx。</p></article>
-            <article class="guide-card"><h3>CLI 基础工具</h3><p>Bash、PowerShell、Git、ripgrep、fd、jq 和 curl。</p></article>
-          </div>
-
-          <h3>遇到“缺少工具”时</h3>
+          <p>应用会自动扫描所需工具。普通使用只需要处理显示为“缺少”或“不可用”的项目。</p>
+          <SettingsPreview section="tools" />
           <ol>
-            <li>打开“设置 → 开发工具”，点击“重新扫描”。</li>
-            <li>选择缺失的工具，查看右侧检测结果。</li>
-            <li>电脑已经安装时，保持“自动”或选择正确来源；也可以点击“选择”指定路径。</li>
-            <li>电脑没有安装时，可在应用提供托管版本的情况下点击“安装”。安装只会在你确认后开始。</li>
-            <li>安装完成后重新扫描；如果文件损坏，可使用“修复”。</li>
+            <li>点击“重新扫描”，查看工具状态、来源和版本。</li>
+            <li>已经安装的工具保持“自动”，检测不正确时点击“选择”指定路径。</li>
+            <li>缺少工具且应用提供托管版本时，点击“安装”；文件损坏时点击“修复”。</li>
           </ol>
-
-          <div class="note-box"><b>不会修改系统：</b>应用管理的工具保存在 Pi Agent Desktop 私有目录，不会修改系统 PATH、Shell 配置或 Windows 注册表。已有工具全部可用时，无需额外安装。</div>
+          <div class="note-box"><b>无需全部安装：</b>状态正常的工具不用处理；应用托管的工具保存在私有目录，不会修改系统 PATH。</div>
         </section>
 
         <section id="updates">

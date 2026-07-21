@@ -1,0 +1,171 @@
+---
+import { Icon } from "astro-icon/components";
+import { withBase } from "../utils/paths";
+
+interface Props {
+  variant?: "hero" | "docs";
+}
+
+const { variant = "hero" } = Astro.props;
+---
+
+<div
+  id={`app-preview-${variant}`}
+  class:list={["app-preview", `app-preview-${variant}`]}
+  role="img"
+  aria-label="Pi Agent Desktop 高清界面预览，左侧为项目和会话，中间为 Agent 对话，右侧为文件与代码预览"
+>
+  <div class="preview-titlebar" aria-hidden="true">
+    <div class="preview-window-controls">
+      <span class="preview-window-pill"><Icon name="ph:laptop" /></span>
+    </div>
+    <strong>Pi Agent Desktop</strong>
+    <div class="preview-titlebar-spacer"></div>
+  </div>
+
+  <div class="preview-workspace" aria-hidden="true">
+    <aside class="preview-sidebar">
+      <div class="preview-brand">
+        <span><img src={withBase("icon.png")} alt="" width="15" height="15" />Pi Agent Desktop</span>
+        <Icon name="ph:arrow-clockwise" />
+      </div>
+
+      <div class="preview-new-session"><Icon name="ph:plus" />新建会话</div>
+      <div class="preview-project-path">~/Desktop/show-pi-desktop</div>
+      <div class="preview-git-row"><Icon name="ph:git-branch" />Git repo root only</div>
+
+      <div class="preview-session-heading"><span>会话</span><span>2</span></div>
+      <div class="preview-session-search"><Icon name="ph:magnifying-glass" />搜索会话...</div>
+      <div class="preview-day-label">今天</div>
+
+      <div class="preview-session preview-session-active">
+        <span class="preview-presence"></span>
+        <div>
+          <b>hi</b>
+          <small>32m ago&nbsp;&nbsp; <strong>34 msgs</strong></small>
+        </div>
+        <Icon name="ph:caret-down" />
+        <Icon name="ph:dots-three" />
+      </div>
+      <div class="preview-session preview-session-child">
+        <span></span>
+        <div>
+          <b>hi</b>
+          <small>45m ago&nbsp;&nbsp; <strong>2 msgs</strong></small>
+        </div>
+        <Icon name="ph:dots-three" />
+      </div>
+
+      <div class="preview-settings"><Icon name="ph:gear-six" />设置</div>
+    </aside>
+
+    <section class="preview-chat">
+      <header class="preview-chat-header">
+        <div><Icon name="ph:sidebar-simple" /><Icon name="ph:moon" /><b>hi</b></div>
+        <div>
+          <span class="preview-channel-status"><i></i>已连接到消息渠道 · 3 个对话</span>
+          <span class="preview-token"><Icon name="ph:circle" />297K Token</span>
+        </div>
+      </header>
+
+      <div class="preview-chat-canvas">
+        <span class="preview-corner preview-corner-tl"></span>
+        <span class="preview-corner preview-corner-tr"></span>
+        <span class="preview-corner preview-corner-bl"></span>
+        <span class="preview-corner preview-corner-br"></span>
+
+        <div class="preview-conversation">
+          <div class="preview-prior-answer">
+            <ul>
+              <li><b>技术：</b>原生 HTML、CSS、JavaScript</li>
+              <li><b>形式：</b>响应式单页网站，无需安装依赖</li>
+              <li><b>入口文件：</b><code>index.html</code></li>
+            </ul>
+            <p>直接在浏览器中打开 <code>index.html</code> 即可运行。</p>
+          </div>
+          <div class="preview-message-meta"><span>11,044 in · 147 out · $0.0596</span><span>06:33</span></div>
+
+          <div class="preview-user-message">介绍 DLYZZT/pi-desktop 这个项目的网页</div>
+          <div class="preview-user-time">06:35</div>
+
+          <div class="preview-process-row"><Icon name="ph:caret-right" /><b>过程详情 · 7 条消息 · 11 次工具调用</b></div>
+          <div class="preview-model-label">GPT-5.6 Sol</div>
+
+          <article class="preview-assistant-card">
+            <p>已将网页改为介绍 <b>DLYZZT/pi-desktop</b> 项目的产品官网。</p>
+            <p>主要内容包括：</p>
+            <ul>
+              <li>Pi Agent Desktop 核心定位与下载入口</li>
+              <li>会话、工具调用、项目文件、模型及扩展管理</li>
+              <li>微信、Telegram、飞书/Lark 消息渠道</li>
+              <li>Electron 三进程架构及本地隐私策略</li>
+              <li>macOS 与 Windows 系统支持</li>
+              <li>GitHub、Release 和安装文档链接</li>
+            </ul>
+            <p>文件：</p>
+            <ul class="preview-file-list">
+              <li><code>index.html</code></li>
+              <li><code>assets/icon.png</code></li>
+            </ul>
+          </article>
+          <div class="preview-message-meta"><span>1,028 in · 205 out · 48,640 cache · $0.0356</span><span>06:40</span></div>
+        </div>
+
+        <div class="preview-composer">
+          <div class="preview-composer-main"><span>输入消息... 输入 / 查看命令，输入 @ 引用文件</span><b>发送</b></div>
+          <div class="preview-composer-tools">
+            <span><Icon name="ph:image" /></span>
+            <span><i></i>GPT-5.6 Sol</span>
+            <span class="preview-composer-spacer"></span>
+            <span><Icon name="ph:lightbulb" />高</span>
+            <span><Icon name="ph:paper-plane-tilt" />标准</span>
+            <span><Icon name="ph:arrows-in-line-horizontal" />压缩上下文</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="preview-files">
+      <div class="preview-tabs">
+        <span><Icon name="ph:folder-simple" />Explorer</span>
+        <span class="preview-tab-active"><Icon name="ph:file-html" />index.html <Icon name="ph:x" /></span>
+      </div>
+      <div class="preview-file-toolbar">
+        <span>index.html</span><span>html</span><span>826 lines</span><span>43.8 KB</span><b><i></i> live</b><em>Wrap</em><Icon name="ph:download-simple" />
+      </div>
+      <div class="preview-code">
+        <ol>
+          <li><code><span class="syn-punc">&lt;!</span><span class="syn-tag">doctype</span> <span class="syn-attr">html</span><span class="syn-punc">&gt;</span></code></li>
+          <li><code><span class="syn-punc">&lt;</span><span class="syn-tag">html</span> <span class="syn-attr">lang</span>=<span class="syn-string">"zh-CN"</span><span class="syn-punc">&gt;</span></code></li>
+          <li><code><span class="syn-punc">&lt;</span><span class="syn-tag">head</span><span class="syn-punc">&gt;</span></code></li>
+          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">meta</span> <span class="syn-attr">charset</span>=<span class="syn-string">"UTF-8"</span> <span class="syn-punc">/&gt;</span></code></li>
+          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">meta</span> <span class="syn-attr">name</span>=<span class="syn-string">"viewport"</span></code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-attr">content</span>=<span class="syn-string">"width=device-width"</span> <span class="syn-punc">/&gt;</span></code></li>
+          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">meta</span> <span class="syn-attr">name</span>=<span class="syn-string">"description"</span></code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-attr">content</span>=<span class="syn-string">"Pi Agent Desktop"</span> <span class="syn-punc">/&gt;</span></code></li>
+          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">title</span><span class="syn-punc">&gt;</span>Pi Agent Desktop<span class="syn-punc">&lt;/</span><span class="syn-tag">title</span><span class="syn-punc">&gt;</span></code></li>
+          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">link</span> <span class="syn-attr">rel</span>=<span class="syn-string">"preconnect"</span> <span class="syn-punc">/&gt;</span></code></li>
+          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">style</span><span class="syn-punc">&gt;</span></code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-var">:root</span> &#123;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--snow</span>: <span class="syn-value">#f6f9fb</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--white</span>: <span class="syn-value">#ffffff</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--ink</span>: <span class="syn-value">#102333</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--muted</span>: <span class="syn-value">#667783</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--line</span>: <span class="syn-value">#dce6eb</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--cyan</span>: <span class="syn-value">#08bce8</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--orange</span>: <span class="syn-value">#ff8b2c</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--green</span>: <span class="syn-value">#40d899</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</code></li>
+          <li><code></code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-var">*</span> &#123; <span class="syn-prop">box-sizing</span>: border-box; &#125;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-var">html</span> &#123; <span class="syn-prop">scroll-behavior</span>: smooth; &#125;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-var">body</span> &#123;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">margin</span>: <span class="syn-value">0</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">color</span>: <span class="syn-value">var(--ink)</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">background</span>: <span class="syn-value">var(--snow)</span>;</code></li>
+          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</code></li>
+        </ol>
+      </div>
+    </aside>
+  </div>
+</div>

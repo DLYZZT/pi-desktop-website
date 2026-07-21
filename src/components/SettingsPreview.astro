@@ -1,0 +1,454 @@
+---
+import { Icon } from "astro-icon/components";
+
+type Section = "skills" | "plugins" | "channels" | "tools";
+
+interface Props {
+  section: Section;
+}
+
+const { section } = Astro.props;
+const tabs = [
+  { id: "general", label: "通用", icon: "ph:sliders-horizontal" },
+  { id: "models", label: "模型", icon: "ph:brain" },
+  { id: "skills", label: "技能", icon: "ph:lightning" },
+  { id: "plugins", label: "插件", icon: "ph:puzzle-piece" },
+  { id: "channels", label: "消息渠道", icon: "ph:chats-circle" },
+  { id: "tools", label: "开发工具", icon: "ph:wrench" },
+  { id: "about", label: "关于", icon: "ph:info" },
+] as const;
+const ariaLabels: Record<Section, string> = {
+  skills: "Pi Agent Desktop 技能设置界面，左侧选择 Skill，右侧编辑启用状态和 SKILL.md",
+  plugins: "Pi Agent Desktop 插件设置界面，展示插件来源、安装范围和安装按钮",
+  channels: "Pi Agent Desktop 消息渠道设置界面，展示 Telegram 账号、默认目录和访问策略",
+  tools: "Pi Agent Desktop 开发工具设置界面，展示 Node.js 的检测状态、来源和托管运行时",
+};
+
+const skillNames = [
+  "agents-sdk",
+  "cloudflare",
+  "cloudflare-email-service",
+  "durable-objects",
+  "frontend-design",
+  "sandbox-sdk",
+  "turnstile-spin",
+  "web-perf",
+  "workers-best-practices",
+  "wrangler",
+];
+const toolGroups = [
+  { title: "JAVASCRIPT", count: "4/4", tools: ["Node.js", "npm", "npx", "Bun"] },
+  { title: "PYTHON", count: "3/3", tools: ["Python", "uv", "uvx"] },
+  { title: "CLI 基础工具", count: "4/7", tools: ["Bash", "PowerShell", "Git", "ripgrep", "fd", "jq", "curl"] },
+];
+---
+
+<figure class:list={["settings-preview", `settings-preview-${section}`]} id={`settings-preview-${section}`}>
+  <div class="settings-window" role="img" aria-label={ariaLabels[section]}>
+    <div class="settings-header" aria-hidden="true">
+      <div>
+        <b>设置</b>
+        <span>管理 Pi Agent Desktop 的偏好、连接与扩展</span>
+      </div>
+      <Icon name="ph:x" />
+    </div>
+
+    <div class="settings-tabs" aria-hidden="true">
+      {tabs.map((tab) => (
+        <span class:list={["settings-tab", tab.id === section && "is-active"]}>
+          <Icon name={tab.icon} />
+          {tab.label}
+        </span>
+      ))}
+    </div>
+
+    <div class="settings-body" aria-hidden="true">
+      {section === "skills" && (
+        <>
+          <aside class="settings-list">
+            <div class="list-scroll">
+              <div class="list-group-heading"><span>GLOBAL</span><span>{skillNames.length}</span></div>
+              {skillNames.map((name, index) => (
+                <div class:list={["list-row", index === 0 && "is-selected"]}>
+                  <i class:list={[index < 7 ? "is-on" : ""]}></i>
+                  <span>{name}</span>
+                </div>
+              ))}
+            </div>
+            <div class="list-footer"><Icon name="ph:plus" />添加技能</div>
+          </aside>
+
+          <section class="settings-detail skill-detail">
+            <div class="detail-topline">
+              <div><span class="scope-tag">global</span><code>~/.agents/skills/agents-sdk</code></div>
+              <span class="switch is-on"><i></i></span>
+            </div>
+            <label>名称</label>
+            <div class="field mono">agents-sdk</div>
+            <div class="label-row"><label>SKILL.md</label><small>技能说明与使用规则</small></div>
+            <div class="code-field">
+              <b>Agents SDK</b>
+              <span>Build AI agents on Cloudflare Workers using the Agents SDK.</span>
+              <span>Use this skill for stateful agents, durable workflows,</span>
+              <span>real-time WebSocket connections, and scheduled tasks.</span>
+            </div>
+            <div class="detail-actions"><span class="primary-button">保存更改</span></div>
+            <div class="description-box">
+              <b>说明</b>
+              <span>开启后，该 Skill 会在适用的任务中提供给模型。全局 Skill 可用于所有项目。</span>
+            </div>
+          </section>
+        </>
+      )}
+
+      {section === "plugins" && (
+        <>
+          <aside class="settings-list plugin-list">
+            <div class="list-scroll">
+              <div class="list-group-heading"><span>GLOBAL</span><span>2</span></div>
+              <div class="list-row plugin-row"><i class="is-on"></i><span><b>npm:@pi/desktop-tools</b><small>2 tools · 1 skill</small></span></div>
+              <div class="list-row plugin-row"><i class="is-on"></i><span><b>git:github.com/example/plugin</b><small>1 command</small></span></div>
+              <div class="list-group-heading"><span>PROJECT</span><span>1</span></div>
+              <div class="list-row plugin-row"><i></i><span><b>./plugins/project-helper</b><small>已停用</small></span></div>
+            </div>
+            <div class="list-footer is-selected"><Icon name="ph:plus" />添加插件</div>
+          </aside>
+
+          <section class="settings-detail plugin-detail">
+            <div class="detail-title"><span class="round-icon"><Icon name="ph:puzzle-piece" /></span><div><b>添加插件</b><small>从 npm、Git 仓库或本地目录安装</small></div></div>
+            <label>插件来源</label>
+            <div class="input-row"><div class="field mono muted">npm:@scope/package</div><span class="primary-button">安装</span></div>
+            <div class="example-list">
+              <code>npm:@scope/pi-plugin</code>
+              <code>git:https://github.com/user/repo</code>
+              <code>/absolute/path/to/plugin</code>
+            </div>
+            <label>安装范围</label>
+            <div class="segmented"><span class="is-active">global</span><span>project</span></div>
+            <div class="install-path"><Icon name="ph:folder-simple" /><div><small>安装位置</small><code>~/.pi/agent/&#123;npm,git&#125;</code></div></div>
+            <div class="description-box warning"><Icon name="ph:shield-check" /><span>Plugin 可以执行代码，请只安装可信来源。</span></div>
+          </section>
+        </>
+      )}
+
+      {section === "channels" && (
+        <section class="channels-detail">
+          <div class="channels-heading">
+            <div><b>消息渠道</b><span>连接即时通讯账号、控制访问权限，并绑定 Pi 会话。</span></div>
+            <div class="channel-add-buttons"><span>连接飞书 / Lark</span><span>连接 Telegram</span><span class="primary-button">连接微信</span></div>
+          </div>
+
+          <div class="channel-account-card">
+            <div class="channel-account-head">
+              <div class="telegram-logo"><Icon name="ph:telegram-logo" /></div>
+              <div><b>Pi Telegram Bot</b><span>Telegram · @pi_desktop_bot</span></div>
+              <span class="status-pill"><i></i>运行中</span>
+            </div>
+            <div class="channel-form-grid">
+              <div><label>账号名称</label><div class="field">Pi Telegram Bot</div></div>
+              <div><label>默认工具</label><div class="field select">标准<Icon name="ph:caret-down" /></div></div>
+              <div class="wide-field"><label>默认项目目录</label><div class="field path-field"><Icon name="ph:folder-simple" />~/Documents/pi-workspace<span>选择…</span></div></div>
+              <div><label>私聊访问</label><div class="field select">需要配对<Icon name="ph:caret-down" /></div></div>
+              <div><label>群聊访问</label><div class="field select">仅白名单<Icon name="ph:caret-down" /></div></div>
+            </div>
+            <div class="credential-row"><div><label>Bot Token</label><span>凭证由系统安全存储保护</span></div><div class="field mono muted">新的 BotFather Token</div><span class="soft-button">更新 Token</span></div>
+            <div class="channel-actions"><span class="primary-button">保存</span><span class="soft-button">停止</span><span class="soft-button"><Icon name="ph:activity" />测试连接</span></div>
+          </div>
+        </section>
+      )}
+
+      {section === "tools" && (
+        <>
+          <aside class="settings-list tools-list">
+            <div class="list-scroll">
+              {toolGroups.map((group) => (
+                <div class="tool-group">
+                  <div class="list-group-heading"><span>{group.title}</span><span>{group.count}</span></div>
+                  {group.tools.map((tool) => (
+                    <div class:list={["list-row", "tool-row", tool === "Node.js" && "is-selected"]}>
+                      <i class:list={[!["PowerShell", "fd", "jq"].includes(tool) && "is-on"]}></i>
+                      <span>{tool}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div class="tools-footer"><small>darwin-arm64 · r4</small><span><Icon name="ph:arrow-clockwise" />重新扫描</span></div>
+          </aside>
+
+          <section class="settings-detail tool-detail">
+            <div class="provider-row"><div><span class="scope-tag managed">Pi 托管</span><code>~/Library/Application Support/Pi Desktop/tools/node</code></div><span class="available"><i></i>可用</span></div>
+            <div class="tool-title"><span class="round-icon"><Icon name="ph:brackets-curly" /></span><div><b>Node.js</b><span>为 Skills、Plugins、Agent 命令与项目操作提供 JavaScript 运行时。</span></div></div>
+            <div class="detail-section">
+              <b>工具解析</b>
+              <div class="detail-pairs"><span>状态</span><strong class="success">可用</strong><span>来源</span><strong>Pi 托管</strong><span>版本</span><code>v22.19.0</code><span>检测到的候选</span><strong>2</strong></div>
+              <div class="resolution-row"><div><small>优先来源</small><div class="field select">自动（推荐）<Icon name="ph:caret-down" /></div></div><span class="soft-button">选择…</span></div>
+            </div>
+            <div class="detail-section managed-runtime">
+              <b>托管运行时</b>
+              <div class="runtime-card"><div><span>Node.js LTS + npm</span><small>官方来源 · 已安装</small></div><code>v22.19.0</code><span class="soft-button">修复</span></div>
+              <small class="fine-print">托管工具保存在 Pi Desktop 私有目录中，不会修改系统 PATH。</small>
+            </div>
+          </section>
+        </>
+      )}
+    </div>
+  </div>
+</figure>
+
+<style>
+  .settings-preview {
+    --sp-bg: #f7f6f3;
+    --sp-panel: #fcfbf9;
+    --sp-panel-strong: #fff;
+    --sp-hover: #f0eeea;
+    --sp-selected: #fff0e6;
+    --sp-line: #e4e1da;
+    --sp-text: #1c1a17;
+    --sp-muted: #57534a;
+    --sp-dim: #746f66;
+    --sp-accent: #c2410c;
+    --sp-green: #2f9d55;
+    margin: 22px 0 28px;
+  }
+
+  :global([data-theme="dark"]) .settings-preview {
+    --sp-bg: #141210;
+    --sp-panel: #1c1a17;
+    --sp-panel-strong: #211e1a;
+    --sp-hover: #29251f;
+    --sp-selected: #382218;
+    --sp-line: #38332c;
+    --sp-text: #f4f1ea;
+    --sp-muted: #c4beb4;
+    --sp-dim: #918a80;
+    --sp-accent: #fb8b4a;
+    --sp-green: #54bf73;
+  }
+
+  .settings-window,
+  .settings-window * { box-sizing: border-box; }
+
+  .settings-preview section {
+    margin: 0;
+    scroll-margin-top: 0;
+  }
+
+  .settings-window {
+    height: 500px;
+    overflow: hidden;
+    border: 1px solid var(--sp-line);
+    border-radius: 10px;
+    background: var(--sp-bg);
+    box-shadow: 0 18px 44px rgba(28, 26, 23, 0.13);
+    color: var(--sp-text);
+    font-family: Inter, "Noto Sans SC", system-ui, sans-serif;
+    text-align: left;
+  }
+
+  .settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 49px;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--sp-line);
+    background: var(--sp-panel);
+  }
+
+  .settings-header > div { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+  .settings-header b { font-size: 14px; }
+  .settings-header span { color: var(--sp-dim); font-size: 9px; white-space: nowrap; }
+  .settings-header svg { width: 16px; height: 16px; color: var(--sp-muted); }
+
+  .settings-tabs {
+    display: flex;
+    gap: 6px;
+    height: 48px;
+    padding: 7px 12px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--sp-line);
+    background: var(--sp-panel);
+  }
+
+  .settings-tab {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 34px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--sp-muted);
+    font-size: 9px;
+    white-space: nowrap;
+  }
+
+  .settings-tab svg { width: 12px; height: 12px; }
+  .settings-tab.is-active { border-color: color-mix(in srgb, var(--sp-accent) 30%, var(--sp-line)); background: color-mix(in srgb, var(--sp-accent) 8%, var(--sp-panel)); color: var(--sp-accent); font-weight: 650; }
+  .settings-body { display: flex; height: calc(100% - 97px); overflow: hidden; }
+
+  .settings-list {
+    display: flex;
+    width: 210px;
+    flex: 0 0 210px;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid var(--sp-line);
+    background: var(--sp-panel);
+  }
+
+  .list-scroll { flex: 1; overflow: hidden; padding: 7px 6px; }
+  .list-group-heading { display: flex; justify-content: space-between; padding: 4px 7px 3px; color: var(--sp-dim); font-size: 8px; font-weight: 700; letter-spacing: .04em; }
+  .list-row { display: flex; align-items: center; gap: 7px; min-height: 24px; padding: 5px 7px; border-radius: 5px; color: var(--sp-text); font-family: "Noto Sans Mono", monospace; font-size: 9px; }
+  .list-row.is-selected, .list-footer.is-selected { background: var(--sp-selected); color: var(--sp-accent); font-weight: 650; }
+  .list-row > i { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; background: #aaa49b; }
+  .list-row > i.is-on { background: var(--sp-green); }
+  .list-footer { display: flex; align-items: center; gap: 5px; margin: 0 6px 7px; padding: 7px; border-top: 1px solid var(--sp-line); border-radius: 5px; color: var(--sp-dim); font-size: 9px; }
+  .list-footer svg { width: 11px; }
+
+  .settings-detail { min-width: 0; flex: 1; overflow: hidden; padding: 14px 17px; background: var(--sp-bg); }
+  .settings-detail label, .channel-account-card label { display: block; margin: 0 0 5px; color: var(--sp-muted); font-size: 8px; font-weight: 650; }
+  .detail-topline, .provider-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
+  .detail-topline > div, .provider-row > div { display: flex; align-items: center; gap: 7px; min-width: 0; }
+  .settings-preview code { overflow: hidden; color: var(--sp-dim); font-family: "Noto Sans Mono", monospace; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+  .scope-tag { padding: 3px 6px; border-radius: 999px; background: rgba(120,120,120,.12); color: var(--sp-dim); font-size: 7px; font-weight: 700; }
+  .scope-tag.managed { background: color-mix(in srgb, var(--sp-accent) 11%, transparent); color: var(--sp-accent); }
+  .switch { position: relative; width: 25px; height: 14px; border-radius: 999px; background: #aaa49b; }
+  .switch i { position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: 50%; background: white; }
+  .switch.is-on { background: var(--sp-accent); }
+  .switch.is-on i { left: 13px; }
+  .field { display: flex; align-items: center; height: 28px; min-width: 0; padding: 0 9px; border: 1px solid var(--sp-line); border-radius: 5px; background: var(--sp-panel-strong); color: var(--sp-text); font-size: 9px; }
+  .field.mono { font-family: "Noto Sans Mono", monospace; }
+  .field.muted { color: var(--sp-dim); }
+  .label-row { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+  .label-row small { color: var(--sp-dim); font-size: 7px; }
+  .code-field { display: flex; height: 111px; flex-direction: column; gap: 5px; padding: 10px; overflow: hidden; border: 1px solid var(--sp-line); border-radius: 5px; background: var(--sp-panel-strong); color: var(--sp-muted); font-family: "Noto Sans Mono", monospace; font-size: 8px; line-height: 1.45; }
+  .code-field b { color: var(--sp-text); font-size: 9px; }
+  .detail-actions { display: flex; justify-content: flex-end; margin-top: 9px; }
+  .primary-button, .soft-button { display: inline-flex; height: 26px; align-items: center; justify-content: center; gap: 4px; padding: 0 10px; border-radius: 5px; font-size: 8px; font-weight: 650; white-space: nowrap; }
+  .primary-button { background: var(--sp-accent); color: #fff; }
+  .soft-button { border: 1px solid var(--sp-line); background: var(--sp-panel); color: var(--sp-muted); }
+  .soft-button svg { width: 10px; }
+  .description-box { display: flex; gap: 8px; margin-top: 10px; padding: 9px; border: 1px solid var(--sp-line); border-radius: 5px; background: color-mix(in srgb, var(--sp-panel) 76%, transparent); color: var(--sp-dim); font-size: 8px; line-height: 1.4; }
+  .description-box b { color: var(--sp-text); }
+  .description-box.warning { align-items: center; margin-top: 15px; color: var(--sp-muted); }
+  .description-box.warning svg { width: 14px; color: var(--sp-green); }
+
+  .plugin-list { width: 224px; flex-basis: 224px; }
+  .plugin-row { align-items: flex-start; padding-top: 7px; padding-bottom: 7px; }
+  .plugin-row > span { min-width: 0; }
+  .plugin-row b, .plugin-row small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .plugin-row b { font-size: 8px; font-weight: 500; }
+  .plugin-row small { margin-top: 3px; color: var(--sp-dim); font: 7px Inter, sans-serif; }
+  .detail-title, .tool-title { display: flex; align-items: center; gap: 9px; margin-bottom: 17px; }
+  .detail-title > div, .tool-title > div { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+  .detail-title b, .tool-title b { font-size: 13px; }
+  .detail-title small, .tool-title span { color: var(--sp-dim); font-size: 8px; }
+  .round-icon { display: inline-flex; width: 30px; height: 30px; flex: 0 0 30px; align-items: center; justify-content: center; border-radius: 7px; background: var(--sp-selected); color: var(--sp-accent); }
+  .round-icon svg { width: 16px; }
+  .input-row { display: flex; gap: 7px; }
+  .input-row .field { flex: 1; }
+  .example-list { display: flex; flex-direction: column; gap: 3px; margin: 7px 0 13px 9px; }
+  .example-list code { font-size: 7px; }
+  .segmented { display: inline-flex; margin-bottom: 13px; overflow: hidden; border: 1px solid var(--sp-line); border-radius: 5px; }
+  .segmented span { padding: 6px 15px; color: var(--sp-dim); font: 8px "Noto Sans Mono", monospace; }
+  .segmented span:first-child { border-right: 1px solid var(--sp-line); }
+  .segmented span.is-active { background: var(--sp-selected); color: var(--sp-accent); font-weight: 700; }
+  .install-path { display: flex; align-items: center; gap: 8px; padding: 9px; border-radius: 5px; background: var(--sp-panel); }
+  .install-path svg { width: 16px; color: var(--sp-accent); }
+  .install-path div { display: flex; flex-direction: column; gap: 2px; }
+  .install-path small { color: var(--sp-dim); font-size: 7px; }
+
+  .channels-detail { width: 100%; padding: 13px 16px; overflow: hidden; }
+  .channels-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+  .channels-heading > div:first-child { display: flex; flex-direction: column; gap: 3px; }
+  .channels-heading b { font-size: 12px; }
+  .channels-heading span { color: var(--sp-dim); font-size: 8px; }
+  .channel-add-buttons { display: flex; gap: 5px; }
+  .channel-add-buttons > span { display: inline-flex; height: 24px; align-items: center; padding: 0 8px; border: 1px solid var(--sp-line); border-radius: 5px; background: var(--sp-panel); color: var(--sp-muted) !important; white-space: nowrap; }
+  .channel-add-buttons > .primary-button { border-color: var(--sp-accent); background: var(--sp-accent); color: #fff !important; }
+  .channel-account-card { padding: 12px 14px; border: 1px solid var(--sp-line); border-radius: 7px; background: var(--sp-panel); }
+  .channel-account-head { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid var(--sp-line); }
+  .telegram-logo { display: flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: 7px; background: #229ed9; color: #fff; }
+  .telegram-logo svg { width: 16px; }
+  .channel-account-head > div:nth-child(2) { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 2px; }
+  .channel-account-head b { font-size: 10px; }
+  .channel-account-head span { color: var(--sp-dim); font-size: 7px; }
+  .status-pill { display: flex; align-items: center; gap: 4px; padding: 4px 7px; border-radius: 999px; background: color-mix(in srgb, var(--sp-green) 11%, transparent); color: var(--sp-green) !important; }
+  .status-pill i, .available i { width: 5px; height: 5px; border-radius: 50%; background: var(--sp-green); }
+  .channel-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; margin-top: 10px; }
+  .wide-field { grid-column: 1 / -1; }
+  .select { justify-content: space-between; }
+  .select svg { width: 10px; color: var(--sp-dim); }
+  .path-field { gap: 5px; }
+  .path-field svg { width: 11px; color: var(--sp-dim); }
+  .path-field span { margin-left: auto; color: var(--sp-accent); }
+  .credential-row { display: grid; grid-template-columns: minmax(110px, .8fr) minmax(150px, 1.2fr) auto; align-items: end; gap: 7px; margin-top: 9px; }
+  .credential-row > div:first-child { display: flex; flex-direction: column; }
+  .credential-row label { margin-bottom: 2px; }
+  .credential-row > div:first-child span { color: var(--sp-dim); font-size: 7px; }
+  .channel-actions { display: flex; justify-content: flex-end; gap: 6px; margin-top: 10px; }
+
+  .tools-list { width: 188px; flex-basis: 188px; }
+  .tools-list .list-scroll { overflow: hidden; }
+  .tool-group { margin-bottom: 3px; }
+  .tool-row { min-height: 18px; padding-top: 3px; padding-bottom: 3px; font-family: Inter, sans-serif; font-size: 8px; }
+  .tools-footer { padding: 6px; border-top: 1px solid var(--sp-line); }
+  .tools-footer small { display: block; margin-bottom: 4px; color: var(--sp-dim); font: 7px "Noto Sans Mono", monospace; text-align: center; }
+  .tools-footer span { display: flex; height: 23px; align-items: center; justify-content: center; gap: 5px; border: 1px solid var(--sp-line); border-radius: 5px; background: var(--sp-bg); color: var(--sp-muted); font-size: 8px; }
+  .tools-footer svg { width: 10px; }
+  .provider-row { margin-bottom: 15px; }
+  .available { display: flex; align-items: center; gap: 4px; color: var(--sp-green); font-size: 8px; }
+  .tool-title { margin-bottom: 13px; }
+  .detail-section { padding: 10px 0; border-top: 1px solid var(--sp-line); }
+  .detail-section > b { display: block; margin-bottom: 8px; font-size: 10px; }
+  .detail-pairs { display: grid; grid-template-columns: 100px 1fr; gap: 5px; font-size: 8px; }
+  .detail-pairs > span { color: var(--sp-dim); }
+  .detail-pairs strong { font-weight: 500; }
+  .detail-pairs .success { color: var(--sp-green); }
+  .resolution-row { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 7px; margin-top: 9px; }
+  .resolution-row small { display: block; margin-bottom: 4px; color: var(--sp-dim); font-size: 7px; }
+  .runtime-card { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; padding: 8px; border: 1px solid var(--sp-line); border-radius: 5px; background: var(--sp-panel); }
+  .runtime-card > div { display: flex; flex-direction: column; gap: 2px; }
+  .runtime-card span { font-size: 8px; }
+  .runtime-card small, .fine-print { color: var(--sp-dim); font-size: 7px; }
+  .fine-print { display: block; margin-top: 7px; }
+
+  @media (max-width: 680px) {
+    .settings-window { height: 480px; }
+    .settings-header { height: 44px; padding: 0 13px; }
+    .settings-header span { display: none; }
+    .settings-tabs { height: 43px; padding: 5px 8px; }
+    .settings-tab { display: none; }
+    .settings-tab.is-active { display: flex; max-width: 124px; flex: 0 0 124px; }
+    .settings-tabs::after { display: flex; align-items: center; margin-left: auto; color: var(--sp-dim); content: "设置项预览"; font-size: 8px; }
+    .settings-body { height: calc(100% - 87px); }
+    .settings-list { display: none; }
+    .settings-detail { padding: 13px; }
+    .code-field { height: 105px; }
+    .channels-detail { padding: 11px; }
+    .channels-heading { display: block; }
+    .channel-add-buttons { margin-top: 8px; }
+    .channel-add-buttons > span:first-child { display: none; }
+    .channel-account-card { padding: 10px; }
+    .credential-row { grid-template-columns: 1fr auto; }
+    .credential-row > div:first-child { grid-column: 1 / -1; }
+    .channel-form-grid { gap: 7px; }
+    .tool-detail .provider-row code { max-width: 170px; }
+  }
+
+  @media (max-width: 430px) {
+    .settings-window { height: 480px; }
+    .channels-heading > div:first-child span { display: none; }
+    .channel-add-buttons > span:not(.primary-button) { display: none; }
+    .channel-form-grid > div:nth-child(2), .channel-form-grid > div:nth-child(5), .credential-row { display: none; }
+    .channel-form-grid { grid-template-columns: 1fr; }
+    .wide-field { grid-column: auto; }
+    .example-list code:nth-child(3) { display: none; }
+    .tool-detail .provider-row code { max-width: 120px; }
+    .detail-pairs { grid-template-columns: 78px 1fr; }
+  }
+</style>
