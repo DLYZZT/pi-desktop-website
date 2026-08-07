@@ -9,7 +9,13 @@ const features = [
     icon: "ph:chats-circle",
     title: "完整的会话体验",
     description:
-      "创建、搜索、按日期分组管理会话，持续展示流式回复、工具调用与上下文压缩状态，支持排队消息与 Steer / Follow-up 交互。",
+      "创建、搜索、按日期分组管理会话；增量索引、历史分页与延迟内容让大量会话和超长对话依然保持流畅。",
+  },
+  {
+    icon: "ph:browser",
+    title: "用户与 Agent 共享浏览器",
+    description:
+      "在右侧打开真实 Chromium 页面，保留多标签页、Profile 与登录态；Agent 经独立授权后可读取和操作同一个页面。",
   },
   {
     icon: "ph:folder-simple",
@@ -22,6 +28,12 @@ const features = [
     title: "模型与扩展统一管理",
     description:
       "管理模型提供商与配置，支持浏览器 OAuth 登录；搜索、安装和配置 Skills，并沿用 Pi Agent 的 Plugins 扩展体系。",
+  },
+  {
+    icon: "ph:wrench",
+    title: "跨平台开发工具",
+    description:
+      "发现并验证系统工具，也可按需安装应用私有的 Node.js、Python、Git、Bun 与常用 CLI，不修改系统 PATH。",
   },
   {
     icon: "ph:paper-plane-tilt",
@@ -47,22 +59,23 @@ const checks = [
   ["数据本地留存", "会话与 Pi 配置默认保存在本机", "~/.pi/agent/"],
   ["零本地端口", "UI 通信不额外开放任何本地网络端口"],
   ["最小暴露面", "Renderer sandbox + 严格 CSP + 受控 preload 桥接"],
+  ["浏览器隔离", "远程网页不获得应用 preload、Node 或主 Renderer bridge"],
+  ["权限相互独立", "Coding 权限不会隐式开启 Browser read / interact"],
   ["凭证加密", "渠道 token 由 Electron safeStorage 加密，不回传 Renderer"],
-  ["只发起出站连接", "无 webhook，无本地监听端口"],
   ["可信更新", "更新配置固定于正式包内，不接收外部更新地址"],
 ];
 ---
 
 <BaseLayout
   title="Pi Agent Desktop — 把 Pi Coding Agent 变成真正的桌面工作台"
-  description="Pi Agent Desktop 是 Pi Coding Agent 的桌面工作台：本地优先、零本地服务器、跨平台应用，支持 macOS、Windows 与 Linux。"
+  description="Pi Agent Desktop 是 Pi Coding Agent 的本地优先桌面工作台，集成会话、项目文件、共享浏览器、模型、扩展与消息渠道，支持 macOS、Windows 与 Linux。"
 >
   <main id="main-content">
     <section class="hero">
       <div class="container">
         <img class="hero-icon" src={withBase("icon.png")} alt="Pi Agent Desktop 图标" width="104" height="104" />
         <h1>Pi Coding Agent <br />桌面工作台</h1>
-        <p class="hero-sub">会话、文件、模型与消息渠道，统一收进一个本地优先的桌面应用。无需命令行，安装即用。</p>
+        <p class="hero-sub">会话、文件、共享浏览器、模型与消息渠道，统一收进一个本地优先的桌面应用。无需命令行，安装即用。</p>
         <div class="hero-tags" aria-label="产品特点">
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />本地优先</span>
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />零本地服务器</span>
@@ -79,7 +92,7 @@ const checks = [
           </a>
         </div>
         <p class="hero-meta">
-          当前版本 <span data-version>v0.1.3</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
+          当前版本 <span data-version>v0.1.5</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
         </p>
 
         <AppPreview />
@@ -91,7 +104,7 @@ const checks = [
         <div class="section-head-center">
           <p class="eyebrow">Features</p>
           <h2 class="section-title">一个完整的 Agent 工作台</h2>
-          <p class="section-desc">从会话管理到文件预览，从模型配置到消息渠道，桌面端把日常开发所需的一切收进同一个窗口。</p>
+          <p class="section-desc">从会话管理、文件预览和共享浏览器，到模型、扩展与消息渠道，桌面端把日常工作所需的一切收进同一个窗口。</p>
         </div>
         <div class="feature-grid">
           {
@@ -126,27 +139,30 @@ const checks = [
       <div class="container">
         <div class="section-head-center">
           <p class="eyebrow">Architecture</p>
-          <h2 class="section-title">三进程隔离，各司其职</h2>
-          <p class="section-desc">高权限桌面能力、Agent 运行时和 UI 被隔离开来，生产环境不监听 TCP 端口，也不需要附带 Web Server。</p>
+          <h2 class="section-title">三进程隔离，网页独立承载</h2>
+          <p class="section-desc">高权限桌面能力、Agent 运行时和 UI 相互隔离；远程网页由 Main 创建的沙箱化 Browser View 承载。</p>
         </div>
         <div class="arch-flow">
           <div class="arch-box">
             <h4>Main 主进程</h4>
-            <p>窗口 · 托盘 · 通知 · 更新<br />Agent Host 监督</p>
+            <p>窗口 · 托盘 · 更新<br />Browser View 与网络策略</p>
           </div>
-          <Icon class="arch-arrow" name="ph:arrow-right" aria-hidden="true" />
           <div class="arch-box">
             <h4>Agent Host</h4>
             <p>utilityProcess 中运行<br />Pi Coding Agent</p>
           </div>
-          <Icon class="arch-arrow" name="ph:arrows-left-right" aria-hidden="true" />
           <div class="arch-box">
             <h4>Renderer</h4>
             <p>React 19 UI<br />受控 preload 桥接</p>
           </div>
+          <div class="arch-box">
+            <h4>Browser View</h4>
+            <p>真实 Chromium 页面<br />沙箱 · Profile · 独立授权</p>
+          </div>
         </div>
         <div class="arch-note">
           <span class="chip">类型化 MessagePort IPC</span>
+          <span class="chip">revisioned Browser RPC</span>
           <span class="chip">零本地端口</span>
           <span class="chip">数据留在 ~/.pi/agent/</span>
         </div>

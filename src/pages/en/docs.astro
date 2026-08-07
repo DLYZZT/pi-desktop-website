@@ -11,13 +11,14 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 <BaseLayout
   lang="en"
   title="User Guide — Pi Agent Desktop"
-  description="Learn how to install Pi Agent Desktop, use the workspace, configure models, and manage Skills, Plugins, messaging channels, and developer tools."
+  description="Learn how to install Pi Agent Desktop, use its built-in browser and workspace, configure models, and manage Skills, Plugins, messaging channels, and developer tools."
 >
   <main id="main-content" class="container">
     <div class="docs-layout">
       <aside class="docs-side" aria-label="User guide contents">
         <a href="#install">Download and install</a>
         <a href="#workspace">Main workspace</a>
+        <a href="#browser">Built-in browser</a>
         <a href="#models">Configure models</a>
         <a href="#skills">Skills settings</a>
         <a href="#plugins">Plugins settings</a>
@@ -76,7 +77,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Meet the main workspace</h2>
           <figure class="guide-figure">
             <AppPreview variant="docs" lang="en" />
-            <figcaption>The workspace contains sessions on the left, the conversation in the center, and files on the right.</figcaption>
+            <figcaption>The workspace contains sessions on the left, the conversation in the center, and files or the shared browser on the right.</figcaption>
           </figure>
 
           <div class="guide-grid guide-grid-three">
@@ -89,14 +90,43 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
               <ul><li>Send prompts and read streaming replies</li><li>Inspect reasoning and tool-call results</li><li>Choose the model, reasoning level, and tool preset</li><li>Add images or reference files with <code>@</code></li></ul>
             </article>
             <article class="guide-card">
-              <h3>Right: files and previews</h3>
-              <ul><li>Browse files in the current project</li><li>Open several files in tabs</li><li>Preview code, Markdown, diagrams, and documents</li><li>Drag dividers to resize panels</li></ul>
+              <h3>Right: files and browser</h3>
+              <ul><li>Browse files in the current project</li><li>Open several files in tabs</li><li>Preview code, Markdown, diagrams, and documents</li><li>Open real pages shared with the Agent</li><li>Drag dividers to resize panels</li></ul>
             </article>
           </div>
 
           <h3>Start your first session</h3>
           <ol><li>Choose a project folder in the left sidebar.</li><li>Select New session.</li><li>Make sure an available model is selected below the composer.</li><li>Describe a goal, such as “Explain this project” or “Find the login page.”</li></ol>
           <p>For chat or temporary work, you can choose an empty folder. The Agent can read or modify project files only when you authorize the relevant tools.</p>
+          <div class="note-box"><b>Long sessions are not truncated:</b> The app initially prioritizes the most recent 20 conversation turns. It prefetches older messages near the top, or you can select Load earlier messages. The complete history remains on your machine.</div>
+        </section>
+
+        <section id="browser">
+          <h2>Use the built-in browser</h2>
+          <p class="guide-path"><b>Open</b><span>Right side of the workspace</span><i>→</i><span>Browser</span></p>
+          <p>The built-in browser hosts real Chromium pages. You and the Agent operate the same page, with tabs, profiles, and login state preserved, and you can take over at any time.</p>
+
+          <div class="guide-grid guide-grid-three">
+            <article class="guide-card">
+              <h3>Browse</h3>
+              <ul><li>Create, switch, and close multiple tabs</li><li>Choose a temporary or persistent profile</li><li>Sign in and use uploads, downloads, and proxies</li></ul>
+            </article>
+            <article class="guide-card">
+              <h3>Work with the Agent</h3>
+              <ul><li>Browser read permits navigation, page snapshots, and screenshots</li><li>Browser interact permits clicks, typing, and keyboard actions</li><li>You and the Agent share the page, and you can take over</li></ul>
+            </article>
+            <article class="guide-card">
+              <h3>Permissions and confirmation</h3>
+              <ul><li>Coding permission never enables browser access automatically</li><li>The main window requests a session grant on first use</li><li>Submissions, uploads, downloads, and external protocols remain policy-controlled</li></ul>
+            </article>
+          </div>
+
+          <h3>Manage browser permissions</h3>
+          <p>Open Settings → Browser to manage global defaults and persistent policies for individual sessions. Grants from the authorization dialog are temporary for the current session and can be revoked at any time.</p>
+
+          <h3>Advanced browser mode</h3>
+          <p>Advanced mode adds trusted input, network inspection, a JavaScript knowledge store, and confirmed write-request replay in a dedicated profile. The switch lasts only for the current app launch, and Agent tools never receive or return cookie values.</p>
+          <div class="note-box"><b>Private-network protection:</b> Current protection is explicitly best-effort. Without a managed network sandbox, Strict mode rejects the request instead of silently weakening protection.</div>
         </section>
 
         <section id="models">
@@ -181,6 +211,12 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           </FaqItem>
           <FaqItem summary="Why can’t I send a message after configuring a model?">
             <p>Confirm a model is selected below the composer, then check the API key, account credits, and network connection. Use Test on the provider card to see the exact error.</p>
+          </FaqItem>
+          <FaqItem summary="Why do I only see recent messages when opening a long session?">
+            <p>To shorten initial loading, the app starts with the most recent 20 conversation turns. Scroll upward or select Load earlier messages to continue. Pagination and deferred content never delete or truncate locally stored history.</p>
+          </FaqItem>
+          <FaqItem summary="Why can’t the Agent use the browser after I approved Coding tools?">
+            <p>Browser reading and interaction use separate grants. Coding permission does not implicitly enable Browser read / interact. Confirm the main-window authorization dialog or adjust the policy in Settings → Browser.</p>
           </FaqItem>
           <FaqItem summary="Why is there no reply after approving channel pairing?">
             <p>The first message triggers pairing and is not sent to the Agent. After approval, ask the same user to send a new message.</p>

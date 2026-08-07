@@ -16,8 +16,59 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.3</span>
+            <span class="cl-tag">v0.1.5</span>
             <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-08-07">2026-08-07</time>
+          </div>
+          <p>This release improves session-list, session-switching, and long-conversation performance while preserving the complete local history and reducing repeated scanning, transfer, and rendering work.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Highlights</h2>
+          <ul>
+            <li>Added an incremental session index that reuses unchanged metadata by file fingerprint and refreshes only sessions affected by file-watcher events.</li>
+            <li>Opening a session now prioritizes the most recent 20 conversation turns; scroll upward or use the button to load earlier messages.</li>
+            <li>Very large text, thinking, tool-call arguments, and images use deferred content: a recognizable preview arrives first and full content loads on demand.</li>
+            <li>Bounded session-content and path caches improve session switching, scrolling, and responsiveness during streaming output.</li>
+            <li>Compaction and branch summaries are collapsed by default, with new performance instrumentation, benchmarks, and pagination, cache, and index coverage.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.5-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.5-x64.dmg</code></li>
+            <li>Windows x64: <code>Pi-Agent-Desktop-Setup-0.1.5.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.5-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>Pagination and deferred loading do not delete or truncate the complete session history stored on your machine.</li>
+            <li>The Windows installer remains unsigned and may trigger SmartScreen; Linux AppImage updates remain manual.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.4</span>
+            <time class="cl-date" datetime="2026-08-06">2026-08-06</time>
+          </div>
+          <p>This release adds a built-in browser shared by the user and Agent, integrating real Chromium pages, browser authorization, and network policy into the desktop workspace.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Built-in browser</h2>
+          <ul>
+            <li>Open real pages in a Main-owned <code>WebContentsView</code> on the right side of the workspace, with multiple tabs, temporary or persistent profiles, login state, uploads, downloads, and proxy support.</li>
+            <li>The Agent can navigate, read structured page snapshots, capture screenshots, click, type, and wait under separate Browser read / interact grants. Coding permission does not implicitly grant browser access.</li>
+            <li>The user and Agent operate the same page and the user can take over at any time. Submissions, uploads, downloads, permission prompts, and external protocols still pass through local policy or confirmation.</li>
+            <li>Settings manage global and session-specific browser permissions. Advanced browser mode combines trusted input, network inspection, and confirmed write-request replay.</li>
+            <li>Remote pages run inside a sandboxed Browser View without the application preload, Node.js, or the main Renderer bridge.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.4-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.4-x64.dmg</code></li>
+            <li>Windows x64: <code>Pi-Agent-Desktop-Setup-0.1.4.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.4-x86_64.AppImage</code></li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.3</span>
             <time class="cl-date" datetime="2026-07-20">2026-07-20</time>
           </div>
           <p>This release introduces cross-platform developer tool management and an official Linux package, giving Skills, Plugins, and Agent scripts a more consistent runtime across different machines.</p>

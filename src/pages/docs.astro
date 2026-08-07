@@ -10,13 +10,14 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
 <BaseLayout
   title="使用指南 — Pi Agent Desktop"
-  description="Pi Agent Desktop 使用指南：下载安装、认识主界面、配置模型、Skills、Plugins、消息渠道与开发工具。"
+  description="Pi Agent Desktop 使用指南：下载安装、认识主界面、使用内置浏览器、配置模型、Skills、Plugins、消息渠道与开发工具。"
 >
   <main id="main-content" class="container">
     <div class="docs-layout">
       <aside class="docs-side" aria-label="使用指南目录">
         <a href="#install">下载安装</a>
         <a href="#workspace">认识主界面</a>
+        <a href="#browser">内置浏览器</a>
         <a href="#models">配置模型</a>
         <a href="#skills">Skills 设置</a>
         <a href="#plugins">Plugins 设置</a>
@@ -84,7 +85,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>认识主界面</h2>
           <figure class="guide-figure">
             <AppPreview variant="docs" />
-            <figcaption>主界面由左侧会话区、中间对话区和右侧文件区组成。</figcaption>
+            <figcaption>主界面由左侧会话区、中间对话区和右侧文件 / 浏览器面板组成。</figcaption>
           </figure>
 
           <div class="guide-grid guide-grid-three">
@@ -107,11 +108,12 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
               </ul>
             </article>
             <article class="guide-card">
-              <h3>右侧：文件与预览</h3>
+              <h3>右侧：文件与浏览器</h3>
               <ul>
                 <li>浏览当前项目文件</li>
                 <li>用标签页打开多个文件</li>
                 <li>预览代码、Markdown、图表和文档</li>
+                <li>打开与 Agent 共享的真实网页</li>
                 <li>拖动分隔线调整面板宽度</li>
               </ul>
             </article>
@@ -125,6 +127,47 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>描述你的目标，例如“介绍这个项目”或“帮我查找登录页面”。</li>
           </ol>
           <p>如果只是聊天或处理临时任务，也可以选择一个空目录。只有在你明确授权工具后，Agent 才能读取或修改相应项目文件。</p>
+          <div class="note-box"><b>长会话不会被截断：</b>应用首次优先加载最近 20 个对话轮次。接近顶部时会自动预取更早消息，也可以点击“加载更早消息”；完整历史仍保存在本机。</div>
+        </section>
+
+        <section id="browser">
+          <h2>使用内置浏览器</h2>
+          <p class="guide-path"><b>入口</b><span>主界面右侧</span><i>→</i><span>浏览器</span></p>
+          <p>内置浏览器使用真实 Chromium 页面。你和 Agent 操作同一个页面，可以保留标签页、Profile 与登录状态，并在需要时随时接管。</p>
+
+          <div class="guide-grid guide-grid-three">
+            <article class="guide-card">
+              <h3>浏览网页</h3>
+              <ul>
+                <li>新建、切换和关闭多个标签页</li>
+                <li>选择临时或持久 Profile</li>
+                <li>登录网站并使用上传、下载和代理</li>
+              </ul>
+            </article>
+            <article class="guide-card">
+              <h3>让 Agent 协作</h3>
+              <ul>
+                <li>Browser read 允许导航、读取页面和截图</li>
+                <li>Browser interact 允许点击、输入和键盘操作</li>
+                <li>用户与 Agent 共享页面，用户可随时接管</li>
+              </ul>
+            </article>
+            <article class="guide-card">
+              <h3>权限与确认</h3>
+              <ul>
+                <li>Coding 权限不会自动开启浏览器权限</li>
+                <li>首次使用时由主窗口请求当前会话授权</li>
+                <li>提交、上传、下载和外部协议仍受本地策略控制</li>
+              </ul>
+            </article>
+          </div>
+
+          <h3>管理浏览器权限</h3>
+          <p>在“设置 → 浏览器”中管理全局默认和具体会话的永久权限。授权弹窗产生的许可只对当前会话临时生效；不再需要时，可以随时撤销。</p>
+
+          <h3>高级浏览器模式</h3>
+          <p>高级模式提供可信输入、网络检查、JavaScript 经验库和确认后的写请求重放，并使用专用 Profile。这个开关只在本次应用启动期间有效，Agent 工具不会接收或返回 Cookie 值。</p>
+          <div class="note-box"><b>私网保护：</b>当前保护属于明确标记的 best-effort。未部署受控网络沙箱时，Strict 模式会直接拒绝请求，而不是降低保护级别继续访问。</div>
         </section>
 
         <section id="models">
@@ -248,6 +291,12 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           </FaqItem>
           <FaqItem summary="配置模型后仍然无法发送消息？">
             <p>确认输入框下方已经选择模型，然后检查 API Key、账号额度和网络连接。回到“设置 → 模型”，使用“测试”查看服务商返回的具体错误。</p>
+          </FaqItem>
+          <FaqItem summary="为什么打开长会话时只看到最近的消息？">
+            <p>为了缩短首屏时间，应用先加载最近 20 个对话轮次。向上滚动或点击“加载更早消息”即可继续加载；分页和延迟内容不会删除或截断本机保存的历史。</p>
+          </FaqItem>
+          <FaqItem summary="授权 Coding 工具后，Agent 为什么仍然不能操作浏览器？">
+            <p>浏览器读取和交互使用独立授权，Coding 权限不会隐式开启 Browser read / interact。请在主窗口的授权弹窗中确认，或前往“设置 → 浏览器”调整策略。</p>
           </FaqItem>
           <FaqItem summary="消息渠道批准配对后为什么没有回复？">
             <p>触发配对的第一条消息不会进入 Agent。批准后，请让同一个用户再发送一条新消息。</p>

@@ -11,13 +11,14 @@ const { variant = "hero", lang = "zh" } = Astro.props;
 const isEnglish = lang === "en";
 const copy = isEnglish
   ? {
-      aria: "High-resolution Pi Agent Desktop preview with projects and sessions on the left, an Agent conversation in the center, and files and code on the right",
+      aria: "High-resolution Pi Agent Desktop preview with projects and sessions on the left, an Agent conversation in the center, and the shared browser on the right",
       newSession: "New session",
       sessions: "Sessions",
       search: "Search sessions...",
       today: "Today",
       settings: "Settings",
       channelStatus: "Messaging connected · 3 conversations",
+      loadEarlier: "Load earlier messages",
       prior: [
         ["Stack:", "Native HTML, CSS, and JavaScript"],
         ["Format:", "Responsive single-page site with no dependencies"],
@@ -30,11 +31,11 @@ const copy = isEnglish
       highlights: "Highlights include:",
       items: [
         "Pi Agent Desktop positioning and download entry points",
-        "Sessions, tool calls, project files, models, and extensions",
+        "Fast paginated sessions, tool calls, project files, models, and extensions",
+        "A built-in browser shared by the user and Agent",
         "WeChat, Telegram, and Feishu / Lark messaging channels",
-        "Electron's three-process architecture and local privacy model",
-        "macOS, Windows, and Linux support",
-        "Links to GitHub, releases, and installation docs",
+        "Isolated Electron processes and local privacy controls",
+        "macOS, Windows, and Linux downloads",
       ],
       files: "Files:",
       composer: "Message... Type / for commands or @ to reference files",
@@ -42,15 +43,22 @@ const copy = isEnglish
       reasoning: "High",
       preset: "Standard",
       compact: "Compact context",
+      browserTab: "Browser",
+      browserGrant: "Browser interact · session grant",
+      browserEyebrow: "PI AGENT DESKTOP",
+      browserTitle: "A true desktop workspace",
+      browserText: "Sessions, files, browser, models, and messaging in one local-first app.",
+      browserCta: "View releases",
     }
   : {
-      aria: "Pi Agent Desktop 高清界面预览，左侧为项目和会话，中间为 Agent 对话，右侧为文件与代码预览",
+      aria: "Pi Agent Desktop 高清界面预览，左侧为项目和会话，中间为 Agent 对话，右侧为用户与 Agent 共享的内置浏览器",
       newSession: "新建会话",
       sessions: "会话",
       search: "搜索会话...",
       today: "今天",
       settings: "设置",
       channelStatus: "已连接到消息渠道 · 3 个对话",
+      loadEarlier: "加载更早消息",
       prior: [
         ["技术：", "原生 HTML、CSS、JavaScript"],
         ["形式：", "响应式单页网站，无需安装依赖"],
@@ -63,11 +71,11 @@ const copy = isEnglish
       highlights: "主要内容包括：",
       items: [
         "Pi Agent Desktop 核心定位与下载入口",
-        "会话、工具调用、项目文件、模型及扩展管理",
+        "快速分页会话、工具调用、项目文件、模型及扩展管理",
+        "用户与 Agent 共享的内置浏览器",
         "微信、Telegram、飞书/Lark 消息渠道",
-        "Electron 三进程架构及本地隐私策略",
-        "macOS、Windows 与 Linux 系统支持",
-        "GitHub、Release 和安装文档链接",
+        "Electron 进程隔离及本地隐私策略",
+        "macOS、Windows 与 Linux 下载",
       ],
       files: "文件：",
       composer: "输入消息... 输入 / 查看命令，输入 @ 引用文件",
@@ -75,6 +83,12 @@ const copy = isEnglish
       reasoning: "高",
       preset: "标准",
       compact: "压缩上下文",
+      browserTab: "浏览器",
+      browserGrant: "浏览器交互 · 当前会话授权",
+      browserEyebrow: "PI AGENT DESKTOP",
+      browserTitle: "真正的桌面工作台",
+      browserText: "会话、文件、浏览器、模型与消息渠道，统一收进一个本地优先的应用。",
+      browserCta: "查看发布版本",
     };
 ---
 
@@ -110,8 +124,8 @@ const copy = isEnglish
       <div class="preview-session preview-session-active">
         <span class="preview-presence"></span>
         <div>
-          <b>hi</b>
-          <small>32m ago&nbsp;&nbsp; <strong>34 msgs</strong></small>
+          <b>Website refresh</b>
+          <small>2m ago&nbsp;&nbsp; <strong>126 msgs</strong></small>
         </div>
         <Icon name="ph:caret-down" />
         <Icon name="ph:dots-three" />
@@ -144,6 +158,7 @@ const copy = isEnglish
         <span class="preview-corner preview-corner-br"></span>
 
         <div class="preview-conversation">
+          <div class="preview-history-load"><Icon name="ph:arrow-up" />{copy.loadEarlier}</div>
           <div class="preview-prior-answer">
             <ul>
               {copy.prior.map(([label, text], index) => <li><b>{label}</b>{index === 2 ? <code>{text}</code> : text}</li>)}
@@ -185,46 +200,33 @@ const copy = isEnglish
       </div>
     </section>
 
-    <aside class="preview-files">
+    <aside class="preview-files preview-browser-panel">
       <div class="preview-tabs">
         <span><Icon name="ph:folder-simple" />Explorer</span>
-        <span class="preview-tab-active"><Icon name="ph:file-html" />index.html <Icon name="ph:x" /></span>
+        <span class="preview-tab-active"><Icon name="ph:globe" />{copy.browserTab} <Icon name="ph:x" /></span>
       </div>
-      <div class="preview-file-toolbar">
-        <span>index.html</span><span>html</span><span>826 lines</span><span>43.8 KB</span><b><i></i> live</b><em>Wrap</em><Icon name="ph:download-simple" />
+      <div class="preview-browser-toolbar">
+        <Icon name="ph:arrow-left" />
+        <Icon name="ph:arrow-right" />
+        <Icon name="ph:arrow-clockwise" />
+        <span class="preview-browser-address"><Icon name="ph:lock-simple" />github.com/DLYZZT/pi-desktop</span>
+        <Icon name="ph:dots-three-vertical" />
       </div>
-      <div class="preview-code">
-        <ol>
-          <li><code><span class="syn-punc">&lt;!</span><span class="syn-tag">doctype</span> <span class="syn-attr">html</span><span class="syn-punc">&gt;</span></code></li>
-          <li><code><span class="syn-punc">&lt;</span><span class="syn-tag">html</span> <span class="syn-attr">lang</span>=<span class="syn-string">"{isEnglish ? "en" : "zh-CN"}"</span><span class="syn-punc">&gt;</span></code></li>
-          <li><code><span class="syn-punc">&lt;</span><span class="syn-tag">head</span><span class="syn-punc">&gt;</span></code></li>
-          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">meta</span> <span class="syn-attr">charset</span>=<span class="syn-string">"UTF-8"</span> <span class="syn-punc">/&gt;</span></code></li>
-          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">meta</span> <span class="syn-attr">name</span>=<span class="syn-string">"viewport"</span></code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-attr">content</span>=<span class="syn-string">"width=device-width"</span> <span class="syn-punc">/&gt;</span></code></li>
-          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">meta</span> <span class="syn-attr">name</span>=<span class="syn-string">"description"</span></code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-attr">content</span>=<span class="syn-string">"Pi Agent Desktop"</span> <span class="syn-punc">/&gt;</span></code></li>
-          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">title</span><span class="syn-punc">&gt;</span>Pi Agent Desktop<span class="syn-punc">&lt;/</span><span class="syn-tag">title</span><span class="syn-punc">&gt;</span></code></li>
-          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">link</span> <span class="syn-attr">rel</span>=<span class="syn-string">"preconnect"</span> <span class="syn-punc">/&gt;</span></code></li>
-          <li><code>&nbsp;&nbsp;<span class="syn-punc">&lt;</span><span class="syn-tag">style</span><span class="syn-punc">&gt;</span></code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-var">:root</span> &#123;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--snow</span>: <span class="syn-value">#f6f9fb</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--white</span>: <span class="syn-value">#ffffff</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--ink</span>: <span class="syn-value">#102333</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--muted</span>: <span class="syn-value">#667783</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--line</span>: <span class="syn-value">#dce6eb</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--cyan</span>: <span class="syn-value">#08bce8</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--orange</span>: <span class="syn-value">#ff8b2c</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">--green</span>: <span class="syn-value">#40d899</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</code></li>
-          <li><code></code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-var">*</span> &#123; <span class="syn-prop">box-sizing</span>: border-box; &#125;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-var">html</span> &#123; <span class="syn-prop">scroll-behavior</span>: smooth; &#125;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-var">body</span> &#123;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">margin</span>: <span class="syn-value">0</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">color</span>: <span class="syn-value">var(--ink)</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syn-prop">background</span>: <span class="syn-value">var(--snow)</span>;</code></li>
-          <li><code>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</code></li>
-        </ol>
+      <div class="preview-browser-page">
+        <div class="preview-browser-grant"><i></i>{copy.browserGrant}</div>
+        <div class="preview-browser-hero">
+          <img src={withBase("icon.png")} alt="" width="26" height="26" />
+          <small>{copy.browserEyebrow}</small>
+          <b>{copy.browserTitle}</b>
+          <p>{copy.browserText}</p>
+          <span>{copy.browserCta}</span>
+        </div>
+        <div class="preview-browser-cards">
+          <span><Icon name="ph:chats-circle" />Sessions</span>
+          <span><Icon name="ph:folder-simple" />Files</span>
+          <span><Icon name="ph:browser" />Browser</span>
+          <span><Icon name="ph:shield-check" />Local-first</span>
+        </div>
       </div>
     </aside>
   </div>
