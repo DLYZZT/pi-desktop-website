@@ -16,8 +16,45 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.5</span>
+            <span class="cl-tag">v0.1.6</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-08-08">2026-08-08</time>
+          </div>
+          <p>本次版本将内置 Pi Coding Agent 升级至 0.84.0，并重点增强内容渲染、模型目录、凭据同步和 Skill 安装稳定性。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Pi 0.84 与内容渲染</h2>
+          <ul>
+            <li>将 Pi Coding Agent 及相关运行时升级至 0.84.0，并完成 OAuth、模型和扩展接口适配。</li>
+            <li>Agent 回复新增 Mermaid 图表和 LaTeX（KaTeX）公式渲染。</li>
+            <li>Markdown 文件完善代码高亮、Mermaid 与 KaTeX 渲染。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />模型与身份认证</h2>
+          <ul>
+            <li>会话启动优先使用本地缓存的模型目录，并可从模型选择器手动刷新远程目录。</li>
+            <li>模型刷新支持超时、取消、离线状态与部分 Provider 失败提示；刷新失败时继续保留缓存模型。</li>
+            <li>API Key 设置或删除、OAuth 登录或退出后，会同步刷新 Agent Host 的模型状态；同步失败时显示明确警告。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Skill 安装与稳定性</h2>
+          <ul>
+            <li>正常安装继续使用 npm 默认并发与缓存；遇到网络、超时或 cache lock 故障时，自动使用临时隔离缓存重试一次。</li>
+            <li>改进安装超时、扩展加载诊断和错误信息脱敏，便于排查问题且避免暴露敏感内容。</li>
+            <li>修复 Linux ASAR 依赖冲突、Windows ASAR 路径校验和 macOS Intel 构建验证，并加强生产包完整性检查。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.6-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.6-x64.dmg</code></li>
+            <li>Windows x64：<code>Pi-Agent-Desktop-Setup-0.1.6.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.6-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>Windows 安装包目前未签名，首次运行可能出现 SmartScreen 提示；Linux AppImage 继续使用手动更新。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.5</span>
             <time class="cl-date" datetime="2026-08-07">2026-08-07</time>
           </div>
           <p>本次版本重点优化会话列表、会话切换和超长对话的加载性能，在保留完整本地历史的同时减少重复扫描、传输与渲染。</p>

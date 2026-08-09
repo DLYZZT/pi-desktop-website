@@ -27,7 +27,7 @@ const features = [
     icon: "ph:sliders-horizontal",
     title: "模型与扩展统一管理",
     description:
-      "管理模型提供商与配置，支持浏览器 OAuth 登录；搜索、安装和配置 Skills，并沿用 Pi Agent 的 Plugins 扩展体系。",
+      "内置 Pi Coding Agent 0.84，模型目录支持缓存、手动刷新与离线回退；Skills 安装失败时可通过隔离缓存自动重试。",
   },
   {
     icon: "ph:wrench",
@@ -92,7 +92,7 @@ const checks = [
           </a>
         </div>
         <p class="hero-meta">
-          当前版本 <span data-version>v0.1.5</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
+          当前版本 <span data-version>v0.1.6</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
         </p>
 
         <AppPreview />
@@ -195,7 +195,7 @@ const checks = [
       <div class="container">
         <div class="cta-panel">
           <h2>准备好让 Pi Agent 常驻桌面了吗？</h2>
-          <p>内置 Pi Coding Agent 运行时，安装并配置模型提供商后即可使用。</p>
+          <p>内置 Pi Coding Agent 0.84.0 运行时，安装并配置模型提供商后即可使用。</p>
           <a class="btn btn-primary" href={withBase("download/")}>
             <Icon name="ph:download-simple" aria-hidden="true" />
             免费下载

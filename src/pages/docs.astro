@@ -40,7 +40,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>下载安装</h2>
-          <p>打开<a href={withBase("download/")}>下载页面</a>，网站会优先推荐当前系统对应的安装包。桌面安装包已经内置 Pi Coding Agent 运行时，日常使用不需要另外安装 Pi CLI。</p>
+          <p>打开<a href={withBase("download/")}>下载页面</a>，网站会优先推荐当前系统对应的安装包。v0.1.6 桌面安装包已经内置 Pi Coding Agent 0.84.0 运行时，日常使用不需要另外安装 Pi CLI。</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card">
@@ -173,28 +173,36 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>配置模型</h2>
           <p class="guide-path"><b>入口</b><span>设置</span><i>→</i><span>模型</span></p>
-          <p>Pi Agent Desktop 本身不提供模型额度。你需要连接已有的模型服务账号，或填写模型服务商提供的 API Key。</p>
+          <p>Pi Agent Desktop v0.1.6 内置 Pi Coding Agent 0.84.0，但不提供模型额度。你需要连接已有的模型服务账号，或填写模型服务商提供的 API Key。</p>
 
           <h3>使用 API Key</h3>
           <ol>
             <li>打开“设置 → 模型”，点击“添加服务商”。</li>
             <li>选择你的模型服务商。</li>
-            <li>粘贴 API Key，点击“保存”。</li>
+            <li>粘贴 API Key，点击“保存”；应用会同步刷新 Agent Host 的模型状态。</li>
             <li>选择要使用的模型；如果界面提供“测试”，可以先测试连接。</li>
             <li>关闭设置，在会话输入框下方选择刚配置的模型。</li>
           </ol>
+
+          <h3>刷新模型目录</h3>
+          <ol>
+            <li>在会话输入框下方打开模型选择器。</li>
+            <li>点击“刷新模型目录”，从已配置的 Provider 获取最新模型。</li>
+            <li>等待刷新完成；离线、超时或部分 Provider 失败时，界面会显示对应状态或警告。</li>
+          </ol>
+          <p>会话启动时优先读取本地缓存的模型目录，避免每次启动都发起网络请求。刷新失败不会清空已有模型，缓存目录仍可继续使用。</p>
 
           <h3>使用 OAuth 登录</h3>
           <ol>
             <li>在“添加服务商”中选择支持 OAuth 的服务商。</li>
             <li>点击“登录”，按提示在浏览器中完成授权。</li>
-            <li>回到应用，确认服务商显示为已连接。</li>
+            <li>回到应用，确认服务商显示为已连接；登录或退出后模型状态会自动同步。</li>
           </ol>
 
           <h3>自定义兼容服务</h3>
           <p>如果你使用的是兼容 OpenAI、Anthropic 或 Google API 的自建服务，可以添加自定义服务商，并填写 Base URL、API 类型、API Key 和模型信息。这部分只在普通服务商列表无法满足需求时使用。</p>
 
-          <div class="note-box"><b>配置失败？</b>先检查 API Key 是否完整、账号是否有可用额度、网络是否能访问服务商，再使用模型卡片中的“测试”查看错误信息。</div>
+          <div class="note-box"><b>配置失败？</b>先检查 API Key 是否完整、账号是否有可用额度、网络是否能访问服务商，再使用模型卡片中的“测试”查看错误信息。如果凭据已经保存但模型同步失败，应用会显示明确警告，凭据本身仍然有效。</div>
         </section>
 
         <section id="skills">
@@ -208,6 +216,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>需要添加时点击“添加技能”，搜索名称，选择“全局”或“当前项目”，再点击“安装”。</li>
             <li>只有确实需要自定义说明时才修改内容，并点击“保存更改”。</li>
           </ol>
+          <div class="note-box"><b>安装重试：</b>正常安装使用 npm 默认并发和缓存。遇到网络错误、超时或 npm cache lock 故障时，应用会自动切换到临时隔离缓存并重试一次。</div>
           <div class="note-box"><b>建议：</b>通用 Skill 选择“全局”，只服务当前仓库的 Skill 选择“当前项目”。</div>
         </section>
 

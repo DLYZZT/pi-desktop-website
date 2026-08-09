@@ -16,8 +16,45 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.5</span>
+            <span class="cl-tag">v0.1.6</span>
             <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-08-08">2026-08-08</time>
+          </div>
+          <p>This release upgrades the bundled Pi Coding Agent to 0.84.0 and focuses on content rendering, the model directory, credential synchronization, and reliable Skill installation.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Pi 0.84 and content rendering</h2>
+          <ul>
+            <li>Upgraded Pi Coding Agent and its related runtime to 0.84.0, with matching OAuth, model, and extension API adaptations.</li>
+            <li>Agent responses now render Mermaid diagrams and LaTeX formulas with KaTeX.</li>
+            <li>Markdown files gain improved syntax highlighting, Mermaid, and KaTeX rendering.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Models and authentication</h2>
+          <ul>
+            <li>Sessions start from the locally cached model directory, with an explicit remote refresh action in the model selector.</li>
+            <li>Model refresh supports timeouts, cancellation, offline state, and partial-provider warnings while preserving cached models after a failure.</li>
+            <li>Saving or deleting an API key and signing in or out through OAuth now synchronize model state with the Agent Host and surface a clear warning if synchronization fails.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Skill installation and reliability</h2>
+          <ul>
+            <li>Normal installs retain npm's default concurrency and cache. Network, timeout, or cache-lock failures trigger one retry with a temporary isolated cache.</li>
+            <li>Improved installation timeout messages, extension diagnostics, and sensitive-data filtering in errors.</li>
+            <li>Fixed Linux ASAR dependency conflicts, Windows ASAR path verification, and macOS Intel build validation, with stronger production-package checks.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.6-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.6-x64.dmg</code></li>
+            <li>Windows x64: <code>Pi-Agent-Desktop-Setup-0.1.6.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.6-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>The Windows installer remains unsigned and may trigger SmartScreen; Linux AppImage updates remain manual.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.5</span>
             <time class="cl-date" datetime="2026-08-07">2026-08-07</time>
           </div>
           <p>This release improves session-list, session-switching, and long-conversation performance while preserving the complete local history and reducing repeated scanning, transfer, and rendering work.</p>

@@ -41,7 +41,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. Desktop packages include the Pi Coding Agent runtime, so normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.6 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
@@ -132,18 +132,22 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+          <p>Pi Agent Desktop v0.1.6 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
 
           <h3>Use an API key</h3>
-          <ol><li>Open Settings → Models and select Add provider.</li><li>Choose your model provider.</li><li>Paste the API key and save.</li><li>Select a model. If a Test action is available, use it to verify the connection.</li><li>Close Settings and choose the model below the conversation composer.</li></ol>
+          <ol><li>Open Settings → Models and select Add provider.</li><li>Choose your model provider.</li><li>Paste the API key and save. The app synchronizes the Agent Host model state.</li><li>Select a model. If a Test action is available, use it to verify the connection.</li><li>Close Settings and choose the model below the conversation composer.</li></ol>
+
+          <h3>Refresh the model directory</h3>
+          <ol><li>Open the model selector below the conversation composer.</li><li>Select Refresh model directory to fetch the latest models from configured providers.</li><li>Wait for the refresh to finish. Offline, timeout, and partial-provider failures appear as a status or warning.</li></ol>
+          <p>Sessions prefer the locally cached model directory on startup instead of making an unnecessary network request. A failed refresh never clears existing models, so the cached directory remains available.</p>
 
           <h3>Use OAuth</h3>
-          <ol><li>Choose a provider that supports OAuth.</li><li>Select Sign in and complete authorization in your browser.</li><li>Return to the app and confirm the provider shows as connected.</li></ol>
+          <ol><li>Choose a provider that supports OAuth.</li><li>Select Sign in and complete authorization in your browser.</li><li>Return to the app and confirm the provider shows as connected. Signing in or out automatically synchronizes the model state.</li></ol>
 
           <h3>Use a compatible custom service</h3>
           <p>For self-hosted services compatible with the OpenAI, Anthropic, or Google API, add a custom provider and enter its Base URL, API type, API key, and model information. Use this only when a standard provider does not meet your needs.</p>
 
-          <div class="note-box"><b>Connection failed?</b> Check that the API key is complete, your account has credits, and your network can reach the provider. Then use the model card's Test action to see the provider error.</div>
+          <div class="note-box"><b>Connection failed?</b> Check that the API key is complete, your account has credits, and your network can reach the provider. Then use the model card's Test action to see the provider error. If credentials were saved but model synchronization failed, the app shows a clear warning while keeping the credentials.</div>
         </section>
 
         <section id="skills">
@@ -152,6 +156,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <p>This section focuses on settings. Each Skill's own documentation explains its capabilities and usage.</p>
           <SettingsPreview section="skills" lang="en" />
           <ol><li>Choose a project, then open Settings → Skills.</li><li>Select an installed Skill and use the switch to control whether it is visible to the model.</li><li>To add one, select Add skill, search by name, choose Global or Current project, and install.</li><li>Edit the content only when you need custom instructions, then save your changes.</li></ol>
+          <div class="note-box"><b>Installation retry:</b> Normal installs use npm's default concurrency and cache. On a network error, timeout, or npm cache-lock failure, the app automatically retries once with a temporary isolated cache.</div>
           <div class="note-box"><b>Tip:</b> Use Global for reusable Skills and Current project for repository-specific Skills.</div>
         </section>
 
