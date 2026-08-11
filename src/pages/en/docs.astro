@@ -41,7 +41,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.6 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.7 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
@@ -132,10 +132,15 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop v0.1.6 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+          <p>Pi Agent Desktop v0.1.7 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+          <SettingsPreview section="models" lang="en" />
 
           <h3>Use an API key</h3>
           <ol><li>Open Settings → Models and select Add provider.</li><li>Choose your model provider.</li><li>Paste the API key and save. The app synchronizes the Agent Host model state.</li><li>Select a model. If a Test action is available, use it to verify the connection.</li><li>Close Settings and choose the model below the conversation composer.</li></ol>
+
+          <h3>Control which models appear</h3>
+          <ol><li>Open Settings → Models and choose a connected subscription or API-key provider.</li><li>Review the enabled count. When a provider has many models, search by model name or ID.</li><li>Toggle models individually, or use Enable all and Disable all for the provider.</li><li>Wait for the selection to save, then return to the conversation model selector.</li></ol>
+          <p>The selection persists to Pi settings and remains compatible with existing thinking-level configuration, but it does not change the model currently used by an existing session. The app prevents a configuration with no valid models from being saved.</p>
 
           <h3>Refresh the model directory</h3>
           <ol><li>Open the model selector below the conversation composer.</li><li>Select Refresh model directory to fetch the latest models from configured providers.</li><li>Wait for the refresh to finish. Offline, timeout, and partial-provider failures appear as a status or warning.</li></ol>
@@ -172,16 +177,25 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="channels">
           <h2>Messaging channel settings</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Messaging channels</span></p>
-          <p>Choose a channel and enter only the account information that channel requires:</p>
+          <p>Choose a channel. The official QR creation flow is recommended for Feishu / Lark, while existing custom apps remain supported:</p>
           <SettingsPreview section="channels" lang="en" />
 
           <div class="table-scroll" tabindex="0" role="region" aria-label="Messaging channel connection methods">
             <table><thead><tr><th>Channel</th><th>Configuration</th></tr></thead><tbody>
               <tr><td>WeChat</td><td>Select Connect WeChat, then scan the QR code and confirm on your phone.</td></tr>
               <tr><td>Telegram</td><td>Enter the Bot Token created with BotFather.</td></tr>
-              <tr><td>Feishu / Lark</td><td>Choose the platform and enter the App ID and App Secret for a custom enterprise app.</td></tr>
+              <tr><td>Feishu / Lark</td><td>Create a new bot through the recommended QR flow, or enter the App ID and App Secret for an existing app.</td></tr>
             </tbody></table>
           </div>
+
+          <h3>Create a Feishu / Lark bot by QR code</h3>
+          <ol><li>Select Connect Feishu / Lark, then choose Scan to create (recommended).</li><li>Select Feishu China or Lark for the account region.</li><li>Generate the QR code, scan it in the corresponding client, and complete official authorization.</li><li>The app creates the bot, configures required permissions, stores the credentials, verifies the identity, and starts the connection.</li></ol>
+          <div class="note-box"><b>Secure defaults:</b> The App Secret is handled only inside the Agent Host and stored with operating-system encryption; it never enters the UI. Only the scanning user can send direct messages by default. Groups, commands, and Agent tools remain off until explicitly enabled.</div>
+
+          <h3>Connect an existing Feishu / Lark app</h3>
+          <p>Choose Existing app, select Feishu or Lark, then enter the App ID and App Secret. The QR flow never reads an existing app's App Secret.</p>
+
+          <h3>Finish the account setup</h3>
           <ol><li>Save the account and configure its default project directory and access policy as needed.</li><li>Start the account and confirm its status is Running.</li><li>Use Test connection. Bind a messaging conversation only when it should share context with the current desktop session.</li></ol>
         </section>
 

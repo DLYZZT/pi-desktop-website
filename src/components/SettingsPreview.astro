@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 
-type Section = "skills" | "plugins" | "channels" | "tools";
+type Section = "models" | "skills" | "plugins" | "channels" | "tools";
 
 interface Props {
   section: Section;
@@ -21,6 +21,7 @@ const tabs = [
   { id: "about", label: isEnglish ? "About" : "关于", icon: "ph:info" },
 ] as const;
 const ariaLabels: Record<Section, string> = {
+  models: isEnglish ? "Pi Agent Desktop model settings with provider-level search, enabled counts, and individual or bulk model selection" : "Pi Agent Desktop 模型设置界面，展示按服务商搜索、启用数量以及逐个或批量控制模型显示范围",
   skills: isEnglish ? "Pi Agent Desktop Skills settings with a Skill list, enabled state, and SKILL.md editor" : "Pi Agent Desktop 技能设置界面，左侧选择 Skill，右侧编辑启用状态和 SKILL.md",
   plugins: isEnglish ? "Pi Agent Desktop Plugins settings with source, installation scope, and install action" : "Pi Agent Desktop 插件设置界面，展示插件来源、安装范围和安装按钮",
   channels: isEnglish ? "Pi Agent Desktop messaging channel settings with a Telegram account, default directory, and access policies" : "Pi Agent Desktop 消息渠道设置界面，展示 Telegram 账号、默认目录和访问策略",
@@ -38,6 +39,13 @@ const skillNames = [
   "web-perf",
   "workers-best-practices",
   "wrangler",
+];
+const previewModels = [
+  { name: "Claude Sonnet", id: "claude-sonnet", enabled: true },
+  { name: "Claude Opus", id: "claude-opus", enabled: true },
+  { name: "Claude Haiku", id: "claude-haiku", enabled: true },
+  { name: "Claude Sonnet (legacy)", id: "claude-sonnet-legacy", enabled: false },
+  { name: "Claude Haiku (legacy)", id: "claude-haiku-legacy", enabled: false },
 ];
 const toolGroups = [
   { title: "JAVASCRIPT", count: "4/4", tools: ["Node.js", "npm", "npx", "Bun"] },
@@ -66,6 +74,42 @@ const toolGroups = [
     </div>
 
     <div class="settings-body" aria-hidden="true">
+      {section === "models" && (
+        <>
+          <aside class="settings-list model-provider-list">
+            <div class="list-scroll">
+              <div class="list-group-heading"><span>{isEnglish ? "CONNECTED" : "已连接"}</span><span>3</span></div>
+              <div class="list-row model-provider-row is-selected"><i class="is-on"></i><span><b>Anthropic</b><small>{isEnglish ? "API key · 3/5 enabled" : "API Key · 已启用 3/5 个"}</small></span></div>
+              <div class="list-row model-provider-row"><i class="is-on"></i><span><b>OpenAI</b><small>{isEnglish ? "Subscription · All enabled" : "订阅账号 · 已全部启用"}</small></span></div>
+              <div class="list-row model-provider-row"><i class="is-on"></i><span><b>Google Gemini</b><small>{isEnglish ? "API key · All enabled" : "API Key · 已全部启用"}</small></span></div>
+            </div>
+            <div class="list-footer"><Icon name="ph:plus" />{isEnglish ? "Add provider" : "添加服务商"}</div>
+          </aside>
+
+          <section class="settings-detail model-settings-detail">
+            <div class="model-preview-head">
+              <div><span class="round-icon"><Icon name="ph:brain" /></span><span><b>Anthropic</b><small>{isEnglish ? "Choose which models appear in the selector" : "选择要显示在模型选择器中的模型"}</small></span></div>
+              <span class="model-enabled-count">{isEnglish ? "3 of 5 enabled" : "已启用 3/5 个"}</span>
+            </div>
+            <div class="model-preview-controls">
+              <span class="soft-button">{isEnglish ? "Enable all" : "全部启用"}</span>
+              <span class="soft-button">{isEnglish ? "Disable all" : "全部禁用"}</span>
+              <div class="field model-search"><Icon name="ph:magnifying-glass" />{isEnglish ? "Search models…" : "搜索模型…"}</div>
+            </div>
+            <div class="model-choice-list">
+              {previewModels.map((model) => (
+                <div class="model-choice-row">
+                  <span class:list={["model-check", model.enabled && "is-on"]}>{model.enabled && <Icon name="ph:check" />}</span>
+                  <span><b>{model.name}</b><code>{model.id}</code></span>
+                  <small>{model.enabled ? (isEnglish ? "Shown" : "显示") : (isEnglish ? "Hidden" : "隐藏")}</small>
+                </div>
+              ))}
+            </div>
+            <div class="description-box"><Icon name="ph:info" /><span>{isEnglish ? "Changes are saved to Pi settings and do not change the model used by the current session." : "选择会保存到 Pi 设置，不会改变当前会话正在使用的模型。"}</span></div>
+          </section>
+        </>
+      )}
+
       {section === "skills" && (
         <>
           <aside class="settings-list">
@@ -340,6 +384,35 @@ const toolGroups = [
   .description-box.warning { align-items: center; margin-top: 15px; color: var(--sp-muted); }
   .description-box.warning svg { width: 14px; color: var(--sp-green); }
 
+  .model-provider-list { width: 220px; flex-basis: 220px; }
+  .model-provider-row { align-items: flex-start; padding-top: 8px; padding-bottom: 8px; font-family: Inter, sans-serif; }
+  .model-provider-row > span { min-width: 0; }
+  .model-provider-row b, .model-provider-row small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .model-provider-row b { font-size: 9px; }
+  .model-provider-row small { margin-top: 3px; color: var(--sp-dim); font-size: 7px; font-weight: 400; }
+  .model-settings-detail { padding: 13px 16px; }
+  .model-preview-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 11px; }
+  .model-preview-head > div { display: flex; align-items: center; gap: 9px; min-width: 0; }
+  .model-preview-head > div > span:last-child { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+  .model-preview-head b { font-size: 12px; }
+  .model-preview-head small { overflow: hidden; color: var(--sp-dim); font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+  .model-enabled-count { padding: 4px 8px; border-radius: 999px; background: color-mix(in srgb, var(--sp-green) 11%, transparent); color: var(--sp-green); font-size: 8px; white-space: nowrap; }
+  .model-preview-controls { display: grid; grid-template-columns: auto auto minmax(130px, 1fr); gap: 6px; margin-bottom: 9px; }
+  .model-search { gap: 5px; color: var(--sp-dim); }
+  .model-search svg { width: 11px; }
+  .model-choice-list { overflow: hidden; border: 1px solid var(--sp-line); border-radius: 6px; background: var(--sp-panel); }
+  .model-choice-row { display: grid; grid-template-columns: 15px minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 42px; padding: 6px 9px; border-bottom: 1px solid var(--sp-line); }
+  .model-choice-row:last-child { border-bottom: 0; }
+  .model-choice-row > span:nth-child(2) { display: flex; min-width: 0; flex-direction: column; gap: 2px; }
+  .model-choice-row b { overflow: hidden; font-size: 8.5px; text-overflow: ellipsis; white-space: nowrap; }
+  .model-choice-row code { font-size: 7px; }
+  .model-choice-row small { color: var(--sp-dim); font-size: 7px; }
+  .model-check { display: inline-flex; width: 14px; height: 14px; align-items: center; justify-content: center; border: 1px solid var(--sp-line); border-radius: 3px; background: var(--sp-panel-strong); color: #fff; }
+  .model-check.is-on { border-color: var(--sp-accent); background: var(--sp-accent); }
+  .model-check svg { width: 10px; }
+  .model-settings-detail .description-box { align-items: center; margin-top: 9px; }
+  .model-settings-detail .description-box svg { width: 13px; flex: 0 0 13px; color: var(--sp-accent); }
+
   .plugin-list { width: 224px; flex-basis: 224px; }
   .plugin-row { align-items: flex-start; padding-top: 7px; padding-bottom: 7px; }
   .plugin-row > span { min-width: 0; }
@@ -431,6 +504,9 @@ const toolGroups = [
     .settings-body { height: calc(100% - 87px); }
     .settings-list { display: none; }
     .settings-detail { padding: 13px; }
+    .model-preview-controls { grid-template-columns: auto auto; }
+    .model-preview-controls .model-search { grid-column: 1 / -1; }
+    .model-choice-row { min-height: 38px; }
     .code-field { height: 105px; }
     .channels-detail { padding: 11px; }
     .channels-heading { display: block; }
@@ -453,5 +529,7 @@ const toolGroups = [
     .example-list code:nth-child(3) { display: none; }
     .tool-detail .provider-row code { max-width: 120px; }
     .detail-pairs { grid-template-columns: 78px 1fr; }
+    .model-preview-head small { max-width: 190px; }
+    .model-choice-row:nth-child(5) { display: none; }
   }
 </style>

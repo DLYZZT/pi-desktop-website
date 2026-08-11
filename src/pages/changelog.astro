@@ -16,8 +16,49 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.6</span>
+            <span class="cl-tag">v0.1.7</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-08-10">2026-08-10</time>
+          </div>
+          <p>本次版本重点简化模型配置和飞书 / Lark 接入流程：可以按服务商控制模型显示范围，并通过官方扫码流程创建和连接新机器人。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />模型选择与中文设置</h2>
+          <ul>
+            <li>已连接的订阅账号和 API Key 服务商可以选择哪些模型显示在模型选择器中。</li>
+            <li>支持按模型名称或 ID 搜索、逐个启用，并按服务商全部启用或全部停用，同时显示已启用数量。</li>
+            <li>模型选择会持久化到 Pi 设置，兼容已有思考等级配置，且不会改变当前会话正在使用的模型。</li>
+            <li>防止保存没有有效模型的配置，避免模型选择器进入不可用状态。</li>
+            <li>模型服务商、登录、连接测试、自定义模型、上下文窗口、费用和思考等级等设置现已完整支持中文。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />飞书 / Lark 扫码创建机器人</h2>
+          <ul>
+            <li>新增“扫码创建（推荐）”接入方式，可选择飞书中国区或 Lark，并使用官方授权流程创建新的 Pi Desktop 机器人。</li>
+            <li>授权后自动配置消息、资源、卡片、事件和机器人菜单权限，保存凭据、验证机器人身份并启动连接。</li>
+            <li>App Secret 只在 Agent Host 中处理并通过系统加密保存，不会进入界面。</li>
+            <li>默认仅允许扫码者发送私聊；群聊、命令和 Agent 工具保持关闭，需要后续显式启用。</li>
+            <li>已有自建应用仍可通过 App ID 和 App Secret 接入。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />安全与验证</h2>
+          <ul>
+            <li>加强渠道凭据保存、重新加载、明文泄漏检查和错误信息脱敏。</li>
+            <li>增加飞书扫码注册与渠道登录生命周期测试，并完善跨平台发布包静态验证和 Windows 原生剪贴板资源检查。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.7-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.7-x64.dmg</code></li>
+            <li>Windows x64：<code>Pi-Agent-Desktop-Setup-0.1.7.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.7-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时仍为 0.84.0。</li>
+            <li>Windows 安装包目前未签名，首次运行可能出现 SmartScreen 提示；Linux AppImage 继续使用手动更新。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.6</span>
             <time class="cl-date" datetime="2026-08-08">2026-08-08</time>
           </div>
           <p>本次版本将内置 Pi Coding Agent 升级至 0.84.0，并重点增强内容渲染、模型目录、凭据同步和 Skill 安装稳定性。</p>

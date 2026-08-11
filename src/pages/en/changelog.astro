@@ -16,8 +16,49 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.6</span>
+            <span class="cl-tag">v0.1.7</span>
             <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-08-10">2026-08-10</time>
+          </div>
+          <p>This release streamlines model configuration and Feishu / Lark setup: control which models appear for each provider and create and connect a new bot through the official QR flow.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Model selection and localized settings</h2>
+          <ul>
+            <li>Connected subscription and API-key providers can choose which models appear in the model selector.</li>
+            <li>Search by model name or ID, enable models individually, enable or disable every model for a provider, and see the enabled count.</li>
+            <li>Selections persist to Pi settings, remain compatible with existing thinking-level configuration, and do not change the model currently used by an existing session.</li>
+            <li>The app prevents saving a configuration with no valid models so the selector cannot become unusable.</li>
+            <li>Provider, sign-in, connection test, custom model, context window, cost, and thinking-level settings are now fully localized in Chinese.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Create a Feishu / Lark bot by QR code</h2>
+          <ul>
+            <li>Added a recommended Scan to create flow for Feishu China or Lark using the official authorization process.</li>
+            <li>Authorization configures the required message, resource, card, event, and bot-menu permissions, stores credentials, verifies the bot identity, and starts the connection.</li>
+            <li>The App Secret is handled only inside the Agent Host and stored with operating-system encryption; it never enters the UI.</li>
+            <li>Only the scanning user can send direct messages by default. Groups, commands, and Agent tools remain off until explicitly enabled.</li>
+            <li>Existing custom apps can still connect with an App ID and App Secret.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Security and validation</h2>
+          <ul>
+            <li>Strengthened channel credential storage, reload coverage, plaintext-leak checks, and error redaction.</li>
+            <li>Added Feishu QR registration and channel login lifecycle tests, plus stronger cross-platform package validation and Windows native clipboard runtime checks.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.7-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.7-x64.dmg</code></li>
+            <li>Windows x64: <code>Pi-Agent-Desktop-Setup-0.1.7.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.7-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>The bundled Pi Coding Agent runtime remains at 0.84.0.</li>
+            <li>The Windows installer remains unsigned and may trigger SmartScreen; Linux AppImage updates remain manual.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.6</span>
             <time class="cl-date" datetime="2026-08-08">2026-08-08</time>
           </div>
           <p>This release upgrades the bundled Pi Coding Agent to 0.84.0 and focuses on content rendering, the model directory, credential synchronization, and reliable Skill installation.</p>

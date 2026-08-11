@@ -27,7 +27,7 @@ const features = [
     icon: "ph:sliders-horizontal",
     title: "模型与扩展统一管理",
     description:
-      "内置 Pi Coding Agent 0.84，模型目录支持缓存、手动刷新与离线回退；Skills 安装失败时可通过隔离缓存自动重试。",
+      "内置 Pi Coding Agent 0.84；按服务商搜索并控制模型显示范围，支持逐个或批量启用，模型设置与连接流程完整中文化。",
   },
   {
     icon: "ph:wrench",
@@ -39,7 +39,7 @@ const features = [
     icon: "ph:paper-plane-tilt",
     title: "IM 消息渠道",
     description:
-      "个人微信、Telegram 与飞书 / Lark 接入，私聊配对与群聊白名单，图片、文件、语音全类型收发，随时随地驱动 Agent。",
+      "个人微信、Telegram 与飞书 / Lark 接入；飞书 / Lark 可通过官方扫码创建机器人，也可连接已有自建应用。",
   },
   {
     icon: "ph:clock-clockwise",
@@ -92,7 +92,7 @@ const checks = [
           </a>
         </div>
         <p class="hero-meta">
-          当前版本 <span data-version>v0.1.6</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
+          当前版本 <span data-version>v0.1.7</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
         </p>
 
         <AppPreview />
@@ -130,7 +130,7 @@ const checks = [
         <div class="channel-strip">
           <span class="channel-chip"><Icon class="channel-dot dot-wechat" name="ph:circle-fill" aria-hidden="true" />个人微信 · 二维码登录</span>
           <span class="channel-chip"><Icon class="channel-dot dot-tg" name="ph:circle-fill" aria-hidden="true" />Telegram · Bot Token</span>
-          <span class="channel-chip"><Icon class="channel-dot dot-lark" name="ph:circle-fill" aria-hidden="true" />飞书 / Lark · 企业自建应用</span>
+          <span class="channel-chip"><Icon class="channel-dot dot-lark" name="ph:circle-fill" aria-hidden="true" />飞书 / Lark · 官方扫码 / 已有应用</span>
         </div>
       </div>
     </section>
