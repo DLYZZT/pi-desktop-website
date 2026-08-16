@@ -16,8 +16,81 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.7</span>
+            <span class="cl-tag">v0.1.10</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-08-16">2026-08-16</time>
+          </div>
+          <p>本次版本为新会话加入自动命名：首条有效消息发送后在后台生成简短标题，同时保证正常回复不被阻塞、手动名称永远优先。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />新会话自动命名</h2>
+          <ul>
+            <li>使用当前会话选择的模型在后台生成标题，并实时更新侧边栏；标题请求独立于会话历史和上下文缓存。</li>
+            <li>“设置 → 通用 → 会话”新增“自动命名新会话”开关，默认启用并完整支持中英文。</li>
+            <li>模型不可用或请求失败时使用本地标题兜底；统一清理引号、换行和末尾标点，并限制为 40 个字符。</li>
+            <li>自动标题生成期间手动重命名也不会被覆盖；斜杠命令、空白、单字符和纯图片消息不会触发命名。</li>
+            <li>收紧工作目录与模型运行时处理，修复模型服务初始化失败时未执行本地兜底的问题。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.10-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.10-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.10.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.10-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时仍为 0.84.0。</li>
+            <li>Windows 安装包为未签名 Beta，可能出现“未知发布者”或 SmartScreen 提示；Linux AppImage 继续使用手动更新。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.9</span>
+            <time class="cl-date" datetime="2026-08-16">2026-08-16</time>
+          </div>
+          <p>本次版本改善长对话中的滚动控制：离开最新内容时显示“滚动到底部”按钮，回到末尾后重新启用流式输出自动跟随。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />对话滚动体验</h2>
+          <ul>
+            <li>新增浮动“滚动到底部”按钮，并显示运行状态，提供中英文文案和减少动态效果支持。</li>
+            <li>排除运行时尾部占位区对“接近底部”判断的干扰，避免按钮错误显示或隐藏。</li>
+            <li>在回合和会话切换之间保持滚动磁吸状态，同时确保用户主动向上滚动可以解除自动跟随。</li>
+            <li>图片延迟加载或过程详情展开改变内容高度后，会及时更新按钮与自动跟随状态。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.9-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.9-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.9.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.9-x86_64.AppImage</code></li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.8</span>
+            <time class="cl-date" datetime="2026-08-15">2026-08-15</time>
+          </div>
+          <p>本次版本为 API Key 服务商加入 Base URL，并集中加强模型刷新、界面本地化、主题一致性、渠道权限同步和桌面运行可靠性。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />模型、界面与渠道</h2>
+          <ul>
+            <li>API Key 服务商可以设置 Base URL 以覆盖默认请求端点；模型目录刷新的服务初始化与最终整理阶段都受到超时保护。</li>
+            <li>补齐会话侧边栏、应用导航、文件浏览与预览、Skills、Plugins 和 Agent 通知的中英文界面。</li>
+            <li>统一错误页、Word 预览、模型连接状态和用户消息气泡的主题，并在离线环境中使用内置字体。</li>
+            <li>渠道账号默认工具权限会同步到已绑定会话；权限按 Pi Session 生效，共用会话的多个渠道入口保持一致。</li>
+            <li>加强共享浏览器、桌面 IPC、文件访问、更新流程、崩溃恢复和长时间运行时的安全性、性能与故障恢复。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.8-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.8-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.8.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.8-x86_64.AppImage</code></li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.7</span>
             <time class="cl-date" datetime="2026-08-10">2026-08-10</time>
           </div>
           <p>本次版本重点简化模型配置和飞书 / Lark 接入流程：可以按服务商控制模型显示范围，并通过官方扫码流程创建和连接新机器人。</p>

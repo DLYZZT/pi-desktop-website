@@ -33,10 +33,10 @@ const platformCards = [
     icon: "ph:windows-logo-fill",
     title: "Windows",
     requirement: "Windows 10 / 11 · 64 位（x64）",
-    requirementDetail: "暂不提供 32 位或 ARM64 版本",
+    requirementDetail: "未签名 Beta · 暂不提供 32 位或 ARM64",
     downloadKey: "winExe",
-    buttonLabel: "下载安装程序",
-    alternateLabel: "NSIS 安装程序（.exe）",
+    buttonLabel: "下载未签名 Beta",
+    alternateLabel: "NSIS 安装程序（.exe）· 未签名",
     meta: "x64",
   },
   {
@@ -64,7 +64,7 @@ const infoCards = [
   {
     title: "Windows 安装提示",
     items: [
-      "当前未配置 Authenticode 代码签名",
+      "Windows 安装包为未签名 Beta，未配置 Authenticode 代码签名",
       "安装时可能出现「未知发布者」或 SmartScreen 提示",
       "确认安装包来自 GitHub Releases 后，选择「仍要运行」即可",
     ],
@@ -127,7 +127,7 @@ const infoCards = [
                     )
                   }
                 </div>
-                <div class="dl-ver"><span data-version>v0.1.7</span> · {card.meta}</div>
+                <div class="dl-ver"><span data-version>v0.1.10</span> · {card.meta}</div>
               </article>
             ))
           }

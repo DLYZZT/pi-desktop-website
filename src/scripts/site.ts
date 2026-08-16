@@ -1,8 +1,8 @@
 import { withBase } from "../utils/paths";
 
 const REPO = "DLYZZT/pi-desktop";
-const FALLBACK_VERSION = "0.1.7";
-const RELEASE_CACHE_KEY = "pi-site-release-v0.1.7";
+const FALLBACK_VERSION = "0.1.10";
+const RELEASE_CACHE_KEY = "pi-site-release-v0.1.10";
 
 type Platform = {
   os: "mac" | "windows" | "linux" | "unknown";
@@ -61,7 +61,7 @@ function fallbackRelease(version: string): Release {
     macArmZip: `${base}/Pi-Agent-Desktop-${version}-arm64.zip`,
     macX64Dmg: `${base}/Pi-Agent-Desktop-${version}-x64.dmg`,
     macX64Zip: `${base}/Pi-Agent-Desktop-${version}-x64.zip`,
-    winExe: `${base}/Pi-Agent-Desktop-Setup-${version}.exe`,
+    winExe: `${base}/Pi-Agent-Desktop-Unsigned-Beta-Setup-${version}.exe`,
     linuxAppImage: `${base}/Pi-Agent-Desktop-${version}-x86_64.AppImage`,
   };
 }

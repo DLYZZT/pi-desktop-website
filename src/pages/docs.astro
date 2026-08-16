@@ -40,7 +40,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>下载安装</h2>
-          <p>打开<a href={withBase("download/")}>下载页面</a>，网站会优先推荐当前系统对应的安装包。v0.1.7 桌面安装包已经内置 Pi Coding Agent 0.84.0 运行时，日常使用不需要另外安装 Pi CLI。</p>
+          <p>打开<a href={withBase("download/")}>下载页面</a>，网站会优先推荐当前系统对应的安装包。v0.1.10 桌面安装包已经内置 Pi Coding Agent 0.84.0 运行时，日常使用不需要另外安装 Pi CLI。</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card">
@@ -49,7 +49,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             </article>
             <article class="guide-card">
               <h3>Windows</h3>
-              <p>支持 Windows 10 / 11 x64。运行 EXE 安装程序，按安装向导完成安装。</p>
+              <p>支持 Windows 10 / 11 x64。当前安装包为未签名 Beta，运行 EXE 后按安装向导完成安装。</p>
             </article>
             <article class="guide-card">
               <h3>Linux</h3>
@@ -66,7 +66,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
           <h3>Windows 安装</h3>
           <ol>
-            <li>下载 Windows x64 安装程序并运行。</li>
+            <li>下载 Windows x64 未签名 Beta 安装程序并运行。</li>
             <li>按安装向导完成安装。</li>
             <li>当前安装包尚未配置代码签名；如果 SmartScreen 显示“未知发布者”，确认文件来自项目的 <a href={`${repoUrl}/releases`} target="_blank" rel="noopener noreferrer">GitHub Releases</a> 后，选择“更多信息 → 仍要运行”。</li>
           </ol>
@@ -128,6 +128,15 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           </ol>
           <p>如果只是聊天或处理临时任务，也可以选择一个空目录。只有在你明确授权工具后，Agent 才能读取或修改相应项目文件。</p>
           <div class="note-box"><b>长会话不会被截断：</b>应用首次优先加载最近 20 个对话轮次。接近顶部时会自动预取更早消息，也可以点击“加载更早消息”；完整历史仍保存在本机。</div>
+
+          <h3>自动命名与回到最新消息</h3>
+          <p>新会话发送首条有效消息后，应用会用当前模型在后台生成不超过 40 个字符的简短标题，并实时更新侧边栏。标题生成不会进入会话历史或阻塞正常回复；模型不可用时会使用消息开头作为本地兜底。</p>
+          <ul>
+            <li>在“设置 → 通用 → 会话”中关闭或重新开启“自动命名新会话”。</li>
+            <li>手动设置的名称始终优先，自动标题不会覆盖手动重命名。</li>
+            <li>斜杠命令、空白、单字符和纯图片消息不会触发自动命名。</li>
+            <li>向上浏览旧消息后，点击右下角“滚动到底部”按钮即可回到最新内容并恢复流式输出自动跟随。</li>
+          </ul>
         </section>
 
         <section id="browser">
@@ -173,17 +182,19 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>配置模型</h2>
           <p class="guide-path"><b>入口</b><span>设置</span><i>→</i><span>模型</span></p>
-          <p>Pi Agent Desktop v0.1.7 内置 Pi Coding Agent 0.84.0，但不提供模型额度。你需要连接已有的模型服务账号，或填写模型服务商提供的 API Key。模型设置页面已经完整支持中文。</p>
+          <p>Pi Agent Desktop v0.1.10 内置 Pi Coding Agent 0.84.0，但不提供模型额度。你需要连接已有的模型服务账号，或填写模型服务商提供的 API Key。模型设置页面已经完整支持中文。</p>
           <SettingsPreview section="models" />
 
           <h3>使用 API Key</h3>
           <ol>
             <li>打开“设置 → 模型”，点击“添加服务商”。</li>
             <li>选择你的模型服务商。</li>
+            <li>如需代理或兼容端点，可先填写 Base URL；留空则使用服务商默认地址。</li>
             <li>粘贴 API Key，点击“保存”；应用会同步刷新 Agent Host 的模型状态。</li>
             <li>选择要使用的模型；如果界面提供“测试”，可以先测试连接。</li>
             <li>关闭设置，在会话输入框下方选择刚配置的模型。</li>
           </ol>
+          <p>Base URL 会覆盖当前 API Key 服务商的请求地址，并与 API Key 一起在点击页面底部“保存”后生效。模型目录刷新受到完整超时保护；即使服务初始化或最终目录整理卡住，也会停止等待并继续保留缓存模型。</p>
 
           <h3>管理模型显示范围</h3>
           <ol>

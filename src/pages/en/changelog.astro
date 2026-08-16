@@ -16,8 +16,81 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.7</span>
+            <span class="cl-tag">v0.1.10</span>
             <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-08-16">2026-08-16</time>
+          </div>
+          <p>This release adds automatic naming for new sessions: a short title is generated in the background after the first meaningful message, without blocking the normal reply and with manual names always taking priority.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Automatic session titles</h2>
+          <ul>
+            <li>The current session model generates a title in the background and updates the sidebar in real time. The request remains separate from session history and context caches.</li>
+            <li>Settings → General → Conversation now includes an Auto-title new sessions switch, enabled by default and fully localized in English and Chinese.</li>
+            <li>If the model is unavailable or the request fails, a local title is used. Quotes, line breaks, and trailing punctuation are normalized, with a 40-character limit.</li>
+            <li>A manual rename during generation is never overwritten. Slash commands, blank text, single-character messages, and image-only messages do not trigger a title.</li>
+            <li>Working-directory and model-runtime handling are tighter, and local fallback now runs correctly after model-service initialization failures.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.10-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.10-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.10.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.10-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>The bundled Pi Coding Agent runtime remains at 0.84.0.</li>
+            <li>The Windows installer is an Unsigned Beta and may trigger Unknown Publisher or SmartScreen warnings. Linux AppImage updates remain manual.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.9</span>
+            <time class="cl-date" datetime="2026-08-16">2026-08-16</time>
+          </div>
+          <p>This release improves control in long conversations: a Scroll to bottom button appears after leaving the latest content and restores automatic following for streaming output.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Conversation scrolling</h2>
+          <ul>
+            <li>Added a floating Scroll to bottom button with running-state feedback, English and Chinese copy, and reduced-motion support.</li>
+            <li>The live run spacer no longer distorts the near-bottom calculation, preventing incorrect button visibility.</li>
+            <li>Scroll magnet state persists across turns and session switches while intentional upward scrolling always disengages automatic following.</li>
+            <li>Delayed image loads and expanded process details now update button visibility and follow state as content height changes.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.9-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.9-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.9.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.9-x86_64.AppImage</code></li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.8</span>
+            <time class="cl-date" datetime="2026-08-15">2026-08-15</time>
+          </div>
+          <p>This release adds Base URLs for API-key providers and concentrates on reliable model refresh, localization, consistent theming, channel permission synchronization, and desktop resilience.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Models, interface, and channels</h2>
+          <ul>
+            <li>API-key providers can override their default endpoint with a Base URL. Model refresh now bounds both service initialization and final catalog projection with a timeout.</li>
+            <li>Completed English and Chinese coverage for the session sidebar, app navigation, file browsing and viewing, Skills, Plugins, and Agent notifications.</li>
+            <li>Unified themes across failure pages, Word previews, model connection status, and user-message bubbles, while bundling renderer fonts for offline use.</li>
+            <li>An account's default tool grant synchronizes to bound sessions. Grants are Pi Session-scoped, so channel entry points sharing a session remain consistent.</li>
+            <li>Strengthened security, performance, and failure recovery across the shared browser, desktop IPC, file access, updates, crash recovery, and long-running operation.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.8-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.8-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.8.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.8-x86_64.AppImage</code></li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.7</span>
             <time class="cl-date" datetime="2026-08-10">2026-08-10</time>
           </div>
           <p>This release streamlines model configuration and Feishu / Lark setup: control which models appear for each provider and create and connect a new bot through the official QR flow.</p>

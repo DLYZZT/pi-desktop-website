@@ -41,11 +41,11 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.7 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.10 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
-            <article class="guide-card"><h3>Windows</h3><p>Windows 10 and 11 x64 are supported. Run the EXE installer and follow the setup wizard.</p></article>
+            <article class="guide-card"><h3>Windows</h3><p>Windows 10 and 11 x64 are supported. The current installer is an unsigned Beta; run the EXE and follow the setup wizard.</p></article>
             <article class="guide-card"><h3>Linux</h3><p>Linux x64 is available as an AppImage. Make it executable, then open it from your file manager or application menu.</p></article>
           </div>
 
@@ -58,7 +58,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
           <h3>Install on Windows</h3>
           <ol>
-            <li>Download and run the Windows x64 installer.</li>
+            <li>Download and run the unsigned Windows x64 Beta installer.</li>
             <li>Follow the setup wizard.</li>
             <li>The installer is not code-signed yet. If SmartScreen shows “Unknown publisher,” confirm the file came from <a href={`${repoUrl}/releases`} target="_blank" rel="noopener noreferrer">GitHub Releases</a>, then choose More info → Run anyway.</li>
           </ol>
@@ -99,6 +99,15 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <ol><li>Choose a project folder in the left sidebar.</li><li>Select New session.</li><li>Make sure an available model is selected below the composer.</li><li>Describe a goal, such as “Explain this project” or “Find the login page.”</li></ol>
           <p>For chat or temporary work, you can choose an empty folder. The Agent can read or modify project files only when you authorize the relevant tools.</p>
           <div class="note-box"><b>Long sessions are not truncated:</b> The app initially prioritizes the most recent 20 conversation turns. It prefetches older messages near the top, or you can select Load earlier messages. The complete history remains on your machine.</div>
+
+          <h3>Auto-titles and returning to the latest message</h3>
+          <p>After the first meaningful message in a new session, the app uses the current model in the background to generate a title of up to 40 characters and updates the sidebar in real time. The request never enters session history or blocks the normal reply; if the model is unavailable, the beginning of the message provides a local fallback.</p>
+          <ul>
+            <li>Turn Auto-title new sessions off or on under Settings → General → Conversation.</li>
+            <li>Manual names always win and are never overwritten by an automatic title.</li>
+            <li>Slash commands, blank text, single-character messages, and image-only messages do not trigger a title.</li>
+            <li>After scrolling upward, use the floating Scroll to bottom button to return to the latest content and re-enable automatic following during streaming.</li>
+          </ul>
         </section>
 
         <section id="browser">
@@ -132,11 +141,12 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop v0.1.7 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+          <p>Pi Agent Desktop v0.1.10 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
           <SettingsPreview section="models" lang="en" />
 
           <h3>Use an API key</h3>
-          <ol><li>Open Settings → Models and select Add provider.</li><li>Choose your model provider.</li><li>Paste the API key and save. The app synchronizes the Agent Host model state.</li><li>Select a model. If a Test action is available, use it to verify the connection.</li><li>Close Settings and choose the model below the conversation composer.</li></ol>
+          <ol><li>Open Settings → Models and select Add provider.</li><li>Choose your model provider.</li><li>For a proxy or compatible endpoint, enter a Base URL; leave it blank to use the provider default.</li><li>Paste the API key and save. The app synchronizes the Agent Host model state.</li><li>Select a model. If a Test action is available, use it to verify the connection.</li><li>Close Settings and choose the model below the conversation composer.</li></ol>
+          <p>The Base URL overrides the endpoint for the current API-key provider and takes effect with the API key after you select Save at the bottom of the page. Model catalog refresh is fully timeout-bounded: even if service creation or final catalog projection stalls, the app stops waiting and preserves the cached models.</p>
 
           <h3>Control which models appear</h3>
           <ol><li>Open Settings → Models and choose a connected subscription or API-key provider.</li><li>Review the enabled count. When a provider has many models, search by model name or ID.</li><li>Toggle models individually, or use Enable all and Disable all for the provider.</li><li>Wait for the selection to save, then return to the conversation model selector.</li></ol>
