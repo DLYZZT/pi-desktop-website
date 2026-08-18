@@ -16,8 +16,64 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.10</span>
+            <span class="cl-tag">v0.1.12</span>
             <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-08-18">2026-08-18</time>
+          </div>
+          <p>This release fixes a Windows issue where project history disappeared from the session sidebar after switching between the main workspace and a linked worktree and would not return without restarting.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Windows worktree session fix</h2>
+          <ul>
+            <li>The main workspace and linked worktrees now share Git's reported top-level path, eliminating slash mismatches between session files and Git output.</li>
+            <li>The session sidebar and app shell use Windows-aware path comparison for separators, drive and path casing, and trailing separators.</li>
+            <li>Repository subdirectories keep their independent project identity, and submodule semantics remain intact.</li>
+            <li>When the sandboxed Renderer has no <code>process</code> global, Windows is detected through platform information exposed by preload.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.12-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.12-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.12.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.12-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>The bundled Pi Coding Agent runtime remains at 0.84.0.</li>
+            <li>The Windows installer is an Unsigned Beta and may trigger Unknown Publisher or SmartScreen warnings. Linux AppImage updates remain manual.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.11</span>
+            <time class="cl-date" datetime="2026-08-18">2026-08-18</time>
+          </div>
+          <p>This release adds an end-to-end local-file experience: attach any file in chat, recognize local paths in Markdown, and use rich system actions from file-link context menus.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Attachments and local files</h2>
+          <ul>
+            <li>Drag and drop, paste, or use the attachment button for any file. Non-images appear as file cards, can be sent without text, and work in Steer / Follow-up queues during streaming.</li>
+            <li>Markdown recognizes Windows, POSIX, and UNC local paths while preserving <code>file:</code> links. Absolute paths can be revealed in the system file manager, and repository-relative paths still open in the app.</li>
+            <li>File-link context menus can open a file, use the default app or Open with, save a copy, copy the path or text contents, and reveal it in its folder. Windows reads real file associations.</li>
+            <li>Attachment sends use stable snapshots, failed content merges back into the latest draft, and file references are validated as absolute paths, deduplicated, and count-limited.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Conversation experience and safety</h2>
+          <ul>
+            <li>Thinking-block expansion state persists across session switches, new blocks inherit the latest choice, and storage is isolated by session and bounded.</li>
+            <li>An upward wheel action or <code>ArrowUp</code>, <code>PageUp</code>, or <code>Home</code> immediately releases scroll following.</li>
+            <li>Empty text segments between thinking and tool calls are filtered to prevent blank assistant bubbles.</li>
+            <li>Main resolves real paths, validates file type and working-directory boundaries, and limits copied file contents by size and text type.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.11-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.11-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.11.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.11-x86_64.AppImage</code></li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.10</span>
             <time class="cl-date" datetime="2026-08-16">2026-08-16</time>
           </div>
           <p>This release adds automatic naming for new sessions: a short title is generated in the background after the first meaningful message, without blocking the normal reply and with manual names always taking priority.</p>

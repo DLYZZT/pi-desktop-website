@@ -16,8 +16,64 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.10</span>
+            <span class="cl-tag">v0.1.12</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-08-18">2026-08-18</time>
+          </div>
+          <p>本次版本修复 Windows 下切换主工作区与 linked worktree 后，项目历史会话从侧边栏消失且无法恢复的问题。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Windows Worktree 会话修复</h2>
+          <ul>
+            <li>主工作区和 linked worktree 统一使用 Git 报告的顶层路径，消除会话文件与 Git 输出之间的斜杠差异。</li>
+            <li>会话侧边栏和应用外壳使用 Windows 感知的路径比较，统一处理分隔符、盘符与路径大小写及尾部分隔符。</li>
+            <li>继续保留仓库子目录的独立项目身份和子模块语义，不会把所有目录错误合并为同一个项目。</li>
+            <li>在沙箱 Renderer 不提供 <code>process</code> 时，通过 preload 平台信息正确识别 Windows。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.12-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.12-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.12.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.12-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时仍为 0.84.0。</li>
+            <li>Windows 安装包为未签名 Beta，可能出现“未知发布者”或 SmartScreen 提示；Linux AppImage 继续使用手动更新。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.11</span>
+            <time class="cl-date" datetime="2026-08-18">2026-08-18</time>
+          </div>
+          <p>本次版本带来端到端本地文件体验：聊天可附加任意文件，Markdown 自动识别本地路径，并为文件链接提供丰富的系统右键操作。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />附件与本地文件</h2>
+          <ul>
+            <li>拖放、粘贴和附件按钮均可添加任意文件；非图片显示为文件卡片，支持纯附件发送及流式回复期间加入 Steer / Follow-up 队列。</li>
+            <li>Markdown 自动识别 Windows、POSIX 和 UNC 本地路径并保留 <code>file:</code> 链接；绝对路径可在系统文件管理器中定位，仓库相对路径仍在应用内打开。</li>
+            <li>文件链接右键菜单支持打开文件、默认应用、打开方式、另存为、复制路径、复制文本内容和在文件夹中显示；Windows 会读取真实文件关联。</li>
+            <li>附件发送使用稳定快照，失败内容会合并回最新草稿；文件引用统一校验绝对路径、去重并限制数量。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />对话体验与安全</h2>
+          <ul>
+            <li>思考块展开/折叠状态会跨会话切换保留，新思考块沿用最近选择，并按会话隔离和限制容量。</li>
+            <li>向上滚轮或按下 <code>ArrowUp</code>、<code>PageUp</code>、<code>Home</code> 会立即解除滚动跟随。</li>
+            <li>过滤思考或工具调用之间的空文本段，避免出现空白助手气泡。</li>
+            <li>Main 负责解析真实路径、校验文件类型与工作目录，并限制可复制文件内容的大小和文本类型。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.11-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.11-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.11.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.11-x86_64.AppImage</code></li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.10</span>
             <time class="cl-date" datetime="2026-08-16">2026-08-16</time>
           </div>
           <p>本次版本为新会话加入自动命名：首条有效消息发送后在后台生成简短标题，同时保证正常回复不被阻塞、手动名称永远优先。</p>

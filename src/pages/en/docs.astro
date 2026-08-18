@@ -41,7 +41,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.10 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.12 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
@@ -87,7 +87,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             </article>
             <article class="guide-card">
               <h3>Center: conversation</h3>
-              <ul><li>Send prompts and read streaming replies</li><li>Inspect reasoning and tool-call results</li><li>Choose the model, reasoning level, and tool preset</li><li>Add images or reference files with <code>@</code></li></ul>
+              <ul><li>Send prompts and read streaming replies</li><li>Inspect reasoning and tool-call results</li><li>Choose the model, reasoning level, and tool preset</li><li>Drag, paste, or attach any file, or reference project files with <code>@</code></li></ul>
             </article>
             <article class="guide-card">
               <h3>Right: files and browser</h3>
@@ -108,6 +108,16 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>Slash commands, blank text, single-character messages, and image-only messages do not trigger a title.</li>
             <li>After scrolling upward, use the floating Scroll to bottom button to return to the latest content and re-enable automatic following during streaming.</li>
           </ul>
+
+          <h3>Send attachments and use local file links</h3>
+          <ul>
+            <li>Add images or any file through drag and drop, paste, or the attachment button beside the composer. Non-image attachments appear as file cards.</li>
+            <li>Attachments can be sent without text. Messages with attachments can also enter the Steer / Follow-up queue while the Agent is streaming.</li>
+            <li>If sending fails, attachments and text merge back into the current draft without overwriting anything typed while the send was in progress.</li>
+            <li>Markdown messages recognize Windows, POSIX, and UNC local paths. Repository-relative paths open inside the app, while absolute paths can be revealed in the system file manager.</li>
+            <li>Right-click a local file link to open it, choose the default app or Open with, save a copy, copy its path or text contents, or reveal it in its folder.</li>
+          </ul>
+          <div class="note-box"><b>Thinking-block preference:</b> When you expand or collapse a thinking block, the app remembers that choice for the current session. New blocks inherit the latest state, isolated from other sessions.</div>
         </section>
 
         <section id="browser">
@@ -141,7 +151,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop v0.1.10 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+          <p>Pi Agent Desktop v0.1.12 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
           <SettingsPreview section="models" lang="en" />
 
           <h3>Use an API key</h3>
