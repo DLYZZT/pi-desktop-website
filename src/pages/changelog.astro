@@ -16,8 +16,40 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.12</span>
+            <span class="cl-tag">v0.1.13</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-08-19">2026-08-19</time>
+          </div>
+          <p>本次版本新增聊天字号与对话宽度设置，并重构 <code>@</code> 文件引用候选，让大型非 Git 工作区中的文件浏览和搜索更完整、更可靠。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />聊天外观</h2>
+          <ul>
+            <li>“设置 → 通用 → 会话”新增聊天字号和对话宽度；字号提供小、标准、大、特大四档，修改立即生效并跨重启保存。</li>
+            <li>舒适宽度保持 760px，扩展宽度随窗口自适应且最大为 960px。</li>
+            <li>统一消息、过程详情和输入框的内容边界，修复宽屏与最小窗口下对话气泡和输入区对齐不一致的问题。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" /><code>@</code> 文件引用</h2>
+          <ul>
+            <li>文件候选改为按需浏览和受管 <code>fd</code> 搜索，直接浏览与搜索候选上限均为 300，避免大型目录中的前置内容耗尽配额。</li>
+            <li>以用户主目录为工作区时默认隐藏 Windows <code>AppData</code> 或 macOS <code>Library</code>，显式输入目录名称时仍可访问。</li>
+            <li>搜索工具不可用、超时或失败时会显示明确的降级状态，同时保留当前目录候选，避免卡死或静默返回误导结果。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.13-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.13-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.13.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.13-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时仍为 0.84.0。</li>
+            <li>Windows 安装包为未签名 Beta，可能出现“未知发布者”或 SmartScreen 提示；Linux AppImage 继续使用手动更新。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.12</span>
             <time class="cl-date" datetime="2026-08-18">2026-08-18</time>
           </div>
           <p>本次版本修复 Windows 下切换主工作区与 linked worktree 后，项目历史会话从侧边栏消失且无法恢复的问题。</p>

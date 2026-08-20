@@ -16,8 +16,40 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.12</span>
+            <span class="cl-tag">v0.1.13</span>
             <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-08-19">2026-08-19</time>
+          </div>
+          <p>This release adds chat font-size and conversation-width controls, and reworks <code>@</code> file-reference suggestions for more complete and reliable browsing and search in large non-Git workspaces.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Chat appearance</h2>
+          <ul>
+            <li>Settings → General → Conversation now offers Small, Standard, Large, and Extra Large chat sizes plus conversation-width controls. Changes apply immediately and persist across restarts.</li>
+            <li>Comfortable width remains at 760px, while Expanded adapts to the window up to a maximum of 960px.</li>
+            <li>Message, process-detail, and composer boundaries now align consistently in wide and minimum-width windows.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" /><code>@</code> file references</h2>
+          <ul>
+            <li>Suggestions now use on-demand browsing and managed <code>fd</code> search, with up to 300 results for both browsing and search so early folders cannot exhaust the quota.</li>
+            <li>When the workspace is a user home directory, Windows <code>AppData</code> or macOS <code>Library</code> is hidden by default but remains available when explicitly typed.</li>
+            <li>If the search tool is unavailable, times out, or fails, the app reports a clear fallback state and keeps current-directory candidates instead of hanging or returning misleading results.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.1.13-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.1.13-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.13.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.1.13-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>The bundled Pi Coding Agent runtime remains at 0.84.0.</li>
+            <li>The Windows installer is an Unsigned Beta and may trigger Unknown Publisher or SmartScreen warnings. Linux AppImage updates remain manual.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.12</span>
             <time class="cl-date" datetime="2026-08-18">2026-08-18</time>
           </div>
           <p>This release fixes a Windows issue where project history disappeared from the session sidebar after switching between the main workspace and a linked worktree and would not return without restarting.</p>

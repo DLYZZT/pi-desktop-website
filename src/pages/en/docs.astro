@@ -41,7 +41,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.12 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.13 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
@@ -109,6 +109,14 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>After scrolling upward, use the floating Scroll to bottom button to return to the latest content and re-enable automatic following during streaming.</li>
           </ul>
 
+          <h3>Adjust chat size and conversation width</h3>
+          <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>General</span><i>→</i><span>Conversation</span></p>
+          <ul>
+            <li>Choose Small, Standard, Large, or Extra Large chat text. Changes apply immediately and persist across restarts.</li>
+            <li>Comfortable width stays at 760px; Expanded adapts to the window up to 960px.</li>
+            <li>Messages, process details, and the composer share aligned content boundaries in both wide and minimum-width windows.</li>
+          </ul>
+
           <h3>Send attachments and use local file links</h3>
           <ul>
             <li>Add images or any file through drag and drop, paste, or the attachment button beside the composer. Non-image attachments appear as file cards.</li>
@@ -116,6 +124,8 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>If sending fails, attachments and text merge back into the current draft without overwriting anything typed while the send was in progress.</li>
             <li>Markdown messages recognize Windows, POSIX, and UNC local paths. Repository-relative paths open inside the app, while absolute paths can be revealed in the system file manager.</li>
             <li>Right-click a local file link to open it, choose the default app or Open with, save a copy, copy its path or text contents, or reveal it in its folder.</li>
+            <li>When you type <code>@</code> to reference a project file, the app browses and searches on demand with up to 300 candidates. In a user-home workspace, <code>AppData</code> or <code>Library</code> is hidden by default but remains accessible when explicitly typed.</li>
+            <li>If the file-search tool is unavailable, times out, or fails, the UI shows a fallback state and keeps current-directory candidates instead of blocking input or silently returning incomplete results.</li>
           </ul>
           <div class="note-box"><b>Thinking-block preference:</b> When you expand or collapse a thinking block, the app remembers that choice for the current session. New blocks inherit the latest state, isolated from other sessions.</div>
         </section>
@@ -151,7 +161,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop v0.1.12 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+          <p>Pi Agent Desktop v0.1.13 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
           <SettingsPreview section="models" lang="en" />
 
           <h3>Use an API key</h3>
