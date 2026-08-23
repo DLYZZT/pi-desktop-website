@@ -1041,7 +1041,7 @@ html.dark .app-preview {
 
 .preview-tabs {
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
+  grid-template-columns: 62px 58px minmax(0, 1fr);
   height: 29px;
   border-bottom: 1px solid var(--preview-line);
 }

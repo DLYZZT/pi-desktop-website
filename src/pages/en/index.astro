@@ -37,23 +37,24 @@ const features = [
     description: "Connect WeChat, Telegram, and Feishu / Lark. Create a new Feishu / Lark bot through the official QR flow or connect an existing custom app.",
   },
   {
-    icon: "ph:clock-clockwise",
-    title: "Designed to keep running",
-    description: "Single-instance behavior, system tray, notifications, badges, remembered window state, system theme support, automatic Agent Host recovery, and diagnostics export.",
+    icon: "ph:terminal-window",
+    title: "Observable managed processes",
+    description: "Let the Agent keep dev servers, watchers, and mock APIs running. Inspect state, readiness, and redacted logs, then stop, restart, or export logs from the right panel.",
   },
   {
     icon: "ph:shield-check",
     title: "Secure by default",
-    description: "Renderer sandboxing, a strict CSP, and typed IPC contracts. No local ports are opened, and sessions and configuration remain on your machine.",
+    description: "Renderer sandboxing, a strict CSP, and typed IPC contracts. The UI and control plane open no local ports; managed project services require explicit enablement.",
   },
 ];
 
 const checks = [
   ["Local data", "Sessions and Pi configuration stay on your machine by default", "~/.pi/agent/"],
-  ["No local ports", "The UI does not open additional local network ports"],
+  ["No internal ports", "The UI and control plane open no local ports; user-started project services may listen on loopback"],
   ["Minimal exposure", "Renderer sandbox + strict CSP + controlled preload bridge"],
   ["Browser isolation", "Remote pages receive no application preload, Node.js, or main Renderer bridge"],
-  ["Separate permissions", "Coding permission never implicitly enables Browser read / interact"],
+  ["Separate permissions", "Coding, Browser, and managed-process capabilities never implicitly enable one another"],
+  ["Processes off by default", "Managed processes are session-isolated lifecycle control, not a security sandbox"],
   ["Encrypted credentials", "Channel tokens are encrypted with Electron safeStorage and never returned to the Renderer"],
   ["Trusted updates", "Update settings are fixed in production builds and do not accept external update URLs"],
 ];
@@ -62,17 +63,17 @@ const checks = [
 <BaseLayout
   lang="en"
   title="Pi Agent Desktop — A true desktop workspace for Pi Coding Agent"
-  description="Pi Agent Desktop is a local-first workspace for Pi Coding Agent with sessions, project files, a shared browser, models, extensions, and messaging on macOS, Windows, and Linux."
+  description="Pi Agent Desktop is a local-first workspace for Pi Coding Agent with sessions, project files, a shared browser, managed processes, models, extensions, and messaging on macOS, Windows, and Linux."
 >
   <main id="main-content">
     <section class="hero">
       <div class="container">
         <img class="hero-icon" src={withBase("icon.png")} alt="Pi Agent Desktop icon" width="104" height="104" />
         <h1>Pi Coding Agent<br />Desktop Workspace</h1>
-        <p class="hero-sub">Sessions, files, a shared browser, models, and messaging channels in one local-first desktop app. No command line required—install and start working.</p>
+        <p class="hero-sub">Sessions, files, a shared browser, managed processes, models, and messaging channels in one local-first desktop app. No command line required—install and start working.</p>
         <div class="hero-tags" aria-label="Product highlights">
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />Local-first</span>
-          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />No local server</span>
+          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />No internal server</span>
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />Cross-platform</span>
         </div>
         <div class="hero-cta">
@@ -86,7 +87,7 @@ const checks = [
           </a>
         </div>
         <p class="hero-meta">
-          Current version <span data-version>v0.1.13</span><span class="dot">·</span>macOS, Windows, and Linux<span class="dot">·</span><a href={localizedPath("en", "changelog/")}>View changelog</a>
+          Current version <span data-version>v0.1.14</span><span class="dot">·</span>macOS, Windows, and Linux<span class="dot">·</span><a href={localizedPath("en", "changelog/")}>View changelog</a>
         </p>
 
         <AppPreview lang="en" />
@@ -98,7 +99,7 @@ const checks = [
         <div class="section-head-center">
           <p class="eyebrow">Features</p>
           <h2 class="section-title">A complete Agent workspace</h2>
-          <p class="section-desc">From sessions, file previews, and a shared browser to models, extensions, and messaging, everything you need for everyday work lives in one window.</p>
+          <p class="section-desc">From sessions, file previews, and a shared browser to managed processes, models, extensions, and messaging, everything you need for everyday work lives in one window.</p>
         </div>
         <div class="feature-grid">
           {features.map((feature) => (
@@ -132,18 +133,19 @@ const checks = [
         <div class="section-head-center">
           <p class="eyebrow">Architecture</p>
           <h2 class="section-title">Three isolated processes, sandboxed web content</h2>
-          <p class="section-desc">Privileged desktop capabilities, the Agent runtime, and the UI are isolated. Remote pages live in sandboxed Browser Views created by Main.</p>
+          <p class="section-desc">Privileged desktop capabilities, the Agent runtime, and the UI are isolated. Remote pages live in sandboxed Browser Views while Agent Host manages project-task lifecycles.</p>
         </div>
         <div class="arch-flow">
           <div class="arch-box"><h4>Main process</h4><p>Window · Tray · Updates<br />Browser Views and network policy</p></div>
-          <div class="arch-box"><h4>Agent Host</h4><p>Pi Coding Agent inside<br />an Electron utilityProcess</p></div>
+          <div class="arch-box"><h4>Agent Host</h4><p>Pi Coding Agent in a utilityProcess<br />Managed project-process lifecycles</p></div>
           <div class="arch-box"><h4>Renderer</h4><p>React 19 UI<br />Controlled preload bridge</p></div>
           <div class="arch-box"><h4>Browser View</h4><p>Real Chromium pages<br />Sandbox · Profiles · Separate grants</p></div>
         </div>
         <div class="arch-note">
           <span class="chip">Typed MessagePort IPC</span>
           <span class="chip">Revisioned Browser RPC</span>
-          <span class="chip">No local ports</span>
+          <span class="chip">No control-plane ports</span>
+          <span class="chip">POSIX groups / Windows Job Objects</span>
           <span class="chip">Data stays in ~/.pi/agent/</span>
         </div>
       </div>

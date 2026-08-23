@@ -42,25 +42,26 @@ const features = [
       "个人微信、Telegram 与飞书 / Lark 接入；飞书 / Lark 可通过官方扫码创建机器人，也可连接已有自建应用。",
   },
   {
-    icon: "ph:clock-clockwise",
-    title: "为长期运行而设计",
+    icon: "ph:terminal-window",
+    title: "可观察的受管进程",
     description:
-      "单实例、系统托盘、桌面通知与角标，窗口状态记忆、系统主题跟随，Agent Host 崩溃自动恢复与诊断信息导出。",
+      "让 Agent 持续运行开发服务器、watcher 与 mock API；在右侧查看状态、readiness 和脱敏日志，并可停止、重启或导出日志。",
   },
   {
     icon: "ph:shield-check",
     title: "安全默认开启",
     description:
-      "Renderer sandbox、严格 CSP 与类型化 IPC 契约；不监听任何本地端口，会话与配置始终留在本机。",
+      "Renderer sandbox、严格 CSP 与类型化 IPC 契约；UI 和控制面不监听本地端口，受管项目服务需要显式开启。",
   },
 ];
 
 const checks = [
   ["数据本地留存", "会话与 Pi 配置默认保存在本机", "~/.pi/agent/"],
-  ["零本地端口", "UI 通信不额外开放任何本地网络端口"],
+  ["零内部端口", "UI 与控制面不额外开放本地端口；用户启动的项目服务可监听 loopback"],
   ["最小暴露面", "Renderer sandbox + 严格 CSP + 受控 preload 桥接"],
   ["浏览器隔离", "远程网页不获得应用 preload、Node 或主 Renderer bridge"],
-  ["权限相互独立", "Coding 权限不会隐式开启 Browser read / interact"],
+  ["权限相互独立", "Coding、Browser 与受管进程能力不会相互隐式授权"],
+  ["进程默认关闭", "受管进程按会话隔离，提供生命周期控制但不是安全沙箱"],
   ["凭证加密", "渠道 token 由 Electron safeStorage 加密，不回传 Renderer"],
   ["可信更新", "更新配置固定于正式包内，不接收外部更新地址"],
 ];
@@ -68,17 +69,17 @@ const checks = [
 
 <BaseLayout
   title="Pi Agent Desktop — 把 Pi Coding Agent 变成真正的桌面工作台"
-  description="Pi Agent Desktop 是 Pi Coding Agent 的本地优先桌面工作台，集成会话、项目文件、共享浏览器、模型、扩展与消息渠道，支持 macOS、Windows 与 Linux。"
+  description="Pi Agent Desktop 是 Pi Coding Agent 的本地优先桌面工作台，集成会话、项目文件、共享浏览器、受管进程、模型、扩展与消息渠道，支持 macOS、Windows 与 Linux。"
 >
   <main id="main-content">
     <section class="hero">
       <div class="container">
         <img class="hero-icon" src={withBase("icon.png")} alt="Pi Agent Desktop 图标" width="104" height="104" />
         <h1>Pi Coding Agent <br />桌面工作台</h1>
-        <p class="hero-sub">会话、文件、共享浏览器、模型与消息渠道，统一收进一个本地优先的桌面应用。无需命令行，安装即用。</p>
+        <p class="hero-sub">会话、文件、共享浏览器、受管进程、模型与消息渠道，统一收进一个本地优先的桌面应用。无需命令行，安装即用。</p>
         <div class="hero-tags" aria-label="产品特点">
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />本地优先</span>
-          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />零本地服务器</span>
+          <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />零内部服务器</span>
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />跨平台应用</span>
         </div>
         <div class="hero-cta">
@@ -92,7 +93,7 @@ const checks = [
           </a>
         </div>
         <p class="hero-meta">
-          当前版本 <span data-version>v0.1.13</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
+          当前版本 <span data-version>v0.1.14</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
         </p>
 
         <AppPreview />
@@ -104,7 +105,7 @@ const checks = [
         <div class="section-head-center">
           <p class="eyebrow">Features</p>
           <h2 class="section-title">一个完整的 Agent 工作台</h2>
-          <p class="section-desc">从会话管理、文件预览和共享浏览器，到模型、扩展与消息渠道，桌面端把日常工作所需的一切收进同一个窗口。</p>
+          <p class="section-desc">从会话管理、文件预览和共享浏览器，到受管进程、模型、扩展与消息渠道，桌面端把日常工作所需的一切收进同一个窗口。</p>
         </div>
         <div class="feature-grid">
           {
@@ -140,7 +141,7 @@ const checks = [
         <div class="section-head-center">
           <p class="eyebrow">Architecture</p>
           <h2 class="section-title">三进程隔离，网页独立承载</h2>
-          <p class="section-desc">高权限桌面能力、Agent 运行时和 UI 相互隔离；远程网页由 Main 创建的沙箱化 Browser View 承载。</p>
+          <p class="section-desc">高权限桌面能力、Agent 运行时和 UI 相互隔离；远程网页由沙箱化 Browser View 承载，项目任务由 Agent Host 统一管理生命周期。</p>
         </div>
         <div class="arch-flow">
           <div class="arch-box">
@@ -149,7 +150,7 @@ const checks = [
           </div>
           <div class="arch-box">
             <h4>Agent Host</h4>
-            <p>utilityProcess 中运行<br />Pi Coding Agent</p>
+            <p>utilityProcess 中运行 Pi Coding Agent<br />管理项目进程生命周期</p>
           </div>
           <div class="arch-box">
             <h4>Renderer</h4>
@@ -163,7 +164,8 @@ const checks = [
         <div class="arch-note">
           <span class="chip">类型化 MessagePort IPC</span>
           <span class="chip">revisioned Browser RPC</span>
-          <span class="chip">零本地端口</span>
+          <span class="chip">控制面零本地端口</span>
+          <span class="chip">POSIX group / Windows Job Object</span>
           <span class="chip">数据留在 ~/.pi/agent/</span>
         </div>
       </div>

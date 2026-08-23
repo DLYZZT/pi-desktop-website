@@ -1,8 +1,8 @@
 import { withBase } from "../utils/paths";
 
 const REPO = "DLYZZT/pi-desktop";
-const FALLBACK_VERSION = "0.1.13";
-const RELEASE_CACHE_KEY = "pi-site-release-v0.1.13";
+const FALLBACK_VERSION = "0.1.14";
+const RELEASE_CACHE_KEY = "pi-site-release-v0.1.14";
 
 type Platform = {
   os: "mac" | "windows" | "linux" | "unknown";

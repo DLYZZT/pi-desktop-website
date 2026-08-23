@@ -67,6 +67,7 @@ const infoCards = [
       "Windows 安装包为未签名 Beta，未配置 Authenticode 代码签名",
       "安装时可能出现「未知发布者」或 SmartScreen 提示",
       "确认安装包来自 GitHub Releases 后，选择「仍要运行」即可",
+      "受管后台进程功能需要 Windows 11 x64；Windows 10 可继续使用其他桌面功能",
     ],
   },
   {
@@ -127,7 +128,7 @@ const infoCards = [
                     )
                   }
                 </div>
-                <div class="dl-ver"><span data-version>v0.1.13</span> · {card.meta}</div>
+                <div class="dl-ver"><span data-version>v0.1.14</span> · {card.meta}</div>
               </article>
             ))
           }
@@ -145,7 +146,7 @@ const infoCards = [
         </div>
 
         <p class="release-note">
-          需要历史版本、blockmap 或更新元数据？请访问
+          需要历史版本、blockmap、更新元数据、Windows SBOM 或第三方依赖声明？请访问
           <a href={releasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases</a>
         </p>
       </div>

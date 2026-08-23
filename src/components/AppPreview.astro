@@ -11,7 +11,7 @@ const { variant = "hero", lang = "zh" } = Astro.props;
 const isEnglish = lang === "en";
 const copy = isEnglish
   ? {
-      aria: "High-resolution Pi Agent Desktop preview with projects and sessions on the left, an Agent conversation in the center, and the shared browser on the right",
+      aria: "High-resolution Pi Agent Desktop preview with projects and sessions on the left, an Agent conversation in the center, and files, processes, or the shared browser on the right",
       newSession: "New session",
       sessions: "Sessions",
       search: "Search sessions...",
@@ -33,6 +33,7 @@ const copy = isEnglish
         "Pi Agent Desktop positioning and download entry points",
         "Fast paginated sessions, tool calls, project files, models, and extensions",
         "A built-in browser shared by the user and Agent",
+        "Observable managed development processes",
         "WeChat, Telegram, and Feishu / Lark messaging channels",
         "Isolated Electron processes and local privacy controls",
         "macOS, Windows, and Linux downloads",
@@ -44,14 +45,15 @@ const copy = isEnglish
       preset: "Standard",
       compact: "Compact context",
       browserTab: "Browser",
+      processesTab: "Processes",
       browserGrant: "Browser interact · session grant",
       browserEyebrow: "PI AGENT DESKTOP",
       browserTitle: "A true desktop workspace",
-      browserText: "Sessions, files, browser, models, and messaging in one local-first app.",
+      browserText: "Sessions, files, browser, managed processes, models, and messaging in one local-first app.",
       browserCta: "View releases",
     }
   : {
-      aria: "Pi Agent Desktop 高清界面预览，左侧为项目和会话，中间为 Agent 对话，右侧为用户与 Agent 共享的内置浏览器",
+      aria: "Pi Agent Desktop 高清界面预览，左侧为项目和会话，中间为 Agent 对话，右侧为文件、受管进程或用户与 Agent 共享的内置浏览器",
       newSession: "新建会话",
       sessions: "会话",
       search: "搜索会话...",
@@ -73,6 +75,7 @@ const copy = isEnglish
         "Pi Agent Desktop 核心定位与下载入口",
         "快速分页会话、工具调用、项目文件、模型及扩展管理",
         "用户与 Agent 共享的内置浏览器",
+        "可观察、可控制的受管开发进程",
         "微信、Telegram、飞书/Lark 消息渠道",
         "Electron 进程隔离及本地隐私策略",
         "macOS、Windows 与 Linux 下载",
@@ -84,10 +87,11 @@ const copy = isEnglish
       preset: "标准",
       compact: "压缩上下文",
       browserTab: "浏览器",
+      processesTab: "进程",
       browserGrant: "浏览器交互 · 当前会话授权",
       browserEyebrow: "PI AGENT DESKTOP",
       browserTitle: "真正的桌面工作台",
-      browserText: "会话、文件、浏览器、模型与消息渠道，统一收进一个本地优先的应用。",
+      browserText: "会话、文件、浏览器、受管进程、模型与消息渠道，统一收进一个本地优先的应用。",
       browserCta: "查看发布版本",
     };
 ---
@@ -203,6 +207,7 @@ const copy = isEnglish
     <aside class="preview-files preview-browser-panel">
       <div class="preview-tabs">
         <span><Icon name="ph:folder-simple" />Explorer</span>
+        <span><Icon name="ph:terminal-window" />{copy.processesTab}</span>
         <span class="preview-tab-active"><Icon name="ph:globe" />{copy.browserTab} <Icon name="ph:x" /></span>
       </div>
       <div class="preview-browser-toolbar">

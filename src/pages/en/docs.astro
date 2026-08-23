@@ -11,7 +11,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 <BaseLayout
   lang="en"
   title="User Guide — Pi Agent Desktop"
-  description="Learn how to install Pi Agent Desktop, use its built-in browser and workspace, configure models, and manage Skills, Plugins, messaging channels, and developer tools."
+  description="Learn how to install Pi Agent Desktop, use its workspace, built-in browser, and managed background processes, configure models, and manage extensions and developer tools."
 >
   <main id="main-content" class="container">
     <div class="docs-layout">
@@ -19,6 +19,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <a href="#install">Download and install</a>
         <a href="#workspace">Main workspace</a>
         <a href="#browser">Built-in browser</a>
+        <a href="#processes">Managed processes</a>
         <a href="#models">Configure models</a>
         <a href="#skills">Skills settings</a>
         <a href="#plugins">Plugins settings</a>
@@ -41,7 +42,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.13 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.14 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
@@ -77,7 +78,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Meet the main workspace</h2>
           <figure class="guide-figure">
             <AppPreview variant="docs" lang="en" />
-            <figcaption>The workspace contains sessions on the left, the conversation in the center, and files or the shared browser on the right.</figcaption>
+            <figcaption>The workspace contains sessions on the left, the conversation in the center, and files, managed processes, or the shared browser on the right.</figcaption>
           </figure>
 
           <div class="guide-grid guide-grid-three">
@@ -90,8 +91,8 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
               <ul><li>Send prompts and read streaming replies</li><li>Inspect reasoning and tool-call results</li><li>Choose the model, reasoning level, and tool preset</li><li>Drag, paste, or attach any file, or reference project files with <code>@</code></li></ul>
             </article>
             <article class="guide-card">
-              <h3>Right: files and browser</h3>
-              <ul><li>Browse files in the current project</li><li>Open several files in tabs</li><li>Preview code, Markdown, diagrams, and documents</li><li>Open real pages shared with the Agent</li><li>Drag dividers to resize panels</li></ul>
+              <h3>Right: files, processes, and browser</h3>
+              <ul><li>Browse files in the current project</li><li>Open several files in tabs</li><li>Preview code, Markdown, diagrams, and documents</li><li>Inspect and control managed processes and redacted logs</li><li>Open real pages shared with the Agent</li><li>Drag dividers to resize panels</li></ul>
             </article>
           </div>
 
@@ -158,10 +159,35 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <div class="note-box"><b>Private-network protection:</b> Current protection is explicitly best-effort. Without a managed network sandbox, Strict mode rejects the request instead of silently weakening protection.</div>
         </section>
 
+        <section id="processes">
+          <h2>Run managed background processes</h2>
+          <p class="guide-path"><b>Enable</b><span>Settings</span><i>→</i><span>General</span><i>→</i><span>Managed processes</span></p>
+          <p>Managed background processes let the Agent keep development servers, watchers, mock APIs, and other project tasks running under the app's lifecycle control without shell <code>&amp;</code>, <code>nohup</code>, or an external terminal. Short commands continue to use Bash.</p>
+
+          <h3>Start and inspect a process</h3>
+          <ol>
+            <li>Choose a trusted project folder, then turn on Enable managed background processes under Settings → General. The feature is off by default.</li>
+            <li>Ask the Agent to start a development server, watch build, or another long-running task; it uses the <code>process_*</code> tools.</li>
+            <li>Open Processes on the right to inspect owner, state, readiness, redacted logs, loopback endpoints, and exit reasons.</li>
+            <li>Select Open in Browser for an available endpoint to debug it with the built-in Browser. Process capability and Browser authorization remain separate.</li>
+          </ol>
+
+          <h3>Control processes and logs</h3>
+          <ul>
+            <li>Send line-oriented stdin, stop, force stop, or restart a process, and search, copy, or export its logs.</li>
+            <li>Slow-starting tasks continue from a log cursor instead of rereading all output. Logs use bounded buffers and redact common secrets.</li>
+            <li>Each process belongs only to the Agent session that started it. Restarts create a new run ID, and stale operations are rejected.</li>
+            <li>An Agent cannot automatically bypass a user stop. A crash reaper performs bounded process-tree cleanup after Host or app failure.</li>
+          </ul>
+
+          <div class="note-box"><b>Platform support:</b> Managed processes support macOS, Linux, and Windows 11 x64. Other desktop features remain available on Windows 10, but managed processes do not. Windows ARM64, Windows Server, and 32-bit Windows are not supported.</div>
+          <div class="note-box"><b>Not a security sandbox:</b> Managed processes provide lifecycle control. Child processes have the same local file, network, and environment access as Agent Bash. Project services should bind to <code>127.0.0.1</code> by default; common LAN binds require confirmation.</div>
+        </section>
+
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop v0.1.13 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+          <p>Pi Agent Desktop v0.1.14 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
           <SettingsPreview section="models" lang="en" />
 
           <h3>Use an API key</h3>
@@ -266,6 +292,9 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           </FaqItem>
           <FaqItem summary="Why can’t the Agent use the browser after I approved Coding tools?">
             <p>Browser reading and interaction use separate grants. Coding permission does not implicitly enable Browser read / interact. Confirm the main-window authorization dialog or adjust the policy in Settings → Browser.</p>
+          </FaqItem>
+          <FaqItem summary="Why can’t I enable managed background processes?">
+            <p>Confirm that the platform is supported and a trusted project folder is selected. Windows requires Windows 11 x64. If the UI reports a helper, owner-identity, or crash-reaper problem, follow its restart or reinstall guidance and export diagnostics when needed.</p>
           </FaqItem>
           <FaqItem summary="Why is there no reply after approving channel pairing?">
             <p>The first message triggers pairing and is not sent to the Agent. After approval, ask the same user to send a new message.</p>

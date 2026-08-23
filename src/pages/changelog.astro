@@ -16,8 +16,44 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.13</span>
+            <span class="cl-tag">v0.1.14</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-08-23">2026-08-23</time>
+          </div>
+          <p>本次版本新增可观察、可控制的受管后台进程，让 Agent 能在应用管理的生命周期内持续运行开发服务器、watcher、mock API 和其他项目任务。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />受管后台进程</h2>
+          <ul>
+            <li>新增 <code>process_start</code>、<code>process_list</code>、<code>process_read</code>、<code>process_wait</code>、<code>process_write</code>、<code>process_stop</code> 和 <code>process_restart</code> 工具；普通短命令继续使用 Bash。</li>
+            <li>右侧 Processes 面板集中展示 owner、状态、readiness、脱敏日志、loopback endpoint 与退出原因，并支持 stdin、停止、强制停止、重启、复制和导出日志。</li>
+            <li>支持通过日志 cursor 观察慢启动任务并自动识别 localhost 地址，可直接管理 Vite、React、Storybook、Flask、Spring Boot、mock API 与 watch build 等工作流。</li>
+            <li>受管 localhost 服务可与内置 Browser 联调，进程能力和 Browser 授权彼此独立。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />跨平台、安全与可靠性</h2>
+          <ul>
+            <li>macOS / Linux 使用 POSIX process group 管理完整进程树；Windows 11 x64 使用 Rust helper 与 Windows Job Object，并验证 helper 路径、版本、架构和完整性。</li>
+            <li>功能默认关闭；启用时校验平台架构、项目 trust、会话工作目录、owner identity、crash reaper 和资源策略，不满足条件时 fail-closed。</li>
+            <li>进程按 Agent 会话隔离；日志采用有界缓冲、游标读取和敏感信息脱敏，stdin 不持久化，常见 LAN bind 需要确认。</li>
+            <li>Host 或应用异常退出时，crash reaper 会在限定时间内清理进程树；用户停止的进程不会被 Agent 自动绕过。</li>
+            <li>Windows 发布流程新增 Rust helper 可复现构建、PE 安全检查、CycloneDX SBOM 与打包产物完整性门禁。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.1.14-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.1.14-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.1.14.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.1.14-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时仍为 0.84.0。</li>
+            <li>受管进程支持 macOS、Linux 和 Windows 11 x64，暂不支持 Windows ARM64、Windows Server 与 32 位 Windows；它提供生命周期控制，并不是容器或安全沙箱。</li>
+            <li>Windows 安装包为未签名 Beta，可能出现“未知发布者”或 SmartScreen 提示；Linux AppImage 继续使用手动更新。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.13</span>
             <time class="cl-date" datetime="2026-08-19">2026-08-19</time>
           </div>
           <p>本次版本新增聊天字号与对话宽度设置，并重构 <code>@</code> 文件引用候选，让大型非 Git 工作区中的文件浏览和搜索更完整、更可靠。</p>
