@@ -1041,7 +1041,7 @@ html.dark .app-preview {
 
 .preview-tabs {
   display: grid;
-  grid-template-columns: 62px 58px minmax(0, 1fr);
+  grid-template-columns: 58px 52px 46px minmax(0, 1fr);
   height: 29px;
   border-bottom: 1px solid var(--preview-line);
 }
@@ -1274,7 +1274,7 @@ html.dark .app-preview {
 
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 @media (max-width: 1080px) {

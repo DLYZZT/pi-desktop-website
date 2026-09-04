@@ -59,6 +59,7 @@ const infoCards = [
       "打开 DMG，将 Pi Agent Desktop 拖入「应用程序」",
       "发布包已经 Apple 签名，可直接打开",
       "ZIP 存档解压后同样拖入「应用程序」即可",
+      "已内置校验后的 Herdr v0.8.2，Managed 模式无需另行下载",
     ],
   },
   {
@@ -68,6 +69,7 @@ const infoCards = [
       "安装时可能出现「未知发布者」或 SmartScreen 提示",
       "确认安装包来自 GitHub Releases 后，选择「仍要运行」即可",
       "受管后台进程功能需要 Windows 11 x64；Windows 10 可继续使用其他桌面功能",
+      "Herdr 集成当前在 Windows 上不可用，其他桌面功能不受影响",
     ],
   },
   {
@@ -76,6 +78,7 @@ const infoCards = [
       "下载 x64 AppImage 文件",
       "执行 chmod +x Pi-Agent-Desktop-*.AppImage 添加可执行权限",
       "当前使用手动更新，请从本页下载新版覆盖旧文件",
+      "已内置校验后的 Herdr v0.8.2，Managed 模式无需另行下载",
     ],
   },
   {
@@ -97,7 +100,7 @@ const infoCards = [
     <section class="page-head">
       <div class="container">
         <h1>下载 Pi Agent Desktop</h1>
-        <p>安装包已内置 Pi Coding Agent 0.84.0 运行时，无需单独安装 Pi CLI、Node.js 或 npm，配置模型提供商后即可使用。</p>
+        <p>安装包已内置 Pi Coding Agent 0.84.0；macOS 与 Linux 还内置 Herdr v0.8.2。无需单独安装 Pi CLI、Node.js 或 npm，配置模型提供商后即可使用。</p>
       </div>
     </section>
 
@@ -128,7 +131,7 @@ const infoCards = [
                     )
                   }
                 </div>
-                <div class="dl-ver"><span data-version>v0.1.14</span> · {card.meta}</div>
+                <div class="dl-ver"><span data-version>v0.2.0</span> · {card.meta}</div>
               </article>
             ))
           }

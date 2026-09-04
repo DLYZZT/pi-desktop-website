@@ -17,6 +17,11 @@ const features = [
     description: "Open real Chromium pages on the right with multiple tabs, profiles, and login state. After separate authorization, the Agent can read and operate the same page.",
   },
   {
+    icon: "ph:share-network",
+    title: "Conversational Herdr Agent fleets",
+    description: "Manage a local Agent fleet from the main conversation. See hierarchical status in the title bar, then observe, troubleshoot, or explicitly take keyboard control in the ANSI terminal.",
+  },
+  {
     icon: "ph:folder-simple",
     title: "A project-centered file experience",
     description: "Manage Git branches and worktrees, recognize local paths in Markdown, and use rich context menus to open, copy, save, or reveal files.",
@@ -53,8 +58,8 @@ const checks = [
   ["No internal ports", "The UI and control plane open no local ports; user-started project services may listen on loopback"],
   ["Minimal exposure", "Renderer sandbox + strict CSP + controlled preload bridge"],
   ["Browser isolation", "Remote pages receive no application preload, Node.js, or main Renderer bridge"],
-  ["Separate permissions", "Coding, Browser, and managed-process capabilities never implicitly enable one another"],
-  ["Processes off by default", "Managed processes are session-isolated lifecycle control, not a security sandbox"],
+  ["Separate permissions", "Coding, Browser, Herdr, and managed-process capabilities never implicitly enable one another"],
+  ["Runtimes off by default", "Herdr and managed processes provide lifecycle control, not a security sandbox"],
   ["Encrypted credentials", "Channel tokens are encrypted with Electron safeStorage and never returned to the Renderer"],
   ["Trusted updates", "Update settings are fixed in production builds and do not accept external update URLs"],
 ];
@@ -63,14 +68,14 @@ const checks = [
 <BaseLayout
   lang="en"
   title="Pi Agent Desktop — A true desktop workspace for Pi Coding Agent"
-  description="Pi Agent Desktop is a local-first workspace for Pi Coding Agent with sessions, project files, a shared browser, managed processes, models, extensions, and messaging on macOS, Windows, and Linux."
+  description="Pi Agent Desktop is a local-first workspace for Pi Coding Agent with sessions, project files, a shared browser, Herdr Agent fleets, managed processes, models, extensions, and messaging."
 >
   <main id="main-content">
     <section class="hero">
       <div class="container">
         <img class="hero-icon" src={withBase("icon.png")} alt="Pi Agent Desktop icon" width="104" height="104" />
         <h1>Pi Coding Agent<br />Desktop Workspace</h1>
-        <p class="hero-sub">Sessions, files, a shared browser, managed processes, models, and messaging channels in one local-first desktop app. No command line required—install and start working.</p>
+        <p class="hero-sub">Sessions, files, a shared browser, Herdr Agent fleets, managed processes, models, and messaging channels in one local-first desktop app.</p>
         <div class="hero-tags" aria-label="Product highlights">
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />Local-first</span>
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />No internal server</span>
@@ -87,7 +92,7 @@ const checks = [
           </a>
         </div>
         <p class="hero-meta">
-          Current version <span data-version>v0.1.14</span><span class="dot">·</span>macOS, Windows, and Linux<span class="dot">·</span><a href={localizedPath("en", "changelog/")}>View changelog</a>
+          Current version <span data-version>v0.2.0</span><span class="dot">·</span>macOS, Windows, and Linux<span class="dot">·</span><a href={localizedPath("en", "changelog/")}>View changelog</a>
         </p>
 
         <AppPreview lang="en" />
@@ -99,7 +104,7 @@ const checks = [
         <div class="section-head-center">
           <p class="eyebrow">Features</p>
           <h2 class="section-title">A complete Agent workspace</h2>
-          <p class="section-desc">From sessions, file previews, and a shared browser to managed processes, models, extensions, and messaging, everything you need for everyday work lives in one window.</p>
+          <p class="section-desc">From sessions, file previews, and a shared browser to Herdr Agent fleets, managed processes, models, extensions, and messaging, everyday work stays in one window.</p>
         </div>
         <div class="feature-grid">
           {features.map((feature) => (
@@ -133,11 +138,11 @@ const checks = [
         <div class="section-head-center">
           <p class="eyebrow">Architecture</p>
           <h2 class="section-title">Three isolated processes, sandboxed web content</h2>
-          <p class="section-desc">Privileged desktop capabilities, the Agent runtime, and the UI are isolated. Remote pages live in sandboxed Browser Views while Agent Host manages project-task lifecycles.</p>
+          <p class="section-desc">Privileged desktop capabilities, the Agent runtime, and the UI are isolated. Agent Host connects the Browser, managed processes, and local Herdr Sessions.</p>
         </div>
         <div class="arch-flow">
           <div class="arch-box"><h4>Main process</h4><p>Window · Tray · Updates<br />Browser Views and network policy</p></div>
-          <div class="arch-box"><h4>Agent Host</h4><p>Pi Coding Agent in a utilityProcess<br />Managed project-process lifecycles</p></div>
+          <div class="arch-box"><h4>Agent Host</h4><p>Pi Coding Agent in a utilityProcess<br />Browser · Processes · Herdr adapters</p></div>
           <div class="arch-box"><h4>Renderer</h4><p>React 19 UI<br />Controlled preload bridge</p></div>
           <div class="arch-box"><h4>Browser View</h4><p>Real Chromium pages<br />Sandbox · Profiles · Separate grants</p></div>
         </div>
@@ -146,6 +151,7 @@ const checks = [
           <span class="chip">Revisioned Browser RPC</span>
           <span class="chip">No control-plane ports</span>
           <span class="chip">POSIX groups / Windows Job Objects</span>
+          <span class="chip">Herdr protocol 20</span>
           <span class="chip">Data stays in ~/.pi/agent/</span>
         </div>
       </div>

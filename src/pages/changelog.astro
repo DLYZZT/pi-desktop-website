@@ -16,8 +16,47 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.14</span>
+            <span class="cl-tag">v0.2.0</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-09-03">2026-09-03</time>
+          </div>
+          <p>本次版本完整接入 Herdr v0.8.2 / protocol 20：Pi 可以在原主对话中管理本机 Agent 舰队，用户通过标题栏状态列表和右侧终端观察、排查或接管。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Herdr 对话式控制与舰队界面</h2>
+          <ul>
+            <li>新增 24 个语义化 <code>herdr_*</code> 工具，覆盖 Fleet 查询、workspace / tab / pane 管理、Agent 启动与提示、状态解释、进程诊断、按键和输出等待。</li>
+            <li>主对话直接控制 Herdr Agent；标题栏右侧按 workspace、tab、pane 和 Agent 层级展示舰队状态，初始页与激活会话保持一致。</li>
+            <li>右侧新增 xterm.js Herdr 终端，支持 ANSI 输出、自动适配、只读观察、显式键盘接管、输入限流、断线恢复和有界缓冲；关闭视图不会关闭 pane 或 Agent。</li>
+            <li>Attach 模式连接用户手动启动的 Herdr；Managed 模式由 Pi Desktop 启动、监控、有限重启并在禁用、切换模式、卸载或退出时关闭私有 server。</li>
+            <li>macOS / Linux 安装包内置经摘要校验的 Herdr v0.8.2，安装、更新、修复和卸载统一进入“开发工具”；Managed 模式无需单独联网下载。</li>
+            <li>可启动 <code>pi</code>、<code>claude</code>、<code>codex</code>、<code>gemini</code>、<code>omp</code>、<code>opencode</code>、<code>copilot</code>、<code>kimi</code>、<code>droid</code>、<code>grok</code> 和 <code>qwen</code>。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />安全、可靠性与对话体验</h2>
+          <ul>
+            <li>适配器固定兼容 Herdr <code>&gt;=0.8.2 &lt;0.9.0</code>、protocol 20 和 schema 1；未知协议、schema 漂移、不安全 endpoint、超限响应或非法标识符均 fail-closed。</li>
+            <li>Unix socket 会在每次请求前校验真实文件、当前用户所有权和权限；prompt、pane 输出、等待、终端帧和输入队列均设严格上限并经过脱敏。</li>
+            <li>Managed 只管理 Pi Desktop 自己启动的 Session server，不接管或终止外部 Herdr；Pi Session 与 Herdr Session 相互独立。</li>
+            <li>关闭 workspace、pane 或 Agent 必须经过本机确认；Herdr v0.8.2 不支持仅停止 Agent，因此关闭 Agent 会明确关闭其所在 pane。</li>
+            <li>Skill 调用消息改为折叠显示清晰命令，避免在对话中暴露或重复显示 Skill 正文。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.2.0-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.2.0-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.2.0.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.2.0-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时仍为 0.84.0。</li>
+            <li>Herdr 当前支持 macOS arm64 / x64 与 Linux x64；Windows 可继续使用其他功能，但 Herdr 暂不可用并会 fail-closed。</li>
+            <li>Herdr 与受管进程提供生命周期控制，并不是容器或安全沙箱；子进程拥有与 Agent Bash 相同的本机文件、网络和环境权限。</li>
+            <li>Windows 安装包为未签名 Beta，可能出现“未知发布者”或 SmartScreen 提示；Linux AppImage 继续使用手动更新。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.14</span>
             <time class="cl-date" datetime="2026-08-23">2026-08-23</time>
           </div>
           <p>本次版本新增可观察、可控制的受管后台进程，让 Agent 能在应用管理的生命周期内持续运行开发服务器、watcher、mock API 和其他项目任务。</p>

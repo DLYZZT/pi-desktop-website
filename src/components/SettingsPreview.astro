@@ -14,9 +14,10 @@ const tabs = [
   { id: "general", label: isEnglish ? "General" : "通用", icon: "ph:sliders-horizontal" },
   { id: "models", label: isEnglish ? "Models" : "模型", icon: "ph:brain" },
   { id: "browser", label: isEnglish ? "Browser" : "浏览器", icon: "ph:browser" },
+  { id: "herdr", label: "Herdr", icon: "ph:share-network" },
+  { id: "channels", label: isEnglish ? "Channels" : "消息渠道", icon: "ph:chats-circle" },
   { id: "skills", label: isEnglish ? "Skills" : "技能", icon: "ph:lightning" },
   { id: "plugins", label: isEnglish ? "Plugins" : "插件", icon: "ph:puzzle-piece" },
-  { id: "channels", label: isEnglish ? "Channels" : "消息渠道", icon: "ph:chats-circle" },
   { id: "tools", label: isEnglish ? "Dev Tools" : "开发工具", icon: "ph:wrench" },
   { id: "about", label: isEnglish ? "About" : "关于", icon: "ph:info" },
 ] as const;
@@ -25,7 +26,7 @@ const ariaLabels: Record<Section, string> = {
   skills: isEnglish ? "Pi Agent Desktop Skills settings with a Skill list, enabled state, and SKILL.md editor" : "Pi Agent Desktop 技能设置界面，左侧选择 Skill，右侧编辑启用状态和 SKILL.md",
   plugins: isEnglish ? "Pi Agent Desktop Plugins settings with source, installation scope, and install action" : "Pi Agent Desktop 插件设置界面，展示插件来源、安装范围和安装按钮",
   channels: isEnglish ? "Pi Agent Desktop messaging channel settings with a Telegram account, default directory, and access policies" : "Pi Agent Desktop 消息渠道设置界面，展示 Telegram 账号、默认目录和访问策略",
-  tools: isEnglish ? "Pi Agent Desktop Developer Tools settings with Node.js status, provider, and managed runtime" : "Pi Agent Desktop 开发工具设置界面，展示 Node.js 的检测状态、来源和托管运行时",
+  tools: isEnglish ? "Pi Agent Desktop Developer Tools settings with Herdr, Node.js status, providers, and managed runtimes" : "Pi Agent Desktop 开发工具设置界面，展示 Herdr、Node.js 的检测状态、来源和托管运行时",
 };
 
 const skillNames = [
@@ -48,6 +49,7 @@ const previewModels = [
   { name: "Claude Haiku (legacy)", id: "claude-haiku-legacy", enabled: false },
 ];
 const toolGroups = [
+  { title: "HERDR", count: "1/1", tools: ["Herdr"] },
   { title: "JAVASCRIPT", count: "4/4", tools: ["Node.js", "npm", "npx", "Bun"] },
   { title: "PYTHON", count: "3/3", tools: ["Python", "uv", "uvx"] },
   { title: isEnglish ? "CLI ESSENTIALS" : "CLI 基础工具", count: "4/7", tools: ["Bash", "PowerShell", "Git", "ripgrep", "fd", "jq", "curl"] },

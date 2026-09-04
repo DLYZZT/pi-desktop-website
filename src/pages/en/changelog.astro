@@ -16,8 +16,47 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.1.14</span>
+            <span class="cl-tag">v0.2.0</span>
             <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-09-03">2026-09-03</time>
+          </div>
+          <p>This release fully integrates Herdr v0.8.2 / protocol 20: Pi can manage local Agent fleets from the original conversation while users observe, troubleshoot, or take over through title-bar status and a right-side terminal.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Conversational Herdr control and Fleet UI</h2>
+          <ul>
+            <li>Twenty-four semantic <code>herdr_*</code> tools cover Fleet queries, workspace / tab / pane management, Agent launch and prompting, state explanation, process diagnostics, key input, and output waits.</li>
+            <li>The main conversation controls Herdr Agents directly. Title-bar Fleet status is grouped by workspace, tab, pane, and Agent on both the start screen and active sessions.</li>
+            <li>A right-side xterm.js Herdr terminal adds ANSI output, auto-fit sizing, read-only observation, explicit keyboard takeover, input throttling, reconnection, and bounded buffering. Closing the view does not close the pane or Agent.</li>
+            <li>Attach connects to a user-started Herdr server. Managed lets Pi Desktop start, monitor, restart within limits, and stop its private server when disabled, switched, uninstalled, or exited.</li>
+            <li>macOS and Linux packages bundle a digest-verified Herdr v0.8.2. Installation, update, repair, and removal live in Developer Tools, and Managed mode needs no separate runtime download.</li>
+            <li>Supported Agent CLIs include <code>pi</code>, <code>claude</code>, <code>codex</code>, <code>gemini</code>, <code>omp</code>, <code>opencode</code>, <code>copilot</code>, <code>kimi</code>, <code>droid</code>, <code>grok</code>, and <code>qwen</code>.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Safety, reliability, and conversation UX</h2>
+          <ul>
+            <li>The adapter is pinned to Herdr <code>&gt;=0.8.2 &lt;0.9.0</code>, protocol 20, and schema 1. Unknown protocols, schema drift, unsafe endpoints, oversized responses, and invalid identifiers fail closed.</li>
+            <li>The Unix socket is checked for real-file status, current-user ownership, and permissions before every request. Prompts, pane output, waits, terminal frames, and input queues have strict limits and redaction.</li>
+            <li>Managed controls only the Session server started by Pi Desktop and never takes over or terminates an external Herdr. Pi Sessions and Herdr Sessions remain independent.</li>
+            <li>Closing a workspace, pane, or Agent requires local confirmation. Because Herdr v0.8.2 cannot stop only an Agent, closing one explicitly closes its pane.</li>
+            <li>Skill invocation messages now collapse into clear user-visible commands instead of exposing or repeating Skill bodies.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.2.0-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.2.0-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.2.0.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.2.0-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>The bundled Pi Coding Agent runtime remains at 0.84.0.</li>
+            <li>Herdr currently supports macOS arm64 / x64 and Linux x64. Other features remain available on Windows, but Herdr is unavailable there and fails closed.</li>
+            <li>Herdr and managed processes provide lifecycle control, not a container or security sandbox. Child processes have the same local file, network, and environment access as Agent Bash.</li>
+            <li>The Windows installer is an Unsigned Beta and may trigger Unknown Publisher or SmartScreen warnings. Linux AppImage updates remain manual.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.1.14</span>
             <time class="cl-date" datetime="2026-08-23">2026-08-23</time>
           </div>
           <p>This release adds observable, user-controlled managed background processes so the Agent can keep development servers, watchers, mock APIs, and other project tasks running under the app's lifecycle control.</p>

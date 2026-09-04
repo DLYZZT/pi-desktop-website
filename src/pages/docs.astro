@@ -10,7 +10,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
 <BaseLayout
   title="使用指南 — Pi Agent Desktop"
-  description="Pi Agent Desktop 使用指南：下载安装、认识主界面、使用内置浏览器与受管后台进程、配置模型、Skills、Plugins、消息渠道与开发工具。"
+  description="Pi Agent Desktop 使用指南：下载安装、认识主界面、使用内置浏览器、Herdr Agent 舰队与受管后台进程，以及配置模型、扩展和消息渠道。"
 >
   <main id="main-content" class="container">
     <div class="docs-layout">
@@ -18,6 +18,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <a href="#install">下载安装</a>
         <a href="#workspace">认识主界面</a>
         <a href="#browser">内置浏览器</a>
+        <a href="#herdr">Herdr Agent 舰队</a>
         <a href="#processes">受管后台进程</a>
         <a href="#models">配置模型</a>
         <a href="#skills">Skills 设置</a>
@@ -41,7 +42,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>下载安装</h2>
-          <p>打开<a href={withBase("download/")}>下载页面</a>，网站会优先推荐当前系统对应的安装包。v0.1.14 桌面安装包已经内置 Pi Coding Agent 0.84.0 运行时，日常使用不需要另外安装 Pi CLI。</p>
+          <p>打开<a href={withBase("download/")}>下载页面</a>，网站会优先推荐当前系统对应的安装包。v0.2.0 桌面安装包已经内置 Pi Coding Agent 0.84.0；macOS 与 Linux 还内置 Herdr v0.8.2。日常使用不需要另外安装 Pi CLI。</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card">
@@ -86,7 +87,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>认识主界面</h2>
           <figure class="guide-figure">
             <AppPreview variant="docs" />
-            <figcaption>主界面由左侧会话区、中间对话区和右侧文件 / 进程 / 浏览器面板组成。</figcaption>
+            <figcaption>主界面由左侧会话区、中间对话区与舰队状态，以及右侧文件 / 进程 / Herdr 终端 / 浏览器面板组成。</figcaption>
           </figure>
 
           <div class="guide-grid guide-grid-three">
@@ -109,12 +110,13 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
               </ul>
             </article>
             <article class="guide-card">
-              <h3>右侧：文件、进程与浏览器</h3>
+              <h3>右侧：文件、进程、Herdr 与浏览器</h3>
               <ul>
                 <li>浏览当前项目文件</li>
                 <li>用标签页打开多个文件</li>
                 <li>预览代码、Markdown、图表和文档</li>
                 <li>查看、控制受管后台进程及其脱敏日志</li>
+                <li>观察 Herdr pane 输出并按需接管键盘</li>
                 <li>打开与 Agent 共享的真实网页</li>
                 <li>拖动分隔线调整面板宽度</li>
               </ul>
@@ -201,6 +203,38 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <div class="note-box"><b>私网保护：</b>当前保护属于明确标记的 best-effort。未部署受控网络沙箱时，Strict 模式会直接拒绝请求，而不是降低保护级别继续访问。</div>
         </section>
 
+        <section id="herdr">
+          <h2>使用 Herdr Agent 舰队</h2>
+          <p class="guide-path"><b>入口</b><span>设置</span><i>→</i><span>Herdr</span></p>
+          <p>v0.2.0 接入 Herdr v0.8.2 / protocol 20。Pi 可以在原主对话中使用 <code>herdr_*</code> 工具管理本机 Agent 舰队；标题栏显示 Fleet 状态，右侧 Herdr 终端用于观察、排查和显式接管。</p>
+
+          <h3>准备 Herdr 运行时</h3>
+          <ol>
+            <li>在 macOS 或 Linux 打开“设置 → 开发工具”，找到 Herdr。应用已经内置经过摘要校验的 v0.8.2，可直接安装、更新、修复或卸载私有运行时，无需另行联网下载。</li>
+            <li>打开“设置 → Herdr”并启用集成，然后选择 Attach 或 Managed 模式、填写 Herdr Session 名称并按需开启自动连接。</li>
+            <li>Attach 连接由你手动启动的系统 Herdr，Pi Desktop 不会停止它；Managed 会自动启动、监控、有限重启并管理 Pi Desktop 的私有 server。</li>
+            <li>Managed 在禁用 Herdr、切换模式、卸载运行时或退出应用时关闭私有 server；它不会接管或终止外部 Herdr。</li>
+          </ol>
+
+          <h3>从主对话管理 Agent</h3>
+          <ul>
+            <li>24 个 <code>herdr_*</code> 工具覆盖 Fleet 查询、workspace / tab / pane 创建与管理、Agent 启动与提示、等待、按键、状态解释、进程诊断和输出等待。</li>
+            <li>标题栏右侧按 workspace、tab、pane 和 Agent 层级展示空闲、运行中、已阻塞、已完成或未知状态；初始页和激活会话使用同一列表。</li>
+            <li>可启动 <code>pi</code>、<code>claude</code>、<code>codex</code>、<code>gemini</code>、<code>omp</code>、<code>opencode</code>、<code>copilot</code>、<code>kimi</code>、<code>droid</code>、<code>grok</code> 和 <code>qwen</code>；启动前会检查相应 CLI。</li>
+            <li>Pi Session 与 Herdr Session 相互独立；Herdr prompt 不会写入 Pi 会话记录或 compaction 摘要。</li>
+          </ul>
+
+          <h3>观察与接管终端</h3>
+          <ul>
+            <li>右侧 Herdr 终端支持 ANSI 输出、自动适配尺寸、只读观察、显式键盘接管、输入限流、断线恢复和有界缓冲。</li>
+            <li>关闭终端视图不会关闭 Herdr pane 或 Agent；可以选择在关闭视图时释放终端控制权。</li>
+            <li>关闭 workspace、pane 或 Agent 必须经过本机确认。Herdr v0.8.2 无法只停止 Agent，因此“关闭 Agent”会明确关闭它所在的 pane 及其中进程。</li>
+          </ul>
+
+          <div class="note-box"><b>平台支持：</b>Herdr 当前支持 macOS arm64 / x64 与 Linux x64。Windows 版的其他桌面功能仍可正常使用，但 Herdr 暂不可用并会 fail-closed。</div>
+          <div class="note-box"><b>安全边界：</b>Herdr endpoint、协议和 Unix socket 都会严格校验，数据采用长度上限与脱敏处理；但 Herdr 与受管进程一样提供的是生命周期控制，并不是容器或安全沙箱。</div>
+        </section>
+
         <section id="processes">
           <h2>运行受管后台进程</h2>
           <p class="guide-path"><b>开启</b><span>设置</span><i>→</i><span>通用</span><i>→</i><span>受管后台进程</span></p>
@@ -229,7 +263,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>配置模型</h2>
           <p class="guide-path"><b>入口</b><span>设置</span><i>→</i><span>模型</span></p>
-          <p>Pi Agent Desktop v0.1.14 内置 Pi Coding Agent 0.84.0，但不提供模型额度。你需要连接已有的模型服务账号，或填写模型服务商提供的 API Key。模型设置页面已经完整支持中文。</p>
+          <p>Pi Agent Desktop v0.2.0 内置 Pi Coding Agent 0.84.0，但不提供模型额度。你需要连接已有的模型服务账号，或填写模型服务商提供的 API Key。模型设置页面已经完整支持中文。</p>
           <SettingsPreview section="models" />
 
           <h3>使用 API Key</h3>
@@ -350,6 +384,9 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>已经安装的工具保持“自动”，检测不正确时点击“选择”指定路径。</li>
             <li>缺少工具且应用提供托管版本时，点击“安装”；文件损坏时点击“修复”。</li>
           </ol>
+          <h3>管理 Herdr 运行时</h3>
+          <p>macOS 与 Linux 版已经随包提供经过摘要校验的 Herdr v0.8.2。在“开发工具”中可以查看内置版本、已安装版本和私有磁盘占用，并执行安装、更新、修复或卸载；这些操作从应用内置副本恢复，不会另行下载 Herdr。</p>
+          <p>Herdr 版本随 Pi Desktop 更新。卸载私有运行时不会删除 Herdr Session，也不会移除安装包中的恢复副本。</p>
           <div class="note-box"><b>无需全部安装：</b>状态正常的工具不用处理；应用托管的工具保存在私有目录，不会修改系统 PATH。</div>
         </section>
 
@@ -390,6 +427,9 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           </FaqItem>
           <FaqItem summary="为什么无法开启受管后台进程？">
             <p>确认当前平台受支持，并已选择受信任的项目目录。Windows 需要 Windows 11 x64；如果界面提示 helper、owner identity 或 crash reaper 异常，请按提示重启或重新安装应用，并在需要时导出诊断信息。</p>
+          </FaqItem>
+          <FaqItem summary="为什么找不到或无法连接 Herdr？">
+            <p>Herdr 当前只支持 macOS arm64 / x64 与 Linux x64；Windows 上会保持不可用。macOS 或 Linux 用户可先在“设置 → 开发工具”安装或修复内置 Herdr v0.8.2，再到“设置 → Herdr”确认模式、Session 名称和连接状态。</p>
           </FaqItem>
           <FaqItem summary="消息渠道批准配对后为什么没有回复？">
             <p>触发配对的第一条消息不会进入 Agent。批准后，请让同一个用户再发送一条新消息。</p>

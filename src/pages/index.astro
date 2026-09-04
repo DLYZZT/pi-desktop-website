@@ -18,6 +18,12 @@ const features = [
       "在右侧打开真实 Chromium 页面，保留多标签页、Profile 与登录态；Agent 经独立授权后可读取和操作同一个页面。",
   },
   {
+    icon: "ph:share-network",
+    title: "对话式 Herdr Agent 舰队",
+    description:
+      "在主对话中管理本机 Agent 舰队；标题栏显示分层状态，右侧 ANSI 终端支持只读观察、故障排查和显式键盘接管。",
+  },
+  {
     icon: "ph:folder-simple",
     title: "围绕项目的文件体验",
     description:
@@ -60,8 +66,8 @@ const checks = [
   ["零内部端口", "UI 与控制面不额外开放本地端口；用户启动的项目服务可监听 loopback"],
   ["最小暴露面", "Renderer sandbox + 严格 CSP + 受控 preload 桥接"],
   ["浏览器隔离", "远程网页不获得应用 preload、Node 或主 Renderer bridge"],
-  ["权限相互独立", "Coding、Browser 与受管进程能力不会相互隐式授权"],
-  ["进程默认关闭", "受管进程按会话隔离，提供生命周期控制但不是安全沙箱"],
+  ["权限相互独立", "Coding、Browser、Herdr 与受管进程能力不会相互隐式授权"],
+  ["运行时默认关闭", "Herdr 与受管进程提供生命周期控制，但都不是安全沙箱"],
   ["凭证加密", "渠道 token 由 Electron safeStorage 加密，不回传 Renderer"],
   ["可信更新", "更新配置固定于正式包内，不接收外部更新地址"],
 ];
@@ -69,14 +75,14 @@ const checks = [
 
 <BaseLayout
   title="Pi Agent Desktop — 把 Pi Coding Agent 变成真正的桌面工作台"
-  description="Pi Agent Desktop 是 Pi Coding Agent 的本地优先桌面工作台，集成会话、项目文件、共享浏览器、受管进程、模型、扩展与消息渠道，支持 macOS、Windows 与 Linux。"
+  description="Pi Agent Desktop 是 Pi Coding Agent 的本地优先桌面工作台，集成会话、项目文件、共享浏览器、Herdr Agent 舰队、受管进程、模型、扩展与消息渠道。"
 >
   <main id="main-content">
     <section class="hero">
       <div class="container">
         <img class="hero-icon" src={withBase("icon.png")} alt="Pi Agent Desktop 图标" width="104" height="104" />
         <h1>Pi Coding Agent <br />桌面工作台</h1>
-        <p class="hero-sub">会话、文件、共享浏览器、受管进程、模型与消息渠道，统一收进一个本地优先的桌面应用。无需命令行，安装即用。</p>
+        <p class="hero-sub">会话、文件、共享浏览器、Herdr Agent 舰队、受管进程、模型与消息渠道，统一收进一个本地优先的桌面应用。</p>
         <div class="hero-tags" aria-label="产品特点">
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />本地优先</span>
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />零内部服务器</span>
@@ -93,7 +99,7 @@ const checks = [
           </a>
         </div>
         <p class="hero-meta">
-          当前版本 <span data-version>v0.1.14</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
+          当前版本 <span data-version>v0.2.0</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
         </p>
 
         <AppPreview />
@@ -105,7 +111,7 @@ const checks = [
         <div class="section-head-center">
           <p class="eyebrow">Features</p>
           <h2 class="section-title">一个完整的 Agent 工作台</h2>
-          <p class="section-desc">从会话管理、文件预览和共享浏览器，到受管进程、模型、扩展与消息渠道，桌面端把日常工作所需的一切收进同一个窗口。</p>
+          <p class="section-desc">从会话管理、文件预览和共享浏览器，到 Herdr Agent 舰队、受管进程、模型、扩展与消息渠道，日常工作都在同一个窗口完成。</p>
         </div>
         <div class="feature-grid">
           {
@@ -141,7 +147,7 @@ const checks = [
         <div class="section-head-center">
           <p class="eyebrow">Architecture</p>
           <h2 class="section-title">三进程隔离，网页独立承载</h2>
-          <p class="section-desc">高权限桌面能力、Agent 运行时和 UI 相互隔离；远程网页由沙箱化 Browser View 承载，项目任务由 Agent Host 统一管理生命周期。</p>
+          <p class="section-desc">高权限桌面能力、Agent 运行时和 UI 相互隔离；Agent Host 统一衔接 Browser、受管进程与本机 Herdr Session。</p>
         </div>
         <div class="arch-flow">
           <div class="arch-box">
@@ -150,7 +156,7 @@ const checks = [
           </div>
           <div class="arch-box">
             <h4>Agent Host</h4>
-            <p>utilityProcess 中运行 Pi Coding Agent<br />管理项目进程生命周期</p>
+            <p>utilityProcess 中运行 Pi Coding Agent<br />Browser · Processes · Herdr 适配器</p>
           </div>
           <div class="arch-box">
             <h4>Renderer</h4>
@@ -166,6 +172,7 @@ const checks = [
           <span class="chip">revisioned Browser RPC</span>
           <span class="chip">控制面零本地端口</span>
           <span class="chip">POSIX group / Windows Job Object</span>
+          <span class="chip">Herdr protocol 20</span>
           <span class="chip">数据留在 ~/.pi/agent/</span>
         </div>
       </div>

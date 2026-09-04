@@ -11,7 +11,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 <BaseLayout
   lang="en"
   title="User Guide — Pi Agent Desktop"
-  description="Learn how to install Pi Agent Desktop, use its workspace, built-in browser, and managed background processes, configure models, and manage extensions and developer tools."
+  description="Learn how to install Pi Agent Desktop, use its workspace, built-in browser, Herdr Agent fleets, and managed processes, and configure models, extensions, and messaging."
 >
   <main id="main-content" class="container">
     <div class="docs-layout">
@@ -19,6 +19,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <a href="#install">Download and install</a>
         <a href="#workspace">Main workspace</a>
         <a href="#browser">Built-in browser</a>
+        <a href="#herdr">Herdr Agent fleets</a>
         <a href="#processes">Managed processes</a>
         <a href="#models">Configure models</a>
         <a href="#skills">Skills settings</a>
@@ -42,7 +43,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.1.14 desktop packages include the Pi Coding Agent 0.84.0 runtime, so normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.2.0 desktop packages include Pi Coding Agent 0.84.0, and macOS and Linux also bundle Herdr v0.8.2. Normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
@@ -78,7 +79,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Meet the main workspace</h2>
           <figure class="guide-figure">
             <AppPreview variant="docs" lang="en" />
-            <figcaption>The workspace contains sessions on the left, the conversation in the center, and files, managed processes, or the shared browser on the right.</figcaption>
+            <figcaption>The workspace contains sessions on the left, the conversation and Fleet status in the center, and files, managed processes, a Herdr terminal, or the shared browser on the right.</figcaption>
           </figure>
 
           <div class="guide-grid guide-grid-three">
@@ -91,8 +92,8 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
               <ul><li>Send prompts and read streaming replies</li><li>Inspect reasoning and tool-call results</li><li>Choose the model, reasoning level, and tool preset</li><li>Drag, paste, or attach any file, or reference project files with <code>@</code></li></ul>
             </article>
             <article class="guide-card">
-              <h3>Right: files, processes, and browser</h3>
-              <ul><li>Browse files in the current project</li><li>Open several files in tabs</li><li>Preview code, Markdown, diagrams, and documents</li><li>Inspect and control managed processes and redacted logs</li><li>Open real pages shared with the Agent</li><li>Drag dividers to resize panels</li></ul>
+              <h3>Right: files, processes, Herdr, and browser</h3>
+              <ul><li>Browse files in the current project</li><li>Open several files in tabs</li><li>Preview code, Markdown, diagrams, and documents</li><li>Inspect and control managed processes and redacted logs</li><li>Observe Herdr pane output and take keyboard control when needed</li><li>Open real pages shared with the Agent</li><li>Drag dividers to resize panels</li></ul>
             </article>
           </div>
 
@@ -159,6 +160,38 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <div class="note-box"><b>Private-network protection:</b> Current protection is explicitly best-effort. Without a managed network sandbox, Strict mode rejects the request instead of silently weakening protection.</div>
         </section>
 
+        <section id="herdr">
+          <h2>Use Herdr Agent fleets</h2>
+          <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Herdr</span></p>
+          <p>v0.2.0 integrates Herdr v0.8.2 / protocol 20. Pi can use <code>herdr_*</code> tools to manage a local Agent fleet from the original conversation, while the title bar shows Fleet status and the right-side Herdr terminal supports observation, troubleshooting, and explicit takeover.</p>
+
+          <h3>Prepare the Herdr runtime</h3>
+          <ol>
+            <li>On macOS or Linux, open Settings → Developer Tools and find Herdr. A digest-verified v0.8.2 runtime is bundled, so you can install, update, repair, or remove the private runtime without a separate network download.</li>
+            <li>Open Settings → Herdr, enable the integration, choose Attach or Managed mode, enter a Herdr Session name, and optionally enable automatic connection.</li>
+            <li>Attach connects to a system Herdr server that you start and stop yourself; Pi Desktop never stops it. Managed starts, monitors, and restarts Pi Desktop's private server within limits.</li>
+            <li>Managed stops its private server when Herdr is disabled, the mode changes, the runtime is removed, or the app exits. It never takes over or terminates an external Herdr.</li>
+          </ol>
+
+          <h3>Manage Agents from the conversation</h3>
+          <ul>
+            <li>Twenty-four <code>herdr_*</code> tools cover Fleet queries, workspace / tab / pane creation and management, Agent launch and prompting, waits, key input, state explanation, process diagnostics, and output waits.</li>
+            <li>Title-bar status is grouped by workspace, tab, pane, and Agent, showing idle, working, blocked, done, or unknown states on both the start screen and active sessions.</li>
+            <li>Supported Agent CLIs include <code>pi</code>, <code>claude</code>, <code>codex</code>, <code>gemini</code>, <code>omp</code>, <code>opencode</code>, <code>copilot</code>, <code>kimi</code>, <code>droid</code>, <code>grok</code>, and <code>qwen</code>. Availability is checked before launch.</li>
+            <li>Pi Sessions and Herdr Sessions are independent. Herdr prompts are not written to Pi session history or compaction summaries.</li>
+          </ul>
+
+          <h3>Observe and take over a terminal</h3>
+          <ul>
+            <li>The right-side Herdr terminal supports ANSI output, auto-fit sizing, read-only observation, explicit keyboard takeover, input throttling, reconnection, and bounded buffering.</li>
+            <li>Closing the terminal view does not close the Herdr pane or Agent. You can choose whether closing the view releases terminal control.</li>
+            <li>Closing a workspace, pane, or Agent requires local confirmation. Herdr v0.8.2 cannot stop only an Agent, so Close Agent explicitly closes its pane and every process inside it.</li>
+          </ul>
+
+          <div class="note-box"><b>Platform support:</b> Herdr currently supports macOS arm64 / x64 and Linux x64. Other desktop features remain available on Windows, but Herdr is unavailable there and fails closed.</div>
+          <div class="note-box"><b>Security boundary:</b> Herdr endpoints, protocol, and Unix sockets are strictly validated, with bounded and redacted data. Like managed processes, Herdr provides lifecycle control rather than a container or security sandbox.</div>
+        </section>
+
         <section id="processes">
           <h2>Run managed background processes</h2>
           <p class="guide-path"><b>Enable</b><span>Settings</span><i>→</i><span>General</span><i>→</i><span>Managed processes</span></p>
@@ -187,7 +220,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop v0.1.14 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+          <p>Pi Agent Desktop v0.2.0 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
           <SettingsPreview section="models" lang="en" />
 
           <h3>Use an API key</h3>
@@ -261,6 +294,9 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <p>The app scans required tools automatically. Most users only need to act on items marked Missing or Unavailable.</p>
           <SettingsPreview section="tools" lang="en" />
           <ol><li>Select Rescan to see each tool's status, source, and version.</li><li>Leave installed tools on Auto. If detection is wrong, use Choose to select a path.</li><li>When a managed version is available for a missing tool, select Install. Use Repair if managed files are damaged.</li></ol>
+          <h3>Manage the Herdr runtime</h3>
+          <p>macOS and Linux packages include a digest-verified Herdr v0.8.2. Developer Tools shows the bundled and installed versions plus private disk usage, and lets you install, update, repair, or remove the private runtime from the bundled copy without downloading Herdr separately.</p>
+          <p>Herdr versions arrive with Pi Desktop updates. Removing the private runtime does not delete Herdr Sessions or the recovery copy bundled inside the app.</p>
           <div class="note-box"><b>You do not need everything:</b> Leave healthy tools alone. Managed tools stay in Pi Desktop's private directory and do not change the system PATH.</div>
         </section>
 
@@ -295,6 +331,9 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           </FaqItem>
           <FaqItem summary="Why can’t I enable managed background processes?">
             <p>Confirm that the platform is supported and a trusted project folder is selected. Windows requires Windows 11 x64. If the UI reports a helper, owner-identity, or crash-reaper problem, follow its restart or reinstall guidance and export diagnostics when needed.</p>
+          </FaqItem>
+          <FaqItem summary="Why can’t I find or connect to Herdr?">
+            <p>Herdr currently supports macOS arm64 / x64 and Linux x64 only; it remains unavailable on Windows. On macOS or Linux, install or repair bundled Herdr v0.8.2 under Settings → Developer Tools, then check the mode, Session name, and connection status under Settings → Herdr.</p>
           </FaqItem>
           <FaqItem summary="Why is there no reply after approving channel pairing?">
             <p>The first message triggers pairing and is not sent to the Agent. After approval, ask the same user to send a new message.</p>
