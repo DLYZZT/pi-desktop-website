@@ -43,7 +43,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.2.0 desktop packages include Pi Coding Agent 0.84.0, and macOS and Linux also bundle Herdr v0.8.2. Normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.2.2 desktop packages include Pi Coding Agent 0.85.0, and macOS and Linux also bundle Herdr v0.8.2. Normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
@@ -111,17 +111,24 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>After scrolling upward, use the floating Scroll to bottom button to return to the latest content and re-enable automatic following during streaming.</li>
           </ul>
 
-          <h3>Adjust chat size and conversation width</h3>
+          <h3>Change the interface language</h3>
+          <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>General</span><i>→</i><span>Interface language</span></p>
+          <p>Choose English, Simplified Chinese, or Traditional Chinese. Taiwan, Hong Kong, Macau, and <code>zh-Hant</code> system locales default to Traditional Chinese while preserving an existing user choice. Native dialogs, file context menus, browser confirmations, and tray copy follow the selected language.</p>
+
+          <h3>Adjust chat size, conversation width, and model-reply width</h3>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>General</span><i>→</i><span>Conversation</span></p>
           <ul>
             <li>Choose Small, Standard, Large, or Extra Large chat text. Changes apply immediately and persist across restarts.</li>
             <li>Comfortable width stays at 760px; Expanded adapts to the window up to 960px.</li>
+            <li>Model reply width controls reply bubbles independently: Comfortable keeps the original reading width, while Fill conversation column lets paragraphs, tables, and code blocks use the available chat-column space.</li>
+            <li>Model reply width is separate from the outer conversation width. Full mode contracts with the available space when a right-side panel is open.</li>
             <li>Messages, process details, and the composer share aligned content boundaries in both wide and minimum-width windows.</li>
           </ul>
 
           <h3>Send attachments and use local file links</h3>
           <ul>
             <li>Add images or any file through drag and drop, paste, or the attachment button beside the composer. Non-image attachments appear as file cards.</li>
+            <li>Large screenshots and Retina PNGs are resized to a 2048-pixel longest edge and roughly 512 KiB JPEG before entering the draft, allowing common screenshots to persist and recover after restart.</li>
             <li>Attachments can be sent without text. Messages with attachments can also enter the Steer / Follow-up queue while the Agent is streaming.</li>
             <li>If sending fails, attachments and text merge back into the current draft without overwriting anything typed while the send was in progress.</li>
             <li>Markdown messages recognize Windows, POSIX, and UNC local paths. Repository-relative paths open inside the app, while absolute paths can be revealed in the system file manager.</li>
@@ -130,6 +137,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>If the file-search tool is unavailable, times out, or fails, the UI shows a fallback state and keeps current-directory candidates instead of blocking input or silently returning incomplete results.</li>
           </ul>
           <div class="note-box"><b>Thinking-block preference:</b> When you expand or collapse a thinking block, the app remembers that choice for the current session. New blocks inherit the latest state, isolated from other sessions.</div>
+          <div class="note-box"><b>Content presentation:</b> Mermaid fences show the rendered diagram by default after streaming, with Source view and failure fallback preserved. Multiline notifications and long unspaced text also wrap fully.</div>
         </section>
 
         <section id="browser">
@@ -163,7 +171,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="herdr">
           <h2>Use Herdr Agent fleets</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Herdr</span></p>
-          <p>v0.2.0 integrates Herdr v0.8.2 / protocol 20. Pi can use <code>herdr_*</code> tools to manage a local Agent fleet from the original conversation, while the title bar shows Fleet status and the right-side Herdr terminal supports observation, troubleshooting, and explicit takeover.</p>
+          <p>Pi Agent Desktop uses Herdr v0.8.2 / protocol 20 to manage local Agent fleets. Pi can use <code>herdr_*</code> tools from the original conversation, while the title bar shows Fleet status and the right-side Herdr terminal supports observation, troubleshooting, and explicit takeover.</p>
 
           <h3>Prepare the Herdr runtime</h3>
           <ol>
@@ -177,7 +185,9 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <ul>
             <li>Twenty-four <code>herdr_*</code> tools cover Fleet queries, workspace / tab / pane creation and management, Agent launch and prompting, waits, key input, state explanation, process diagnostics, and output waits.</li>
             <li>Title-bar status is grouped by workspace, tab, pane, and Agent, showing idle, working, blocked, done, or unknown states on both the start screen and active sessions.</li>
-            <li>Supported Agent CLIs include <code>pi</code>, <code>claude</code>, <code>codex</code>, <code>gemini</code>, <code>omp</code>, <code>opencode</code>, <code>copilot</code>, <code>kimi</code>, <code>droid</code>, <code>grok</code>, and <code>qwen</code>. Availability is checked before launch.</li>
+            <li>Supported Agent CLIs include <code>pi</code>, <code>claude</code>, <code>codex</code>, <code>gemini</code>, <code>omp</code>, <code>opencode</code>, <code>copilot</code>, <code>kimi</code>, <code>droid</code>, <code>grok</code>, <code>qwen</code>, and <code>agy</code>.</li>
+            <li>Managed mode discovers common Agent CLIs only in fixed allowlisted locations and places only permitted Agent commands in the launcher overlay. It never runs a login shell, reads shell profiles, installs from the network, or recursively scans the home directory.</li>
+            <li><code>missing-locally</code> means only that Desktop did not find the CLI in a supported local directory. In Attach mode, the external Herdr Session still returns the authoritative launch result.</li>
             <li>Pi Sessions and Herdr Sessions are independent. Herdr prompts are not written to Pi session history or compaction summaries.</li>
           </ul>
 
@@ -220,7 +230,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop v0.2.0 includes Pi Coding Agent 0.84.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider.</p>
+          <p>Pi Agent Desktop v0.2.2 includes Pi Coding Agent 0.85.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider. Model settings support English, Simplified Chinese, and Traditional Chinese.</p>
           <SettingsPreview section="models" lang="en" />
 
           <h3>Use an API key</h3>
@@ -294,6 +304,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <p>The app scans required tools automatically. Most users only need to act on items marked Missing or Unavailable.</p>
           <SettingsPreview section="tools" lang="en" />
           <ol><li>Select Rescan to see each tool's status, source, and version.</li><li>Leave installed tools on Auto. If detection is wrong, use Choose to select a path.</li><li>When a managed version is available for a missing tool, select Install. Use Repair if managed files are damaged.</li></ol>
+          <p>On Windows, Git Bash is recognized from its installation layout together with the colocated Git version, so custom Git for Windows directories and versioned PortableGit folders work correctly.</p>
           <h3>Manage the Herdr runtime</h3>
           <p>macOS and Linux packages include a digest-verified Herdr v0.8.2. Developer Tools shows the bundled and installed versions plus private disk usage, and lets you install, update, repair, or remove the private runtime from the bundled copy without downloading Herdr separately.</p>
           <p>Herdr versions arrive with Pi Desktop updates. Removing the private runtime does not delete Herdr Sessions or the recovery copy bundled inside the app.</p>

@@ -16,8 +16,82 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.2.0</span>
+            <span class="cl-tag">v0.2.2</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-09-11">2026-09-11</time>
+          </div>
+          <p>本次版本新增繁体中文界面与独立的模型回复宽度，升级内置 Pi Coding Agent 至 0.85.0，并改进 Herdr Agent 支持和 Windows Git Bash 兼容性。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />语言与对话布局</h2>
+          <ul>
+            <li>新增繁体中文（<code>zh-TW</code>）界面，覆盖设置、模型、会话、浏览器、开发工具与 Herdr；台湾、香港、澳门及 <code>zh-Hant</code> 系统语言默认使用繁体中文。</li>
+            <li>原生对话框、文件右键菜单、浏览器确认提示和托盘文案会同步应用语言，避免系统级提示与主界面语言不一致。</li>
+            <li>“设置 → 通用 → 会话”新增独立“模型回复宽度”，可选择“舒适宽度”或“填满对话列”；后者让回复气泡、段落、表格和代码块使用完整阅读空间。</li>
+            <li>模型回复宽度与外层“对话宽度”分别控制，默认保持舒适宽度；打开右侧面板时会随可用空间收缩。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Runtime、Herdr 与 Windows 工具</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 及相关运行时升级至 0.85.0，补齐桌面端所需的 <code>pi-server</code> 依赖和兼容性检查。</li>
+            <li>Herdr 新增 <code>agy</code> Agent 的发现与启动支持，并继续沿用固定目录发现与受控启动流程。</li>
+            <li>修复 Git for Windows 安装在自定义目录或带版本号的 PortableGit 目录时，健康的 Git Bash 被误判为不可用的问题。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.2.2-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.2.2-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.2.2.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.2.2-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时现为 0.85.0。</li>
+            <li>Herdr 支持 macOS arm64 / x64 与 Linux x64，Windows 上仍不可用；新增 <code>agy</code> 支持不会自动安装该 CLI。</li>
+            <li>Windows 安装包仍为未签名 Beta，Linux AppImage 继续使用手动更新。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.2.1</span>
+            <time class="cl-date" datetime="2026-09-04">2026-09-04</time>
+          </div>
+          <p>本次版本重点修复正式包在 GUI 精简 PATH 下无法启动已安装 Herdr Agent CLI 的问题，并改进截图附件、通知消息和 Mermaid 展示。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Herdr Agent CLI 启动与诊断</h2>
+          <ul>
+            <li>为 11 个可启动 Agent 增加固定目录 catalog，覆盖 Homebrew、MacPorts、<code>~/.local/bin</code>、Agent 官方目录、npm / Bun / uv / WinGet 与受支持版本管理器的常见位置。</li>
+            <li>Managed Herdr 使用 Agent-only launcher overlay，并补充已验证的 Agent 与运行时目录；从 Finder 启动且系统 PATH 很窄时也能找到常见 Agent CLI。</li>
+            <li><code>herdr_agent_start</code> 不再因 Desktop 本地未发现 CLI 而提前拒绝；完成安全校验后由目标 Herdr Session 返回最终启动结果，Attach 模式不会替外部 Session 下结论。</li>
+            <li>Herdr 诊断新增 <code>detected</code>、<code>missing-locally</code>、<code>ambiguous</code> 和来源信息；失败结果保留稳定错误码，同时避免暴露路径或终端内容。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />附件与内容展示</h2>
+          <ul>
+            <li>大截图和 Retina PNG 进入草稿前会按最长边 2048 像素、目标约 512 KiB 自动缩放并转为 JPEG，草稿图片解码预算提升至 4 MiB。</li>
+            <li>多行通知、显式换行与无空格长文本现在可以完整换行，不再被固定高度压缩成单行省略号。</li>
+            <li>Mermaid 代码块在响应流结束后默认显示渲染结果，同时保留 Source 切换和渲染失败回退。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />安全与可靠性</h2>
+          <ul>
+            <li>Agent CLI 发现只检查固定 allowlist 目录与 canonical command，不运行 <code>--version</code>、登录 shell、shell profile，也不会联网安装或递归扫描用户目录。</li>
+            <li>launcher overlay 只包含允许的 Agent command，不会把完整用户 bin 目录放到系统 PATH 之前；Attach 模式不会修改外部 Herdr 环境。</li>
+            <li>Windows NSIS 历史未签名安装器的特定访问冲突仅在目标目录仍为空时有界重试，其他错误继续立即 fail-closed。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.2.1-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.2.1-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.2.1.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.2.1-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时仍为 0.84.0。</li>
+            <li><code>missing-locally</code> 只表示 Desktop 未在受支持目录中发现 CLI，不代表 Attach 或未来 Remote Session 一定无法启动。</li>
+            <li>Herdr 支持范围与 Windows 未签名 Beta、Linux 手动更新策略保持不变。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.2.0</span>
             <time class="cl-date" datetime="2026-09-03">2026-09-03</time>
           </div>
           <p>本次版本完整接入 Herdr v0.8.2 / protocol 20：Pi 可以在原主对话中管理本机 Agent 舰队，用户通过标题栏状态列表和右侧终端观察、排查或接管。</p>

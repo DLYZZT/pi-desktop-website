@@ -16,8 +16,82 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.2.0</span>
+            <span class="cl-tag">v0.2.2</span>
             <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-09-11">2026-09-11</time>
+          </div>
+          <p>This release adds a Traditional Chinese UI and independent model-reply width, upgrades the bundled Pi Coding Agent to 0.85.0, and improves Herdr Agent support and Windows Git Bash compatibility.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Language and conversation layout</h2>
+          <ul>
+            <li>A new Traditional Chinese (<code>zh-TW</code>) UI covers settings, models, sessions, the browser, developer tools, and Herdr. Taiwan, Hong Kong, Macau, and <code>zh-Hant</code> system locales default to Traditional Chinese.</li>
+            <li>Native dialogs, file context menus, browser confirmations, and tray copy now follow the selected app language instead of drifting from the main UI.</li>
+            <li>Settings → General → Conversation adds an independent Model reply width with Comfortable width and Fill conversation column options. Full mode gives reply bubbles, paragraphs, tables, and code blocks the available reading space.</li>
+            <li>Model reply width is separate from the outer Conversation width and defaults to Comfortable. It contracts with the available space when a right-side panel is open.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Runtime, Herdr, and Windows tools</h2>
+          <ul>
+            <li>Pi Coding Agent and related runtimes move to 0.85.0, including the <code>pi-server</code> dependency and desktop compatibility checks.</li>
+            <li>Herdr can now discover and launch the <code>agy</code> Agent through the same fixed-directory discovery and controlled-start flow.</li>
+            <li>Healthy Git Bash installations in custom Git for Windows or versioned PortableGit directories are now recognized correctly.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.2.2-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.2.2-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.2.2.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.2.2-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>The bundled Pi Coding Agent runtime is now 0.85.0.</li>
+            <li>Herdr supports macOS arm64 / x64 and Linux x64 and remains unavailable on Windows. Adding <code>agy</code> support does not install that CLI automatically.</li>
+            <li>The Windows installer remains an Unsigned Beta, and Linux AppImage updates remain manual.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.2.1</span>
+            <time class="cl-date" datetime="2026-09-04">2026-09-04</time>
+          </div>
+          <p>This release focuses on packaged-app Herdr Agent CLI discovery under a sparse GUI PATH, and improves screenshot attachments, notification wrapping, and Mermaid presentation.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Herdr Agent CLI launch and diagnostics</h2>
+          <ul>
+            <li>A fixed-directory catalog for 11 startable Agents covers common Homebrew, MacPorts, <code>~/.local/bin</code>, vendor, npm / Bun / uv / WinGet, and supported version-manager locations.</li>
+            <li>Managed Herdr uses an Agent-only launcher overlay plus verified Agent and runtime directories, so apps launched from Finder with a sparse system PATH can still find common Agent CLIs.</li>
+            <li><code>herdr_agent_start</code> no longer rejects early when Desktop cannot find a CLI locally. After safety checks, the target Herdr Session returns the authoritative result, and Attach mode does not decide for an external Session.</li>
+            <li>Herdr diagnostics add <code>detected</code>, <code>missing-locally</code>, <code>ambiguous</code>, and source information. Failures retain stable error codes without exposing paths or terminal contents.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Attachments and content presentation</h2>
+          <ul>
+            <li>Large screenshots and Retina PNGs are resized to a 2048-pixel longest edge and roughly 512 KiB JPEG before entering the draft. The decoded draft-image budget increases to 4 MiB.</li>
+            <li>Multiline notifications, explicit line breaks, and long unspaced text now wrap fully instead of being compressed into a fixed-height ellipsis.</li>
+            <li>Mermaid fences show the rendered diagram by default after streaming, while preserving Source view and render-failure fallback.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Safety and reliability</h2>
+          <ul>
+            <li>Agent discovery checks only fixed allowlisted directories and canonical commands. It never runs <code>--version</code>, login shells, shell profiles, network installs, or recursive home-directory scans.</li>
+            <li>The launcher overlay contains only allowed Agent commands rather than prepending whole user bin directories. Attach mode never changes an external Herdr environment.</li>
+            <li>A specific access violation from historical unsigned Windows installers is retried only within bounds and only while the target directory remains empty; other failures still fail closed.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.2.1-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.2.1-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.2.1.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.2.1-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>The bundled Pi Coding Agent runtime remains at 0.84.0.</li>
+            <li><code>missing-locally</code> means only that Desktop did not find the CLI in a supported local directory; it does not prove that Attach or a future Remote Session cannot launch it.</li>
+            <li>Herdr platform support, the Windows Unsigned Beta, and manual Linux updates remain unchanged.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.2.0</span>
             <time class="cl-date" datetime="2026-09-03">2026-09-03</time>
           </div>
           <p>This release fully integrates Herdr v0.8.2 / protocol 20: Pi can manage local Agent fleets from the original conversation while users observe, troubleshoot, or take over through title-bar status and a right-side terminal.</p>
