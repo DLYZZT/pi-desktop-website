@@ -16,8 +16,39 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.2.2</span>
+            <span class="cl-tag">v0.2.3</span>
             <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-09-15">2026-09-15</time>
+          </div>
+          <p>This release aligns native-menu language with the app UI, hides the Windows / Linux top menu bar by default, and fixes list-contained display math that could corrupt later Markdown rendering.</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Native menus and cross-platform UI</h2>
+          <ul>
+            <li>Native application menus now follow the interface language. File, Edit, View, Window, Help, and their submenus support English, Simplified Chinese, and Traditional Chinese.</li>
+            <li>Windows and Linux hide the top menu bar by default for a more integrated app surface. Menu commands and shortcuts remain available, and pressing <code>Alt</code> temporarily reveals the bar.</li>
+            <li>macOS retains the system menu bar, with labels following the app language. The Settings layout is unchanged.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Markdown display math</h2>
+          <ul>
+            <li>Single-line display math inside a list now preserves indentation when expanded, keeping the formula within its original list item.</li>
+            <li>Headings, tables, bold text, and other content after a formula are no longer misparsed as math, with coverage for ordered, unordered, nested, quoted, and mixed-line-ending cases.</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Downloads</h2>
+          <ul>
+            <li>macOS Apple Silicon: <code>Pi-Agent-Desktop-0.2.3-arm64.dmg</code></li>
+            <li>macOS Intel: <code>Pi-Agent-Desktop-0.2.3-x64.dmg</code></li>
+            <li>Windows x64 (Unsigned Beta): <code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.2.3.exe</code></li>
+            <li>Linux x64: <code>Pi-Agent-Desktop-0.2.3-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>The bundled Pi Coding Agent runtime remains at 0.85.0.</li>
+            <li>Herdr platform support, the Windows Unsigned Beta, and manual Linux updates remain unchanged.</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.2.2</span>
             <time class="cl-date" datetime="2026-09-11">2026-09-11</time>
           </div>
           <p>This release adds a Traditional Chinese UI and independent model-reply width, upgrades the bundled Pi Coding Agent to 0.85.0, and improves Herdr Agent support and Windows Git Bash compatibility.</p>

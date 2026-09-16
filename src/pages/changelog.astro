@@ -16,8 +16,39 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.2.2</span>
+            <span class="cl-tag">v0.2.3</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-09-15">2026-09-15</time>
+          </div>
+          <p>本次版本改进原生菜单与应用界面的语言一致性，默认收起 Windows / Linux 顶部菜单栏，并修复列表内数学公式导致后续 Markdown 内容显示异常的问题。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />原生菜单与跨平台界面</h2>
+          <ul>
+            <li>原生应用菜单跟随界面语言设置，文件、编辑、视图、窗口、帮助及其子菜单完整支持英文、简体中文和繁体中文。</li>
+            <li>Windows / Linux 默认收起顶部菜单栏，减少菜单栏与应用界面的视觉割裂；菜单功能和快捷键保持不变，按 <code>Alt</code> 可临时显示。</li>
+            <li>macOS 保留系统顶部菜单栏，菜单文案会随应用语言切换；设置页面布局保持不变。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Markdown 数学公式</h2>
+          <ul>
+            <li>修复列表内单行块级数学公式展开后丢失缩进的问题，让公式继续属于原列表项。</li>
+            <li>避免公式后的标题、表格、粗体文字等内容被误解析为数学公式，并覆盖有序列表、无序列表、嵌套列表、引用和不同换行格式。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.2.3-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.2.3-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.2.3.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.2.3-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时仍为 0.85.0。</li>
+            <li>Herdr 支持范围、Windows 未签名 Beta 和 Linux 手动更新策略保持不变。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.2.2</span>
             <time class="cl-date" datetime="2026-09-11">2026-09-11</time>
           </div>
           <p>本次版本新增繁体中文界面与独立的模型回复宽度，升级内置 Pi Coding Agent 至 0.85.0，并改进 Herdr Agent 支持和 Windows Git Bash 兼容性。</p>
