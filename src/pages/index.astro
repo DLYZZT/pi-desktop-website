@@ -21,7 +21,7 @@ const features = [
     icon: "ph:share-network",
     title: "对话式 Herdr Agent 舰队",
     description:
-      "在主对话中管理本机 Agent 舰队；支持 12 种 Agent CLI，正式包可发现常见安装位置，右侧 ANSI 终端可观察、排查和接管。",
+      "在主对话中管理本机 Agent 舰队；支持 macOS、Linux 与 Windows x64，右侧 ANSI 终端可观察、排查和显式键盘接管。",
   },
   {
     icon: "ph:folder-simple",
@@ -33,7 +33,7 @@ const features = [
     icon: "ph:sliders-horizontal",
     title: "模型与扩展统一管理",
     description:
-      "内置 Pi Coding Agent 0.85；支持服务商 Base URL、模型显示范围与可靠刷新，应用界面和原生菜单提供英文、简体中文和繁体中文。",
+      "内置 Pi Coding Agent 0.87.1，新增 Claude Opus 5.5、GPT-6 Sol / Luna 与 Grok 4.7，并支持模型显示范围、可靠刷新和提示缓存预热。",
   },
   {
     icon: "ph:wrench",
@@ -99,7 +99,7 @@ const checks = [
           </a>
         </div>
         <p class="hero-meta">
-          当前版本 <span data-version>v0.2.3</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
+          当前版本 <span data-version>v0.3.0</span><span class="dot">·</span>支持 macOS、Windows 与 Linux<span class="dot">·</span><a href={withBase("changelog/")}>查看更新日志</a>
         </p>
 
         <AppPreview />
@@ -204,7 +204,7 @@ const checks = [
       <div class="container">
         <div class="cta-panel">
           <h2>准备好让 Pi Agent 常驻桌面了吗？</h2>
-          <p>内置 Pi Coding Agent 0.85.0 运行时，安装并配置模型提供商后即可使用。</p>
+          <p>内置 Pi Coding Agent 0.87.1 运行时，安装并配置模型提供商后即可使用。</p>
           <a class="btn btn-primary" href={withBase("download/")}>
             <Icon name="ph:download-simple" aria-hidden="true" />
             免费下载

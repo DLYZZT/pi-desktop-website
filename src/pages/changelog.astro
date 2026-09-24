@@ -16,8 +16,47 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="cl-list">
         <article class="cl-card">
           <div class="cl-head">
-            <span class="cl-tag">v0.2.3</span>
+            <span class="cl-tag">v0.3.0</span>
             <span class="cl-latest">最新版本</span>
+            <time class="cl-date" datetime="2026-09-24">2026-09-24</time>
+          </div>
+          <p>本次版本将 Herdr 扩展到 Windows x64，升级内置 Pi Coding Agent 至 0.87.1，并更新模型支持、依赖安全与跨平台验证。</p>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Windows x64 Herdr</h2>
+          <ul>
+            <li>Windows x64 安装包现已内置经过完整性校验的 Herdr v0.8.2，可在“开发工具”中安装、修复或卸载，并使用 Attach 或 Managed 模式连接。</li>
+            <li>Windows 支持 Herdr Fleet 与 Agent 控制、实时 ANSI 终端观察和显式键盘接管。</li>
+            <li>终端子进程由原生 Job Object 管理，应用或终端异常退出时会执行有界清理。</li>
+            <li>Herdr 现支持 macOS arm64 / x64、Linux x64 与 Windows x64；Windows ARM64、Windows Server 和 32 位 Windows 暂不支持。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Pi 0.87.1、模型与缓存</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 从 0.85.0 升级到 0.87.1，并适配会话、模型提供商和工具调用相关的运行时变化。</li>
+            <li>新增 Claude Opus 5.5、GPT-6 Sol、GPT-6 Luna 和 Grok 4.7 模型支持。</li>
+            <li>“设置 → 通用 → 会话”新增“提示缓存预热”，可选择关闭、长时间运行工具时预热或空闲时也预热；设置与 Pi CLI 共享，可能消耗模型用量。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />安全与可靠性</h2>
+          <ul>
+            <li>升级存在安全风险的依赖，并补充 Windows Herdr 原生集成、终端生命周期和打包资源的回归测试。</li>
+            <li>继续验证各平台安装包、Windows Job Object、Herdr runtime 完整性和打包后工具链。</li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />下载</h2>
+          <ul>
+            <li>macOS Apple Silicon：<code>Pi-Agent-Desktop-0.3.0-arm64.dmg</code></li>
+            <li>macOS Intel：<code>Pi-Agent-Desktop-0.3.0-x64.dmg</code></li>
+            <li>Windows x64（未签名 Beta）：<code>Pi-Agent-Desktop-Unsigned-Beta-Setup-0.3.0.exe</code></li>
+            <li>Linux x64：<code>Pi-Agent-Desktop-0.3.0-x86_64.AppImage</code></li>
+          </ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />说明</h2>
+          <ul>
+            <li>内置 Pi Coding Agent 运行时现为 0.87.1。</li>
+            <li>Windows 安装包仍为未签名 Beta，Linux AppImage 继续使用手动更新。</li>
+            <li>Herdr 与受管进程提供生命周期控制，并不是安全沙箱。</li>
+          </ul>
+        </article>
+
+        <article class="cl-card">
+          <div class="cl-head">
+            <span class="cl-tag">v0.2.3</span>
             <time class="cl-date" datetime="2026-09-15">2026-09-15</time>
           </div>
           <p>本次版本改进原生菜单与应用界面的语言一致性，默认收起 Windows / Linux 顶部菜单栏，并修复列表内数学公式导致后续 Markdown 内容显示异常的问题。</p>

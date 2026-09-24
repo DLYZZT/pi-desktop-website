@@ -12,7 +12,7 @@ const platformCards = [
 
 const infoCards = [
   { title: "Install on macOS", items: ["Open the DMG and drag Pi Agent Desktop to Applications", "Release builds are Apple-signed and can be opened directly", "You can also extract the ZIP archive and move the app to Applications", "A verified Herdr v0.8.2 runtime is bundled, so Managed mode needs no separate download"] },
-  { title: "Install on Windows", items: ["The Windows installer is an unsigned Beta without Authenticode code signing", "Windows may show an Unknown Publisher or SmartScreen warning", "Confirm the installer came from GitHub Releases, then choose Run anyway", "Managed background processes require Windows 11 x64; other desktop features remain available on Windows 10", "Herdr integration is currently unavailable on Windows; other desktop features are unaffected"] },
+  { title: "Install on Windows", items: ["The Windows installer is an unsigned Beta without Authenticode code signing", "Windows may show an Unknown Publisher or SmartScreen warning", "Confirm the installer came from GitHub Releases, then choose Run anyway", "Managed background processes require Windows 11 x64; other desktop features remain available on Windows 10", "Windows x64 now bundles Herdr v0.8.2 with Fleet, Agent control, and Job Object-contained terminals"] },
   { title: "Install on Linux", items: ["Download the x64 AppImage", "Run chmod +x Pi-Agent-Desktop-*.AppImage to make it executable", "Updates are currently manual; download the new version here and replace the old file", "A verified Herdr v0.8.2 runtime is bundled, so Managed mode needs no separate download"] },
   { title: "Updating", items: ["macOS: check for stable updates automatically or manually in the app", "Windows: check, download, and install stable updates in the app", "Linux: AppImage updates are currently manual"] },
 ];
@@ -27,7 +27,7 @@ const infoCards = [
     <section class="page-head">
       <div class="container">
         <h1>Download Pi Agent Desktop</h1>
-        <p>Pi Coding Agent 0.85.0 is included, and macOS and Linux also bundle Herdr v0.8.2. You do not need to install Pi CLI, Node.js, or npm separately—just configure a model provider.</p>
+        <p>Pi Coding Agent 0.87.1 and Herdr v0.8.2 are included. You do not need to install Pi CLI, Node.js, or npm separately—just configure a model provider.</p>
       </div>
     </section>
 
@@ -50,7 +50,7 @@ const infoCards = [
               <div class="dl-alt">
                 {card.alternateKey ? <a data-dl={card.alternateKey} href={releasesUrl}>{card.alternateLabel}</a> : card.alternateLabel}
               </div>
-              <div class="dl-ver"><span data-version>v0.2.3</span> · {card.meta}</div>
+              <div class="dl-ver"><span data-version>v0.3.0</span> · {card.meta}</div>
             </article>
           ))}
         </div>

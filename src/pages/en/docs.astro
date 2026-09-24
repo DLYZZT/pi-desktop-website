@@ -43,7 +43,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.2.3 desktop packages include Pi Coding Agent 0.85.0, and macOS and Linux also bundle Herdr v0.8.2. Normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.3.0 desktop packages include Pi Coding Agent 0.87.1 and Herdr v0.8.2. Normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
@@ -125,6 +125,8 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>Model reply width is separate from the outer conversation width. Full mode contracts with the available space when a right-side panel is open.</li>
             <li>Messages, process details, and the composer share aligned content boundaries in both wide and minimum-width windows.</li>
           </ul>
+          <h3>Configure prompt cache warming</h3>
+          <p>Prompt cache warming offers Off, During long tool runs, and Also while idle modes. It can keep model prompt caches active during long tool calls or idle time, but may use model tokens. The setting is shared with Pi CLI. Reopen any active session that could not update immediately.</p>
 
           <h3>Send attachments and use local file links</h3>
           <ul>
@@ -176,7 +178,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
           <h3>Prepare the Herdr runtime</h3>
           <ol>
-            <li>On macOS or Linux, open Settings → Developer Tools and find Herdr. A digest-verified v0.8.2 runtime is bundled, so you can install, update, repair, or remove the private runtime without a separate network download.</li>
+            <li>On macOS, Linux, or Windows x64, open Settings → Developer Tools and find Herdr. An integrity-verified v0.8.2 runtime is bundled, so you can install, update, repair, or remove the private runtime without a separate network download.</li>
             <li>Open Settings → Herdr, enable the integration, choose Attach or Managed mode, enter a Herdr Session name, and optionally enable automatic connection.</li>
             <li>Attach connects to a system Herdr server that you start and stop yourself; Pi Desktop never stops it. Managed starts, monitors, and restarts Pi Desktop's private server within limits.</li>
             <li>Managed stops its private server when Herdr is disabled, the mode changes, the runtime is removed, or the app exits. It never takes over or terminates an external Herdr.</li>
@@ -197,9 +199,10 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <li>The right-side Herdr terminal supports ANSI output, auto-fit sizing, read-only observation, explicit keyboard takeover, input throttling, reconnection, and bounded buffering.</li>
             <li>Closing the terminal view does not close the Herdr pane or Agent. You can choose whether closing the view releases terminal control.</li>
             <li>Closing a workspace, pane, or Agent requires local confirmation. Herdr v0.8.2 cannot stop only an Agent, so Close Agent explicitly closes its pane and every process inside it.</li>
+            <li>On Windows x64, native Job Objects contain terminal child processes and provide bounded cleanup after app or terminal failure.</li>
           </ul>
 
-          <div class="note-box"><b>Platform support:</b> Herdr currently supports macOS arm64 / x64 and Linux x64. Other desktop features remain available on Windows, but Herdr is unavailable there and fails closed.</div>
+          <div class="note-box"><b>Platform support:</b> Herdr supports macOS arm64 / x64, Linux x64, and Windows x64. Windows ARM64, Windows Server, and 32-bit Windows are not supported.</div>
           <div class="note-box"><b>Security boundary:</b> Herdr endpoints, protocol, and Unix sockets are strictly validated, with bounded and redacted data. Like managed processes, Herdr provides lifecycle control rather than a container or security sandbox.</div>
         </section>
 
@@ -231,8 +234,11 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop v0.2.3 includes Pi Coding Agent 0.85.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider. Model settings support English, Simplified Chinese, and Traditional Chinese.</p>
+          <p>Pi Agent Desktop v0.3.0 includes Pi Coding Agent 0.87.1 but does not include model credits. Connect an existing model provider account or enter an API key from your provider. Model settings support English, Simplified Chinese, and Traditional Chinese.</p>
           <SettingsPreview section="models" lang="en" />
+
+          <h3>Models added in v0.3.0</h3>
+          <p>The model directory now supports Claude Opus 5.5, GPT-6 Sol, GPT-6 Luna, and Grok 4.7. Availability still depends on the provider, account access, and the current catalog refresh result.</p>
 
           <h3>Use an API key</h3>
           <ol><li>Open Settings → Models and select Add provider.</li><li>Choose your model provider.</li><li>For a proxy or compatible endpoint, enter a Base URL; leave it blank to use the provider default.</li><li>Paste the API key and save. The app synchronizes the Agent Host model state.</li><li>Select a model. If a Test action is available, use it to verify the connection.</li><li>Close Settings and choose the model below the conversation composer.</li></ol>
@@ -307,7 +313,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <ol><li>Select Rescan to see each tool's status, source, and version.</li><li>Leave installed tools on Auto. If detection is wrong, use Choose to select a path.</li><li>When a managed version is available for a missing tool, select Install. Use Repair if managed files are damaged.</li></ol>
           <p>On Windows, Git Bash is recognized from its installation layout together with the colocated Git version, so custom Git for Windows directories and versioned PortableGit folders work correctly.</p>
           <h3>Manage the Herdr runtime</h3>
-          <p>macOS and Linux packages include a digest-verified Herdr v0.8.2. Developer Tools shows the bundled and installed versions plus private disk usage, and lets you install, update, repair, or remove the private runtime from the bundled copy without downloading Herdr separately.</p>
+          <p>macOS, Linux, and Windows x64 packages include integrity-verified Herdr v0.8.2. Developer Tools shows the bundled and installed versions plus private disk usage, and lets you install, update, repair, or remove the private runtime from the bundled copy without downloading Herdr separately.</p>
           <p>Herdr versions arrive with Pi Desktop updates. Removing the private runtime does not delete Herdr Sessions or the recovery copy bundled inside the app.</p>
           <div class="note-box"><b>You do not need everything:</b> Leave healthy tools alone. Managed tools stay in Pi Desktop's private directory and do not change the system PATH.</div>
         </section>
@@ -345,7 +351,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             <p>Confirm that the platform is supported and a trusted project folder is selected. Windows requires Windows 11 x64. If the UI reports a helper, owner-identity, or crash-reaper problem, follow its restart or reinstall guidance and export diagnostics when needed.</p>
           </FaqItem>
           <FaqItem summary="Why can’t I find or connect to Herdr?">
-            <p>Herdr currently supports macOS arm64 / x64 and Linux x64 only; it remains unavailable on Windows. On macOS or Linux, install or repair bundled Herdr v0.8.2 under Settings → Developer Tools, then check the mode, Session name, and connection status under Settings → Herdr.</p>
+            <p>Herdr supports macOS arm64 / x64, Linux x64, and Windows x64. Windows ARM64, Windows Server, and 32-bit Windows are not supported. Install or repair bundled Herdr v0.8.2 under Settings → Developer Tools, then check the mode, Session name, and connection status under Settings → Herdr.</p>
           </FaqItem>
           <FaqItem summary="Why is the top menu bar missing on Windows or Linux?">
             <p>v0.2.3 hides the top menu bar by default for a more integrated app surface; commands and shortcuts are unchanged. Press <code>Alt</code> to reveal it temporarily. The macOS menu bar remains at the top of the system screen.</p>
