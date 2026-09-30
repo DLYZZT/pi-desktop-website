@@ -1,4 +1,5 @@
-import { withBase } from "../utils/paths";
+import { localeFromPathname, localizedPath } from "../i18n";
+import { clientPhrases, type ClientPhrase } from "../i18n/client";
 
 const REPO = "DLYZZT/pi-desktop";
 const FALLBACK_VERSION = "0.3.0";
@@ -20,7 +21,8 @@ type Release = {
 };
 
 const root = document.documentElement;
-const isEnglish = root.lang.toLowerCase().startsWith("en");
+const locale = localeFromPathname(window.location.pathname);
+const t = (key: ClientPhrase) => document.querySelector(`[data-client-message="${key}"]`)?.textContent ?? clientPhrases[key];
 
 function preferredTheme(): "dark" | "light" {
   try {
@@ -154,23 +156,23 @@ function recommendedKey(platform: Platform): keyof Release | null {
 }
 
 function recommendedLabel(platform: Platform) {
-  if (platform.os === "windows") return isEnglish ? "Download for Windows (x64)" : "下载 Windows 版（x64）";
+  if (platform.os === "windows") return t("windowsDownload");
   if (platform.os === "mac") {
-    if (platform.arch === "x64") return isEnglish ? "Download for macOS (Intel)" : "下载 macOS 版（Intel）";
-    return isEnglish ? "Download for macOS (Apple Silicon)" : "下载 macOS 版（Apple Silicon）";
+    if (platform.arch === "x64") return t("macIntelDownload");
+    return t("macSiliconDownload");
   }
   if (platform.os === "linux" && platform.arch !== "arm64") {
-    return isEnglish ? "Download for Linux (x64 AppImage)" : "下载 Linux 版（x64 AppImage）";
+    return t("linuxDownload");
   }
   return null;
 }
 
 function detectedLabel(platform: Platform) {
-  if (platform.os === "windows") return isEnglish ? "Windows (x64)" : "Windows（x64）";
-  if (platform.os === "mac") return platform.arch === "x64" ? "macOS (Intel)" : "macOS (Apple Silicon)";
+  if (platform.os === "windows") return t("windowsDetected");
+  if (platform.os === "mac") return platform.arch === "x64" ? t("macIntelDetected") : t("macSiliconDetected");
   if (platform.os === "linux") {
-    if (platform.arch === "arm64") return isEnglish ? "Linux (ARM64, not yet supported)" : "Linux（ARM64，暂不支持）";
-    return isEnglish ? "Linux (x64)" : "Linux（x64）";
+    if (platform.arch === "arm64") return t("linuxArmDetected");
+    return t("linuxDetected");
   }
   return null;
 }
@@ -193,8 +195,8 @@ function applyRelease(release: Release, platform: Platform) {
     heroButton.href = release[key];
     heroLabel.textContent = label;
   } else if (heroButton && heroLabel) {
-    heroButton.href = withBase(isEnglish ? "en/download/" : "download/");
-    heroLabel.textContent = isEnglish ? "View downloads" : "前往下载";
+    heroButton.href = localizedPath(locale, "download/");
+    heroLabel.textContent = t("viewDownloads");
   }
 
   const banner = document.querySelector<HTMLElement>("[data-detect-banner]");

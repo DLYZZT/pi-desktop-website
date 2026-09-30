@@ -4,25 +4,23 @@ import "@fontsource-variable/noto-sans-mono";
 import "../styles/site.css";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
-import type { Locale } from "../i18n";
-import { localizedPath, localeRouteFromPathname } from "../i18n";
+import { htmlLanguages, localizedPath, localeFromPathname, localeRouteFromPathname, locales } from "../i18n";
 import { withBase } from "../utils/paths";
+import { clientPhrases } from "../i18n/client";
 
 interface Props {
   title: string;
   description: string;
-  lang?: Locale;
 }
 
-const { title, description, lang = "zh" } = Astro.props;
+const { title, description } = Astro.props;
+const lang = localeFromPathname(Astro.url.pathname);
 const iconUrl = withBase("icon.png");
 const routePath = localeRouteFromPathname(Astro.url.pathname);
-const zhPath = localizedPath("zh", routePath);
-const enPath = localizedPath("en", routePath);
 const absoluteUrl = (path: string) => Astro.site ? new URL(path, Astro.site).toString() : path;
-const currentPath = lang === "en" ? enPath : zhPath;
-const documentLang = lang === "en" ? "en" : "zh-CN";
-const skipLabel = lang === "en" ? "Skip to main content" : "跳到主要内容";
+const currentPath = localizedPath(lang, routePath);
+const documentLang = htmlLanguages[lang];
+const skipLabel = "Skip to main content";
 const heroBackgrounds = [
   `--hero-grid-image: url('${withBase("hero-grid.webp")}')`,
   `--hero-grid-dark-image: url('${withBase("hero-grid-dark.webp")}')`,
@@ -42,9 +40,8 @@ const heroBackgrounds = [
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={absoluteUrl(currentPath)} />
-    <link rel="alternate" hreflang="zh-CN" href={absoluteUrl(zhPath)} />
-    <link rel="alternate" hreflang="en" href={absoluteUrl(enPath)} />
-    <link rel="alternate" hreflang="x-default" href={absoluteUrl(zhPath)} />
+    {locales.map((locale) => <link rel="alternate" hreflang={htmlLanguages[locale]} href={absoluteUrl(localizedPath(locale, routePath))} />)}
+    <link rel="alternate" hreflang="x-default" href={absoluteUrl(localizedPath("zh", routePath))} />
     <link rel="icon" type="image/png" href={iconUrl} />
     <script is:inline>
       (() => {
@@ -62,6 +59,9 @@ const heroBackgrounds = [
     <SiteHeader lang={lang} />
     <slot />
     <SiteFooter lang={lang} />
+    <div hidden id="client-i18n" aria-hidden="true">
+      {Object.entries(clientPhrases).map(([key, phrase]) => <span data-client-message={key}>{phrase}</span>)}
+    </div>
     <script>
       import "../scripts/site";
     </script>

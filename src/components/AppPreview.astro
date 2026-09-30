@@ -4,100 +4,53 @@ import { withBase } from "../utils/paths";
 
 interface Props {
   variant?: "hero" | "docs";
-  lang?: "zh" | "en";
 }
 
-const { variant = "hero", lang = "zh" } = Astro.props;
-const isEnglish = lang === "en";
-const copy = isEnglish
-  ? {
-      aria: "High-resolution Pi Agent Desktop preview with sessions on the left, a conversation and Agent Fleet status in the center, and files, processes, a Herdr terminal, or the shared browser on the right",
-      newSession: "New session",
-      sessions: "Sessions",
-      search: "Search sessions...",
-      today: "Today",
-      settings: "Settings",
-      channelStatus: "Agent Fleet · 3 agents",
-      loadEarlier: "Load earlier messages",
-      prior: [
-        ["Stack:", "Native HTML, CSS, and JavaScript"],
-        ["Format:", "Responsive single-page site with no dependencies"],
-        ["Entry:", "index.html"],
-      ],
-      run: "Open index.html directly in a browser to run it.",
-      userMessage: "Create a website that introduces DLYZZT/pi-desktop",
-      process: "Process details · 7 messages · 11 tool calls",
-      answer: "The page is now a product site for DLYZZT/pi-desktop.",
-      highlights: "Highlights include:",
-      items: [
-        "Pi Agent Desktop positioning and download entry points",
-        "Fast paginated sessions, tool calls, project files, models, and extensions",
-        "A built-in browser shared by the user and Agent",
-        "Conversational control of local Herdr Agent fleets",
-        "Observable managed development processes",
-        "WeChat, Telegram, and Feishu / Lark messaging channels",
-        "Isolated Electron processes and local privacy controls",
-        "macOS, Windows, and Linux downloads",
-      ],
-      files: "Files:",
-      composer: "Message... Type / for commands or @ to reference files",
-      send: "Send",
-      reasoning: "High",
-      preset: "Standard",
-      compact: "Compact context",
-      browserTab: "Browser",
-      processesTab: "Processes",
-      herdrTab: "Herdr",
-      browserGrant: "Browser interact · session grant",
-      browserEyebrow: "PI AGENT DESKTOP",
-      browserTitle: "A true desktop workspace",
-      browserText: "Sessions, files, browser, Herdr Agent fleets, managed processes, models, and messaging in one local-first app.",
-      browserCta: "View releases",
-    }
-  : {
-      aria: "Pi Agent Desktop 高清界面预览，左侧为项目和会话，中间为对话与 Agent 舰队状态，右侧为文件、受管进程、Herdr 终端或共享浏览器",
-      newSession: "新建会话",
-      sessions: "会话",
-      search: "搜索会话...",
-      today: "今天",
-      settings: "设置",
-      channelStatus: "Agent 舰队 · 3 个 Agent",
-      loadEarlier: "加载更早消息",
-      prior: [
-        ["技术：", "原生 HTML、CSS、JavaScript"],
-        ["形式：", "响应式单页网站，无需安装依赖"],
-        ["入口文件：", "index.html"],
-      ],
-      run: "直接在浏览器中打开 index.html 即可运行。",
-      userMessage: "介绍 DLYZZT/pi-desktop 这个项目的网页",
-      process: "过程详情 · 7 条消息 · 11 次工具调用",
-      answer: "已将网页改为介绍 DLYZZT/pi-desktop 项目的产品官网。",
-      highlights: "主要内容包括：",
-      items: [
-        "Pi Agent Desktop 核心定位与下载入口",
-        "快速分页会话、工具调用、项目文件、模型及扩展管理",
-        "用户与 Agent 共享的内置浏览器",
-        "在主对话中控制本机 Herdr Agent 舰队",
-        "可观察、可控制的受管开发进程",
-        "微信、Telegram、飞书/Lark 消息渠道",
-        "Electron 进程隔离及本地隐私策略",
-        "macOS、Windows 与 Linux 下载",
-      ],
-      files: "文件：",
-      composer: "输入消息... 输入 / 查看命令，输入 @ 引用文件",
-      send: "发送",
-      reasoning: "高",
-      preset: "标准",
-      compact: "压缩上下文",
-      browserTab: "浏览器",
-      processesTab: "进程",
-      herdrTab: "Herdr",
-      browserGrant: "浏览器交互 · 当前会话授权",
-      browserEyebrow: "PI AGENT DESKTOP",
-      browserTitle: "真正的桌面工作台",
-      browserText: "会话、文件、浏览器、Herdr Agent 舰队、受管进程、模型与消息渠道，统一收进一个本地优先的应用。",
-      browserCta: "查看发布版本",
-    };
+const { variant = "hero" } = Astro.props;
+const copy = {
+  aria: "High-resolution Pi Agent Desktop preview with sessions on the left, a conversation and Agent Fleet status in the center, and files, processes, a Herdr terminal, or the shared browser on the right",
+  newSession: "New session",
+  sessions: "Sessions",
+  search: "Search sessions...",
+  today: "Today",
+  settings: "Settings",
+  channelStatus: "Agent Fleet · 3 agents",
+  loadEarlier: "Load earlier messages",
+  prior: [
+    ["Stack:", "Native HTML, CSS, and JavaScript"],
+    ["Format:", "Responsive single-page site with no dependencies"],
+    ["Entry:", "index.html"],
+  ],
+  run: "Open index.html directly in a browser to run it.",
+  userMessage: "Create a website that introduces DLYZZT/pi-desktop",
+  process: "Process details · 7 messages · 11 tool calls",
+  answer: "The page is now a product site for DLYZZT/pi-desktop.",
+  highlights: "Highlights include:",
+  items: [
+    "Pi Agent Desktop positioning and download entry points",
+    "Fast paginated sessions, tool calls, project files, models, and extensions",
+    "A built-in browser shared by the user and Agent",
+    "Conversational control of local Herdr Agent fleets",
+    "Observable managed development processes",
+    "WeChat, Telegram, and Feishu / Lark messaging channels",
+    "Isolated Electron processes and local privacy controls",
+    "macOS, Windows, and Linux downloads",
+  ],
+  files: "Files:",
+  composer: "Message... Type / for commands or @ to reference files",
+  send: "Send",
+  reasoning: "High",
+  preset: "Standard",
+  compact: "Compact context",
+  browserTab: "Browser",
+  processesTab: "Processes",
+  herdrTab: "Herdr",
+  browserGrant: "Browser interact · session grant",
+  browserEyebrow: "PI AGENT DESKTOP",
+  browserTitle: "A true desktop workspace",
+  browserText: "Sessions, files, browser, Herdr Agent fleets, managed processes, models, and messaging in one local-first app.",
+  browserCta: "View releases",
+};
 ---
 
 <div
@@ -171,7 +124,7 @@ const copy = isEnglish
             <ul>
               {copy.prior.map(([label, text], index) => <li><b>{label}</b>{index === 2 ? <code>{text}</code> : text}</li>)}
             </ul>
-            <p>{isEnglish ? <>Open <code>index.html</code> directly in a browser to run it.</> : <>直接在浏览器中打开 <code>index.html</code> 即可运行。</>}</p>
+            <p>Open <code>index.html</code> directly in a browser to run it.</p>
           </div>
           <div class="preview-message-meta"><span>11,044 in · 147 out · $0.0596</span><span>06:33</span></div>
 
@@ -182,7 +135,7 @@ const copy = isEnglish
           <div class="preview-model-label">GPT-6 Sol</div>
 
           <article class="preview-assistant-card">
-            <p>{isEnglish ? <>The page is now a product site for <b>DLYZZT/pi-desktop</b>.</> : <>已将网页改为介绍 <b>DLYZZT/pi-desktop</b> 项目的产品官网。</>}</p>
+            <p>The page is now a product site for <b>DLYZZT/pi-desktop</b>.</p>
             <p>{copy.highlights}</p>
             <ul>{copy.items.map((item) => <li>{item}</li>)}</ul>
             <p>{copy.files}</p>

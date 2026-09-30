@@ -9,7 +9,6 @@ interface Props {
 }
 
 const { lang = "zh" } = Astro.props;
-const isEnglish = lang === "en";
 ---
 
 <footer class="footer">
@@ -20,14 +19,14 @@ const isEnglish = lang === "en";
           <img src={withBase("icon.png")} alt="" width="26" height="26" />
           <span>Pi Agent Desktop</span>
         </div>
-        <p class="footer-desc">{isEnglish ? "A true desktop workspace for Pi Coding Agent. Local-first, no local server, and cross-platform." : "把 Pi Coding Agent 变成真正的桌面工作台。本地优先 · 零本地服务器 · 跨平台应用。"}</p>
-        <div class="footer-socials" aria-label={isEnglish ? "Social media" : "社交媒体"}>
+        <p class="footer-desc">{"A true desktop workspace for Pi Coding Agent. Local-first, no local server, and cross-platform."}</p>
+        <div class="footer-socials" aria-label={"Social media"}>
           <a
             class="icon-btn"
             href="https://github.com/DLYZZT/pi-desktop"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={isEnglish ? "GitHub repository" : "GitHub 仓库"}
+            aria-label={"GitHub repository"}
           >
             <Icon name="simple-icons:github" aria-hidden="true" />
           </a>
@@ -36,40 +35,40 @@ const isEnglish = lang === "en";
             href="https://x.com/dlyzzt"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={isEnglish ? "Follow DLYZZT on X" : "在 X 上关注 DLYZZT"}
+            aria-label={"Follow DLYZZT on X"}
           >
             <Icon name="simple-icons:x" aria-hidden="true" />
           </a>
         </div>
       </div>
       <div>
-        <h5>{isEnglish ? "Product" : "产品"}</h5>
+        <h5>{"Product"}</h5>
         <ul>
-          <li><a href={localizedPath(lang, "download/")}>{isEnglish ? "Download" : "下载"}</a></li>
-          <li><a href={localizedPath(lang, "changelog/")}>{isEnglish ? "Changelog" : "更新日志"}</a></li>
-          <li><a href={`${localizedPath(lang, "docs/")}#requirements`}>{isEnglish ? "System requirements" : "系统要求"}</a></li>
+          <li><a href={localizedPath(lang, "download/")}>{"Download"}</a></li>
+          <li><a href={localizedPath(lang, "changelog/")}>{"Changelog"}</a></li>
+          <li><a href={`${localizedPath(lang, "docs/")}#requirements`}>{"System requirements"}</a></li>
         </ul>
       </div>
       <div>
-        <h5>{isEnglish ? "Resources" : "资源"}</h5>
+        <h5>{"Resources"}</h5>
         <ul>
-          <li><a href={localizedPath(lang, "docs/")}>{isEnglish ? "Documentation" : "使用文档"}</a></li>
-          <li><a href="https://github.com/DLYZZT/pi-desktop" target="_blank" rel="noopener noreferrer">{isEnglish ? "GitHub repository" : "GitHub 仓库"}</a></li>
+          <li><a href={localizedPath(lang, "docs/")}>{"Documentation"}</a></li>
+          <li><a href="https://github.com/DLYZZT/pi-desktop" target="_blank" rel="noopener noreferrer">{"GitHub repository"}</a></li>
           <li><a href="https://x.com/dlyzzt" target="_blank" rel="noopener noreferrer">X / Twitter</a></li>
           <li><a href="https://github.com/DLYZZT/pi-desktop/releases" target="_blank" rel="noopener noreferrer">Releases</a></li>
         </ul>
       </div>
       <div>
-        <h5>{isEnglish ? "Development" : "开发"}</h5>
+        <h5>{"Development"}</h5>
         <ul>
           <li><a href="https://github.com/DLYZZT/pi-desktop/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
           <li><a href="https://github.com/DLYZZT/pi-desktop/pulls" target="_blank" rel="noopener noreferrer">Pull Requests</a></li>
-          <li><a href="https://github.com/DLYZZT/pi-desktop/actions/workflows/build-desktop.yml" target="_blank" rel="noopener noreferrer">{isEnglish ? "Build status" : "构建状态"}</a></li>
+          <li><a href="https://github.com/DLYZZT/pi-desktop/actions/workflows/build-desktop.yml" target="_blank" rel="noopener noreferrer">{"Build status"}</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>{isEnglish ? "© 2026 DLYZZT · Open source under Apache License 2.0" : "© 2026 DLYZZT · 基于 Apache License 2.0 开源"}</span>
+      <span>{"© 2026 DLYZZT · Open source under Apache License 2.0"}</span>
       <span data-version>v0.3.0</span>
     </div>
   </div>

@@ -1,0 +1,6 @@
+---
+import Page from "../../components/pages/index.astro";
+import { locales } from "../../i18n";
+export function getStaticPaths() { return locales.filter((locale) => locale !== "zh").map((locale) => ({ params: { locale } })); }
+---
+<Page />

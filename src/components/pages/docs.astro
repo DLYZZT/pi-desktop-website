@@ -9,7 +9,6 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 ---
 
 <BaseLayout
-  lang="en"
   title="User Guide — Pi Agent Desktop"
   description="Learn how to install Pi Agent Desktop, use its workspace, built-in browser, Herdr Agent fleets, and managed processes, and configure models, extensions, and messaging."
 >
@@ -78,7 +77,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="workspace">
           <h2>Meet the main workspace</h2>
           <figure class="guide-figure">
-            <AppPreview variant="docs" lang="en" />
+            <AppPreview variant="docs" />
             <figcaption>The workspace contains sessions on the left, the conversation and Fleet status in the center, and files, managed processes, a Herdr terminal, or the shared browser on the right.</figcaption>
           </figure>
 
@@ -235,7 +234,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
           <p>Pi Agent Desktop v0.3.0 includes Pi Coding Agent 0.87.1 but does not include model credits. Connect an existing model provider account or enter an API key from your provider. Model settings support English, Simplified Chinese, and Traditional Chinese.</p>
-          <SettingsPreview section="models" lang="en" />
+          <SettingsPreview section="models" />
 
           <h3>Models added in v0.3.0</h3>
           <p>The model directory now supports Claude Opus 5.5, GPT-6 Sol, GPT-6 Luna, and Grok 4.7. Availability still depends on the provider, account access, and the current catalog refresh result.</p>
@@ -265,7 +264,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Skills settings</h2>
           <p class="guide-path"><b>Open</b><span>Choose a project</span><i>→</i><span>Settings</span><i>→</i><span>Skills</span></p>
           <p>This section focuses on settings. Each Skill's own documentation explains its capabilities and usage.</p>
-          <SettingsPreview section="skills" lang="en" />
+          <SettingsPreview section="skills" />
           <ol><li>Choose a project, then open Settings → Skills.</li><li>Select an installed Skill and use the switch to control whether it is visible to the model.</li><li>To add one, select Add skill, search by name, choose Global or Current project, and install.</li><li>Edit the content only when you need custom instructions, then save your changes.</li></ol>
           <div class="note-box"><b>Installation retry:</b> Normal installs use npm's default concurrency and cache. On a network error, timeout, or npm cache-lock failure, the app automatically retries once with a temporary isolated cache.</div>
           <div class="note-box"><b>Tip:</b> Use Global for reusable Skills and Current project for repository-specific Skills.</div>
@@ -275,7 +274,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Plugins settings</h2>
           <p class="guide-path"><b>Open</b><span>Choose a project</span><i>→</i><span>Settings</span><i>→</i><span>Plugins</span></p>
           <p>The Plugins page lets you configure a source, installation scope, and enabled state.</p>
-          <SettingsPreview section="plugins" lang="en" />
+          <SettingsPreview section="plugins" />
           <ol><li>Choose a project, then open Settings → Plugins.</li><li>Select Add plugin and enter an npm package, Git repository, or absolute local path.</li><li>Choose Global or Current project, then install.</li><li>Enable, disable, update, or remove Plugins from the installed list.</li><li>After changing Plugin settings, reload the current session.</li></ol>
           <div class="note-box"><b>Important:</b> Plugins can execute code. Install only from sources you trust.</div>
         </section>
@@ -284,7 +283,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Messaging channel settings</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Messaging channels</span></p>
           <p>Choose a channel. The official QR creation flow is recommended for Feishu / Lark, while existing custom apps remain supported:</p>
-          <SettingsPreview section="channels" lang="en" />
+          <SettingsPreview section="channels" />
 
           <div class="table-scroll" tabindex="0" role="region" aria-label="Messaging channel connection methods">
             <table><thead><tr><th>Channel</th><th>Configuration</th></tr></thead><tbody>
@@ -309,7 +308,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Developer tools settings</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Developer Tools</span></p>
           <p>The app scans required tools automatically. Most users only need to act on items marked Missing or Unavailable.</p>
-          <SettingsPreview section="tools" lang="en" />
+          <SettingsPreview section="tools" />
           <ol><li>Select Rescan to see each tool's status, source, and version.</li><li>Leave installed tools on Auto. If detection is wrong, use Choose to select a path.</li><li>When a managed version is available for a missing tool, select Install. Use Repair if managed files are damaged.</li></ol>
           <p>On Windows, Git Bash is recognized from its installation layout together with the colocated Git version, so custom Git for Windows directories and versioned PortableGit folders work correctly.</p>
           <h3>Manage the Herdr runtime</h3>

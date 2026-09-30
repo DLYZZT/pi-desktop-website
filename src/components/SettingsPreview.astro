@@ -5,28 +5,26 @@ type Section = "models" | "skills" | "plugins" | "channels" | "tools";
 
 interface Props {
   section: Section;
-  lang?: "zh" | "en";
 }
 
-const { section, lang = "zh" } = Astro.props;
-const isEnglish = lang === "en";
+const { section } = Astro.props;
 const tabs = [
-  { id: "general", label: isEnglish ? "General" : "通用", icon: "ph:sliders-horizontal" },
-  { id: "models", label: isEnglish ? "Models" : "模型", icon: "ph:brain" },
-  { id: "browser", label: isEnglish ? "Browser" : "浏览器", icon: "ph:browser" },
+  { id: "general", label: "General", icon: "ph:sliders-horizontal" },
+  { id: "models", label: "Models", icon: "ph:brain" },
+  { id: "browser", label: "Browser", icon: "ph:browser" },
   { id: "herdr", label: "Herdr", icon: "ph:share-network" },
-  { id: "channels", label: isEnglish ? "Channels" : "消息渠道", icon: "ph:chats-circle" },
-  { id: "skills", label: isEnglish ? "Skills" : "技能", icon: "ph:lightning" },
-  { id: "plugins", label: isEnglish ? "Plugins" : "插件", icon: "ph:puzzle-piece" },
-  { id: "tools", label: isEnglish ? "Dev Tools" : "开发工具", icon: "ph:wrench" },
-  { id: "about", label: isEnglish ? "About" : "关于", icon: "ph:info" },
+  { id: "channels", label: "Channels", icon: "ph:chats-circle" },
+  { id: "skills", label: "Skills", icon: "ph:lightning" },
+  { id: "plugins", label: "Plugins", icon: "ph:puzzle-piece" },
+  { id: "tools", label: "Dev Tools", icon: "ph:wrench" },
+  { id: "about", label: "About", icon: "ph:info" },
 ] as const;
 const ariaLabels: Record<Section, string> = {
-  models: isEnglish ? "Pi Agent Desktop model settings with provider-level search, enabled counts, and individual or bulk model selection" : "Pi Agent Desktop 模型设置界面，展示按服务商搜索、启用数量以及逐个或批量控制模型显示范围",
-  skills: isEnglish ? "Pi Agent Desktop Skills settings with a Skill list, enabled state, and SKILL.md editor" : "Pi Agent Desktop 技能设置界面，左侧选择 Skill，右侧编辑启用状态和 SKILL.md",
-  plugins: isEnglish ? "Pi Agent Desktop Plugins settings with source, installation scope, and install action" : "Pi Agent Desktop 插件设置界面，展示插件来源、安装范围和安装按钮",
-  channels: isEnglish ? "Pi Agent Desktop messaging channel settings with a Telegram account, default directory, and access policies" : "Pi Agent Desktop 消息渠道设置界面，展示 Telegram 账号、默认目录和访问策略",
-  tools: isEnglish ? "Pi Agent Desktop Developer Tools settings with Herdr, Node.js status, providers, and managed runtimes" : "Pi Agent Desktop 开发工具设置界面，展示 Herdr、Node.js 的检测状态、来源和托管运行时",
+  models: "Pi Agent Desktop model settings with provider-level search, enabled counts, and individual or bulk model selection",
+  skills: "Pi Agent Desktop Skills settings with a Skill list, enabled state, and SKILL.md editor",
+  plugins: "Pi Agent Desktop Plugins settings with source, installation scope, and install action",
+  channels: "Pi Agent Desktop messaging channel settings with a Telegram account, default directory, and access policies",
+  tools: "Pi Agent Desktop Developer Tools settings with Herdr, Node.js status, providers, and managed runtimes",
 };
 
 const skillNames = [
@@ -52,7 +50,7 @@ const toolGroups = [
   { title: "HERDR", count: "1/1", tools: ["Herdr"] },
   { title: "JAVASCRIPT", count: "4/4", tools: ["Node.js", "npm", "npx", "Bun"] },
   { title: "PYTHON", count: "3/3", tools: ["Python", "uv", "uvx"] },
-  { title: isEnglish ? "CLI ESSENTIALS" : "CLI 基础工具", count: "4/7", tools: ["Bash", "PowerShell", "Git", "ripgrep", "fd", "jq", "curl"] },
+  { title: "CLI ESSENTIALS", count: "4/7", tools: ["Bash", "PowerShell", "Git", "ripgrep", "fd", "jq", "curl"] },
 ];
 ---
 
@@ -60,13 +58,13 @@ const toolGroups = [
   <div class="settings-window" role="img" aria-label={ariaLabels[section]}>
     <div class="settings-header" aria-hidden="true">
       <div>
-        <b>{isEnglish ? "Settings" : "设置"}</b>
-        <span>{isEnglish ? "Manage Pi Agent Desktop preferences, connections, and extensions" : "管理 Pi Agent Desktop 的偏好、连接与扩展"}</span>
+        <b>{"Settings"}</b>
+        <span>{"Manage Pi Agent Desktop preferences, connections, and extensions"}</span>
       </div>
       <Icon name="ph:x" />
     </div>
 
-    <div class="settings-tabs" data-preview-label={isEnglish ? "Settings preview" : "设置项预览"} aria-hidden="true">
+    <div class="settings-tabs" data-preview-label={"Settings preview"} aria-hidden="true">
       {tabs.map((tab) => (
         <span class:list={["settings-tab", tab.id === section && "is-active"]}>
           <Icon name={tab.icon} />
@@ -80,34 +78,34 @@ const toolGroups = [
         <>
           <aside class="settings-list model-provider-list">
             <div class="list-scroll">
-              <div class="list-group-heading"><span>{isEnglish ? "CONNECTED" : "已连接"}</span><span>3</span></div>
-              <div class="list-row model-provider-row is-selected"><i class="is-on"></i><span><b>Anthropic</b><small>{isEnglish ? "API key · 3/5 enabled" : "API Key · 已启用 3/5 个"}</small></span></div>
-              <div class="list-row model-provider-row"><i class="is-on"></i><span><b>OpenAI</b><small>{isEnglish ? "Subscription · All enabled" : "订阅账号 · 已全部启用"}</small></span></div>
-              <div class="list-row model-provider-row"><i class="is-on"></i><span><b>Google Gemini</b><small>{isEnglish ? "API key · All enabled" : "API Key · 已全部启用"}</small></span></div>
+              <div class="list-group-heading"><span>{"CONNECTED"}</span><span>3</span></div>
+              <div class="list-row model-provider-row is-selected"><i class="is-on"></i><span><b>Anthropic</b><small>{"API key · 3/5 enabled"}</small></span></div>
+              <div class="list-row model-provider-row"><i class="is-on"></i><span><b>OpenAI</b><small>{"Subscription · All enabled"}</small></span></div>
+              <div class="list-row model-provider-row"><i class="is-on"></i><span><b>Google Gemini</b><small>{"API key · All enabled"}</small></span></div>
             </div>
-            <div class="list-footer"><Icon name="ph:plus" />{isEnglish ? "Add provider" : "添加服务商"}</div>
+            <div class="list-footer"><Icon name="ph:plus" />{"Add provider"}</div>
           </aside>
 
           <section class="settings-detail model-settings-detail">
             <div class="model-preview-head">
-              <div><span class="round-icon"><Icon name="ph:brain" /></span><span><b>Anthropic</b><small>{isEnglish ? "Choose which models appear in the selector" : "选择要显示在模型选择器中的模型"}</small></span></div>
-              <span class="model-enabled-count">{isEnglish ? "3 of 5 enabled" : "已启用 3/5 个"}</span>
+              <div><span class="round-icon"><Icon name="ph:brain" /></span><span><b>Anthropic</b><small>{"Choose which models appear in the selector"}</small></span></div>
+              <span class="model-enabled-count">{"3 of 5 enabled"}</span>
             </div>
             <div class="model-preview-controls">
-              <span class="soft-button">{isEnglish ? "Enable all" : "全部启用"}</span>
-              <span class="soft-button">{isEnglish ? "Disable all" : "全部禁用"}</span>
-              <div class="field model-search"><Icon name="ph:magnifying-glass" />{isEnglish ? "Search models…" : "搜索模型…"}</div>
+              <span class="soft-button">{"Enable all"}</span>
+              <span class="soft-button">{"Disable all"}</span>
+              <div class="field model-search"><Icon name="ph:magnifying-glass" />{"Search models…"}</div>
             </div>
             <div class="model-choice-list">
               {previewModels.map((model) => (
                 <div class="model-choice-row">
                   <span class:list={["model-check", model.enabled && "is-on"]}>{model.enabled && <Icon name="ph:check" />}</span>
                   <span><b>{model.name}</b><code>{model.id}</code></span>
-                  <small>{model.enabled ? (isEnglish ? "Shown" : "显示") : (isEnglish ? "Hidden" : "隐藏")}</small>
+                  <small>{model.enabled ? ("Shown") : ("Hidden")}</small>
                 </div>
               ))}
             </div>
-            <div class="description-box"><Icon name="ph:info" /><span>{isEnglish ? "Changes are saved to Pi settings and do not change the model used by the current session." : "选择会保存到 Pi 设置，不会改变当前会话正在使用的模型。"}</span></div>
+            <div class="description-box"><Icon name="ph:info" /><span>{"Changes are saved to Pi settings and do not change the model used by the current session."}</span></div>
           </section>
         </>
       )}
@@ -124,7 +122,7 @@ const toolGroups = [
                 </div>
               ))}
             </div>
-            <div class="list-footer"><Icon name="ph:plus" />{isEnglish ? "Add skill" : "添加技能"}</div>
+            <div class="list-footer"><Icon name="ph:plus" />{"Add skill"}</div>
           </aside>
 
           <section class="settings-detail skill-detail">
@@ -132,19 +130,19 @@ const toolGroups = [
               <div><span class="scope-tag">global</span><code>~/.agents/skills/agents-sdk</code></div>
               <span class="switch is-on"><i></i></span>
             </div>
-            <label>{isEnglish ? "Name" : "名称"}</label>
+            <label>{"Name"}</label>
             <div class="field mono">agents-sdk</div>
-            <div class="label-row"><label>SKILL.md</label><small>{isEnglish ? "Skill instructions and usage rules" : "技能说明与使用规则"}</small></div>
+            <div class="label-row"><label>SKILL.md</label><small>{"Skill instructions and usage rules"}</small></div>
             <div class="code-field">
               <b>Agents SDK</b>
               <span>Build AI agents on Cloudflare Workers using the Agents SDK.</span>
               <span>Use this skill for stateful agents, durable workflows,</span>
               <span>real-time WebSocket connections, and scheduled tasks.</span>
             </div>
-            <div class="detail-actions"><span class="primary-button">{isEnglish ? "Save changes" : "保存更改"}</span></div>
+            <div class="detail-actions"><span class="primary-button">{"Save changes"}</span></div>
             <div class="description-box">
-              <b>{isEnglish ? "Description" : "说明"}</b>
-              <span>{isEnglish ? "When enabled, this Skill is available to the model for relevant tasks. Global Skills work in every project." : "开启后，该 Skill 会在适用的任务中提供给模型。全局 Skill 可用于所有项目。"}</span>
+              <b>{"Description"}</b>
+              <span>{"When enabled, this Skill is available to the model for relevant tasks. Global Skills work in every project."}</span>
             </div>
           </section>
         </>
@@ -158,24 +156,24 @@ const toolGroups = [
               <div class="list-row plugin-row"><i class="is-on"></i><span><b>npm:@pi/desktop-tools</b><small>2 tools · 1 skill</small></span></div>
               <div class="list-row plugin-row"><i class="is-on"></i><span><b>git:github.com/example/plugin</b><small>1 command</small></span></div>
               <div class="list-group-heading"><span>PROJECT</span><span>1</span></div>
-              <div class="list-row plugin-row"><i></i><span><b>./plugins/project-helper</b><small>{isEnglish ? "Disabled" : "已停用"}</small></span></div>
+              <div class="list-row plugin-row"><i></i><span><b>./plugins/project-helper</b><small>{"Disabled"}</small></span></div>
             </div>
-            <div class="list-footer is-selected"><Icon name="ph:plus" />{isEnglish ? "Add plugin" : "添加插件"}</div>
+            <div class="list-footer is-selected"><Icon name="ph:plus" />{"Add plugin"}</div>
           </aside>
 
           <section class="settings-detail plugin-detail">
-            <div class="detail-title"><span class="round-icon"><Icon name="ph:puzzle-piece" /></span><div><b>{isEnglish ? "Add Plugin" : "添加插件"}</b><small>{isEnglish ? "Install from npm, a Git repository, or a local directory" : "从 npm、Git 仓库或本地目录安装"}</small></div></div>
-            <label>{isEnglish ? "Plugin source" : "插件来源"}</label>
-            <div class="input-row"><div class="field mono muted">npm:@scope/package</div><span class="primary-button">{isEnglish ? "Install" : "安装"}</span></div>
+            <div class="detail-title"><span class="round-icon"><Icon name="ph:puzzle-piece" /></span><div><b>{"Add Plugin"}</b><small>{"Install from npm, a Git repository, or a local directory"}</small></div></div>
+            <label>{"Plugin source"}</label>
+            <div class="input-row"><div class="field mono muted">npm:@scope/package</div><span class="primary-button">{"Install"}</span></div>
             <div class="example-list">
               <code>npm:@scope/pi-plugin</code>
               <code>git:https://github.com/user/repo</code>
               <code>/absolute/path/to/plugin</code>
             </div>
-            <label>{isEnglish ? "Installation scope" : "安装范围"}</label>
+            <label>{"Installation scope"}</label>
             <div class="segmented"><span class="is-active">global</span><span>project</span></div>
-            <div class="install-path"><Icon name="ph:folder-simple" /><div><small>{isEnglish ? "Install location" : "安装位置"}</small><code>~/.pi/agent/&#123;npm,git&#125;</code></div></div>
-            <div class="description-box warning"><Icon name="ph:shield-check" /><span>{isEnglish ? "Plugins can execute code. Install only from sources you trust." : "Plugin 可以执行代码，请只安装可信来源。"}</span></div>
+            <div class="install-path"><Icon name="ph:folder-simple" /><div><small>{"Install location"}</small><code>~/.pi/agent/&#123;npm,git&#125;</code></div></div>
+            <div class="description-box warning"><Icon name="ph:shield-check" /><span>{"Plugins can execute code. Install only from sources you trust."}</span></div>
           </section>
         </>
       )}
@@ -183,25 +181,25 @@ const toolGroups = [
       {section === "channels" && (
         <section class="channels-detail">
           <div class="channels-heading">
-            <div><b>{isEnglish ? "Messaging channels" : "消息渠道"}</b><span>{isEnglish ? "Connect accounts, control access, and bind conversations to Pi sessions." : "连接即时通讯账号、控制访问权限，并绑定 Pi 会话。"}</span></div>
-            <div class="channel-add-buttons"><span>{isEnglish ? "Connect Feishu / Lark" : "连接飞书 / Lark"}</span><span>{isEnglish ? "Connect Telegram" : "连接 Telegram"}</span><span class="primary-button">{isEnglish ? "Connect WeChat" : "连接微信"}</span></div>
+            <div><b>{"Messaging channels"}</b><span>{"Connect accounts, control access, and bind conversations to Pi sessions."}</span></div>
+            <div class="channel-add-buttons"><span>{"Connect Feishu / Lark"}</span><span>{"Connect Telegram"}</span><span class="primary-button">{"Connect WeChat"}</span></div>
           </div>
 
           <div class="channel-account-card">
             <div class="channel-account-head">
               <div class="telegram-logo"><Icon name="ph:telegram-logo" /></div>
               <div><b>Pi Telegram Bot</b><span>Telegram · @pi_desktop_bot</span></div>
-              <span class="status-pill"><i></i>{isEnglish ? "Running" : "运行中"}</span>
+              <span class="status-pill"><i></i>{"Running"}</span>
             </div>
             <div class="channel-form-grid">
-              <div><label>{isEnglish ? "Account name" : "账号名称"}</label><div class="field">Pi Telegram Bot</div></div>
-              <div><label>{isEnglish ? "Default tools" : "默认工具"}</label><div class="field select">{isEnglish ? "Standard" : "标准"}<Icon name="ph:caret-down" /></div></div>
-              <div class="wide-field"><label>{isEnglish ? "Default project directory" : "默认项目目录"}</label><div class="field path-field"><Icon name="ph:folder-simple" />~/Documents/pi-workspace<span>{isEnglish ? "Choose…" : "选择…"}</span></div></div>
-              <div><label>{isEnglish ? "Private chat access" : "私聊访问"}</label><div class="field select">{isEnglish ? "Pairing required" : "需要配对"}<Icon name="ph:caret-down" /></div></div>
-              <div><label>{isEnglish ? "Group access" : "群聊访问"}</label><div class="field select">{isEnglish ? "Allowlist only" : "仅白名单"}<Icon name="ph:caret-down" /></div></div>
+              <div><label>{"Account name"}</label><div class="field">Pi Telegram Bot</div></div>
+              <div><label>{"Default tools"}</label><div class="field select">{"Standard"}<Icon name="ph:caret-down" /></div></div>
+              <div class="wide-field"><label>{"Default project directory"}</label><div class="field path-field"><Icon name="ph:folder-simple" />~/Documents/pi-workspace<span>{"Choose…"}</span></div></div>
+              <div><label>{"Private chat access"}</label><div class="field select">{"Pairing required"}<Icon name="ph:caret-down" /></div></div>
+              <div><label>{"Group access"}</label><div class="field select">{"Allowlist only"}<Icon name="ph:caret-down" /></div></div>
             </div>
-            <div class="credential-row"><div><label>Bot Token</label><span>{isEnglish ? "Protected by secure system storage" : "凭证由系统安全存储保护"}</span></div><div class="field mono muted">{isEnglish ? "New BotFather token" : "新的 BotFather Token"}</div><span class="soft-button">{isEnglish ? "Update token" : "更新 Token"}</span></div>
-            <div class="channel-actions"><span class="primary-button">{isEnglish ? "Save" : "保存"}</span><span class="soft-button">{isEnglish ? "Stop" : "停止"}</span><span class="soft-button"><Icon name="ph:activity" />{isEnglish ? "Test connection" : "测试连接"}</span></div>
+            <div class="credential-row"><div><label>Bot Token</label><span>{"Protected by secure system storage"}</span></div><div class="field mono muted">{"New BotFather token"}</div><span class="soft-button">{"Update token"}</span></div>
+            <div class="channel-actions"><span class="primary-button">{"Save"}</span><span class="soft-button">{"Stop"}</span><span class="soft-button"><Icon name="ph:activity" />{"Test connection"}</span></div>
           </div>
         </section>
       )}
@@ -222,21 +220,21 @@ const toolGroups = [
                 </div>
               ))}
             </div>
-            <div class="tools-footer"><small>darwin-arm64 · r4</small><span><Icon name="ph:arrow-clockwise" />{isEnglish ? "Rescan" : "重新扫描"}</span></div>
+            <div class="tools-footer"><small>darwin-arm64 · r4</small><span><Icon name="ph:arrow-clockwise" />{"Rescan"}</span></div>
           </aside>
 
           <section class="settings-detail tool-detail">
-            <div class="provider-row"><div><span class="scope-tag managed">{isEnglish ? "Pi managed" : "Pi 托管"}</span><code>~/Library/Application Support/Pi Desktop/tools/node</code></div><span class="available"><i></i>{isEnglish ? "Available" : "可用"}</span></div>
-            <div class="tool-title"><span class="round-icon"><Icon name="ph:brackets-curly" /></span><div><b>Node.js</b><span>{isEnglish ? "JavaScript runtime for Skills, Plugins, Agent commands, and project operations." : "为 Skills、Plugins、Agent 命令与项目操作提供 JavaScript 运行时。"}</span></div></div>
+            <div class="provider-row"><div><span class="scope-tag managed">{"Pi managed"}</span><code>~/Library/Application Support/Pi Desktop/tools/node</code></div><span class="available"><i></i>{"Available"}</span></div>
+            <div class="tool-title"><span class="round-icon"><Icon name="ph:brackets-curly" /></span><div><b>Node.js</b><span>{"JavaScript runtime for Skills, Plugins, Agent commands, and project operations."}</span></div></div>
             <div class="detail-section">
-              <b>{isEnglish ? "Tool resolution" : "工具解析"}</b>
-              <div class="detail-pairs"><span>{isEnglish ? "Status" : "状态"}</span><strong class="success">{isEnglish ? "Available" : "可用"}</strong><span>{isEnglish ? "Source" : "来源"}</span><strong>{isEnglish ? "Pi managed" : "Pi 托管"}</strong><span>{isEnglish ? "Version" : "版本"}</span><code>v22.19.0</code><span>{isEnglish ? "Detected candidates" : "检测到的候选"}</span><strong>2</strong></div>
-              <div class="resolution-row"><div><small>{isEnglish ? "Preferred source" : "优先来源"}</small><div class="field select">{isEnglish ? "Auto (recommended)" : "自动（推荐）"}<Icon name="ph:caret-down" /></div></div><span class="soft-button">{isEnglish ? "Choose…" : "选择…"}</span></div>
+              <b>{"Tool resolution"}</b>
+              <div class="detail-pairs"><span>{"Status"}</span><strong class="success">{"Available"}</strong><span>{"Source"}</span><strong>{"Pi managed"}</strong><span>{"Version"}</span><code>v22.19.0</code><span>{"Detected candidates"}</span><strong>2</strong></div>
+              <div class="resolution-row"><div><small>{"Preferred source"}</small><div class="field select">{"Auto (recommended)"}<Icon name="ph:caret-down" /></div></div><span class="soft-button">{"Choose…"}</span></div>
             </div>
             <div class="detail-section managed-runtime">
-              <b>{isEnglish ? "Managed runtime" : "托管运行时"}</b>
-              <div class="runtime-card"><div><span>Node.js LTS + npm</span><small>{isEnglish ? "Official source · Installed" : "官方来源 · 已安装"}</small></div><code>v22.19.0</code><span class="soft-button">{isEnglish ? "Repair" : "修复"}</span></div>
-              <small class="fine-print">{isEnglish ? "Managed tools stay in Pi Desktop's private directory and do not modify the system PATH." : "托管工具保存在 Pi Desktop 私有目录中，不会修改系统 PATH。"}</small>
+              <b>{"Managed runtime"}</b>
+              <div class="runtime-card"><div><span>Node.js LTS + npm</span><small>{"Official source · Installed"}</small></div><code>v22.19.0</code><span class="soft-button">{"Repair"}</span></div>
+              <small class="fine-print">{"Managed tools stay in Pi Desktop's private directory and do not modify the system PATH."}</small>
             </div>
           </section>
         </>
