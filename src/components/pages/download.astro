@@ -1,7 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { RELEASE_VERSION, releaseDownloads } from "../../data/release";
 
+const downloads = releaseDownloads();
 const releasesUrl = "https://github.com/DLYZZT/pi-desktop/releases";
 const platformCards = [
   { key: "macArmDmg", icon: "ph:apple-logo-fill", title: "macOS", requirement: "Apple Silicon (M-series)", requirementDetail: "macOS 12 Monterey or later", downloadKey: "macArmDmg", buttonLabel: "Download DMG", alternateKey: "macArmZip", alternateLabel: "Download ZIP archive", meta: "arm64" },
@@ -26,7 +28,7 @@ const infoCards = [
     <section class="page-head">
       <div class="container">
         <h1>Download Pi Agent Desktop</h1>
-        <p>Pi Coding Agent 0.87.1 and Herdr v0.8.2 are included. You do not need to install Pi CLI, Node.js, or npm separately—just configure a model provider.</p>
+        <p>Pi Coding Agent 1.1.0 and Herdr v0.8.2 are included. You do not need to install Pi CLI, Node.js, or npm separately—just configure a model provider.</p>
       </div>
     </section>
 
@@ -43,13 +45,13 @@ const infoCards = [
               <div class="dl-os-icon"><Icon name={card.icon} aria-hidden="true" /></div>
               <h2>{card.title}</h2>
               <p class="dl-req">{card.requirement}<br />{card.requirementDetail}</p>
-              <a class="btn btn-primary btn-block" data-dl={card.downloadKey} href={releasesUrl}>
+              <a class="btn btn-primary btn-block" data-dl={card.downloadKey} href={downloads[card.downloadKey as keyof typeof downloads]}>
                 <Icon name="ph:download-simple" aria-hidden="true" />{card.buttonLabel}
               </a>
               <div class="dl-alt">
-                {card.alternateKey ? <a data-dl={card.alternateKey} href={releasesUrl}>{card.alternateLabel}</a> : card.alternateLabel}
+                {card.alternateKey ? <a data-dl={card.alternateKey} href={downloads[card.alternateKey as keyof typeof downloads]}>{card.alternateLabel}</a> : card.alternateLabel}
               </div>
-              <div class="dl-ver"><span data-version>v0.3.0</span> · {card.meta}</div>
+              <div class="dl-ver"><span data-version>v{RELEASE_VERSION}</span> · {card.meta}</div>
             </article>
           ))}
         </div>

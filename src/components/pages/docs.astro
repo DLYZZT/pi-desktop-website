@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import FaqItem from "../../components/FaqItem.astro";
-import AppPreview from "../../components/AppPreview.astro";
+import ProductScreenshot from "../ProductScreenshot.astro";
+import { whatsNew, advancedSettings, historyBackup } from "../../data/whats-new";
 import SettingsPreview from "../../components/SettingsPreview.astro";
 import { localizedPath } from "../../i18n";
 
@@ -10,7 +11,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
 <BaseLayout
   title="User Guide — Pi Agent Desktop"
-  description="Learn how to install Pi Agent Desktop, use its workspace, built-in browser, Herdr Agent fleets, and managed processes, and configure models, extensions, and messaging."
+  description="Learn to configure Auto routing, MCP services, image generation, tool permissions, and advanced models in Pi Agent Desktop, alongside its workspace and integrations."
 >
   <main id="main-content" class="container">
     <div class="docs-layout">
@@ -21,6 +22,8 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <a href="#herdr">Herdr Agent fleets</a>
         <a href="#processes">Managed processes</a>
         <a href="#models">Configure models</a>
+        {whatsNew.map((feature) => <a href={`#${feature.id}`}>{feature.title}</a>)}
+        <a href="#advanced-models">Advanced model settings</a>
         <a href="#skills">Skills settings</a>
         <a href="#plugins">Plugins settings</a>
         <a href="#channels">Messaging channels</a>
@@ -42,7 +45,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="install">
           <h2>Download and install</h2>
-          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.3.0 desktop packages include Pi Coding Agent 0.87.1 and Herdr v0.8.2. Normal use does not require a separate Pi CLI installation.</p>
+          <p>Open the <a href={localizedPath("en", "download/")}>download page</a>. The site highlights the package that matches your system. The v0.4.0 desktop packages include Pi Coding Agent 1.1.0 and Herdr v0.8.2. Normal use does not require a separate Pi CLI installation.</p>
 
           <div id="requirements" class="guide-grid guide-grid-three">
             <article class="guide-card"><h3>macOS</h3><p>Choose arm64 for Apple Silicon (M-series) or x64 for an Intel Mac. Open the DMG and drag the app to Applications.</p></article>
@@ -76,10 +79,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
 
         <section id="workspace">
           <h2>Meet the main workspace</h2>
-          <figure class="guide-figure">
-            <AppPreview variant="docs" />
-            <figcaption>The workspace contains sessions on the left, the conversation and Fleet status in the center, and files, managed processes, a Herdr terminal, or the shared browser on the right.</figcaption>
-          </figure>
+          <ProductScreenshot name="app-main" alt="Main workspace" eager />
 
           <div class="guide-grid guide-grid-three">
             <article class="guide-card">
@@ -162,6 +162,8 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
             </article>
           </div>
 
+          <ProductScreenshot name="app-browser" alt="Built-in browser" />
+
           <h3>Manage browser permissions</h3>
           <p>Open Settings → Browser to manage global defaults and persistent policies for individual sessions. Grants from the authorization dialog are temporary for the current session and can be revoked at any time.</p>
 
@@ -174,6 +176,8 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Use Herdr Agent fleets</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Herdr</span></p>
           <p>Pi Agent Desktop uses Herdr v0.8.2 / protocol 20 to manage local Agent fleets. Pi can use <code>herdr_*</code> tools from the original conversation, while the title bar shows Fleet status and the right-side Herdr terminal supports observation, troubleshooting, and explicit takeover.</p>
+
+          <ProductScreenshot name="app-herdr" alt="Herdr Agent fleets" />
 
           <h3>Prepare the Herdr runtime</h3>
           <ol>
@@ -233,11 +237,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
         <section id="models">
           <h2>Configure models</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Models</span></p>
-          <p>Pi Agent Desktop v0.3.0 includes Pi Coding Agent 0.87.1 but does not include model credits. Connect an existing model provider account or enter an API key from your provider. Model settings support English, Simplified Chinese, and Traditional Chinese.</p>
-          <SettingsPreview section="models" />
-
-          <h3>Models added in v0.3.0</h3>
-          <p>The model directory now supports Claude Opus 5.5, GPT-6 Sol, GPT-6 Luna, and Grok 4.7. Availability still depends on the provider, account access, and the current catalog refresh result.</p>
+          <p>Pi Agent Desktop v0.4.0 includes Pi Coding Agent 1.1.0 but does not include model credits. Connect an existing model provider account or enter an API key from your provider. Model settings support English, Simplified Chinese, and Traditional Chinese.</p>
 
           <h3>Use an API key</h3>
           <ol><li>Open Settings → Models and select Add provider.</li><li>Choose your model provider.</li><li>For a proxy or compatible endpoint, enter a Base URL; leave it blank to use the provider default.</li><li>Paste the API key and save. The app synchronizes the Agent Host model state.</li><li>Select a model. If a Test action is available, use it to verify the connection.</li><li>Close Settings and choose the model below the conversation composer.</li></ol>
@@ -260,11 +260,25 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <div class="note-box"><b>Connection failed?</b> Check that the API key is complete, your account has credits, and your network can reach the provider. Then use the model card's Test action to see the provider error. If credentials were saved but model synchronization failed, the app shows a clear warning while keeping the credentials.</div>
         </section>
 
+        {whatsNew.map((feature) => (
+          <section id={feature.id}>
+            <h2>{feature.title}</h2>
+            <p>{feature.description}</p>
+            {"screenshot" in feature && <ProductScreenshot name={feature.screenshot} alt={feature.title} />}
+            <ol>{feature.steps.map((step) => <li>{step}</li>)}</ol>
+          </section>
+        ))}
+
+        <section id="advanced-models">
+          <h2>Advanced model settings</h2>
+          <ul>{advancedSettings.map((item) => <li>{item}</li>)}</ul>
+        </section>
+
         <section id="skills">
           <h2>Skills settings</h2>
           <p class="guide-path"><b>Open</b><span>Choose a project</span><i>→</i><span>Settings</span><i>→</i><span>Skills</span></p>
           <p>This section focuses on settings. Each Skill's own documentation explains its capabilities and usage.</p>
-          <SettingsPreview section="skills" />
+          <ProductScreenshot name="app-skill" alt="Skills settings" />
           <ol><li>Choose a project, then open Settings → Skills.</li><li>Select an installed Skill and use the switch to control whether it is visible to the model.</li><li>To add one, select Add skill, search by name, choose Global or Current project, and install.</li><li>Edit the content only when you need custom instructions, then save your changes.</li></ol>
           <div class="note-box"><b>Installation retry:</b> Normal installs use npm's default concurrency and cache. On a network error, timeout, or npm cache-lock failure, the app automatically retries once with a temporary isolated cache.</div>
           <div class="note-box"><b>Tip:</b> Use Global for reusable Skills and Current project for repository-specific Skills.</div>
@@ -308,7 +322,7 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <h2>Developer tools settings</h2>
           <p class="guide-path"><b>Open</b><span>Settings</span><i>→</i><span>Developer Tools</span></p>
           <p>The app scans required tools automatically. Most users only need to act on items marked Missing or Unavailable.</p>
-          <SettingsPreview section="tools" />
+          <ProductScreenshot name="app-dev-tools" alt="Developer tools settings" />
           <ol><li>Select Rescan to see each tool's status, source, and version.</li><li>Leave installed tools on Auto. If detection is wrong, use Choose to select a path.</li><li>When a managed version is available for a missing tool, select Install. Use Repair if managed files are damaged.</li></ol>
           <p>On Windows, Git Bash is recognized from its installation layout together with the colocated Git version, so custom Git for Windows directories and versioned PortableGit folders work correctly.</p>
           <h3>Manage the Herdr runtime</h3>
@@ -326,11 +340,18 @@ const repoUrl = "https://github.com/DLYZZT/pi-desktop";
           <p>Enable Minimize to tray when closing in Settings → General. Closing the main window then keeps channels running; choosing Quit from the tray fully stops the app.</p>
 
           <h3>Local data</h3>
+          <p>{historyBackup}</p>
           <ul><li>Sessions and Pi configuration are stored locally in <code>~/.pi/agent/</code> by default.</li><li>Existing Pi CLI users can reuse their current sessions and configuration.</li><li>Model requests still go to your selected model provider, so review that provider's privacy policy.</li><li>Messaging credentials are encrypted with the operating system's secure storage and are never displayed again in Settings.</li></ul>
         </section>
 
         <section id="faq">
           <h2>Frequently asked questions</h2>
+          <FaqItem summary="Why can’t the Agent use a configured MCP tool?">
+            <p>{whatsNew[1].steps[4]}</p>
+          </FaqItem>
+          <FaqItem summary="How do I enable Auto?">
+            <p>{whatsNew[0].steps[0]}</p>
+          </FaqItem>
           <FaqItem summary="Do I need to install Node.js or Pi CLI?">
             <p>No. Desktop packages include the Pi Coding Agent runtime. Check Settings → Developer Tools only when a Skill, Plugin, or Agent command requires an additional tool.</p>
           </FaqItem>

@@ -1,9 +1,10 @@
+import { RELEASE_VERSION, releaseDownloads } from "../data/release";
 import { localeFromPathname, localizedPath } from "../i18n";
 import { clientPhrases, type ClientPhrase } from "../i18n/client";
 
 const REPO = "DLYZZT/pi-desktop";
-const FALLBACK_VERSION = "0.3.0";
-const RELEASE_CACHE_KEY = "pi-site-release-v0.3.0";
+const FALLBACK_VERSION = RELEASE_VERSION;
+const RELEASE_CACHE_KEY = `pi-site-release-v${RELEASE_VERSION}`;
 
 type Platform = {
   os: "mac" | "windows" | "linux" | "unknown";
@@ -55,18 +56,7 @@ document.addEventListener("click", (event) => {
   }
 });
 
-function fallbackRelease(version: string): Release {
-  const base = `https://github.com/${REPO}/releases/download/v${version}`;
-  return {
-    version,
-    macArmDmg: `${base}/Pi-Agent-Desktop-${version}-arm64.dmg`,
-    macArmZip: `${base}/Pi-Agent-Desktop-${version}-arm64.zip`,
-    macX64Dmg: `${base}/Pi-Agent-Desktop-${version}-x64.dmg`,
-    macX64Zip: `${base}/Pi-Agent-Desktop-${version}-x64.zip`,
-    winExe: `${base}/Pi-Agent-Desktop-Unsigned-Beta-Setup-${version}.exe`,
-    linuxAppImage: `${base}/Pi-Agent-Desktop-${version}-x86_64.AppImage`,
-  };
-}
+const fallbackRelease = releaseDownloads;
 
 function findAsset(assets: Array<{ name: string; browser_download_url: string }>, pattern: RegExp) {
   return assets.find((asset) => pattern.test(asset.name))?.browser_download_url ?? null;

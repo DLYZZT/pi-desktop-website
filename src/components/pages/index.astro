@@ -1,6 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProductScreenshot from "../ProductScreenshot.astro";
+import { whatsNew } from "../../data/whats-new";
+import { RELEASE_VERSION } from "../../data/release";
 import AppPreview from "../../components/AppPreview.astro";
 import { localizedPath } from "../../i18n";
 import { withBase } from "../../utils/paths";
@@ -29,7 +32,7 @@ const features = [
   {
     icon: "ph:sliders-horizontal",
     title: "Models and extensions in one place",
-    description: "Pi Coding Agent 0.87.1 adds Claude Opus 5.5, GPT-6 Sol / Luna, and Grok 4.7, with model visibility, reliable refresh, and prompt cache-warming controls.",
+    description: "Pi Coding Agent 1.1.0 is included, with API key and subscription sign-in, model configuration, Auto routing, and advanced runtime controls.",
   },
   {
     icon: "ph:wrench",
@@ -67,21 +70,22 @@ const checks = [
 
 <BaseLayout
   title="Pi Agent Desktop — A true desktop workspace for Pi Coding Agent"
-  description="Pi Agent Desktop is a local-first workspace for Pi Coding Agent with sessions, project files, a shared browser, Herdr Agent fleets, managed processes, models, extensions, and messaging."
+  description="A local-first Pi Coding Agent workspace with Auto model routing, MCP services, image generation, tool history, a shared browser, and messaging."
 >
   <main id="main-content">
     <section class="hero">
       <div class="container">
+        <a class="release-announcement" href="#whats-new"><span translate="no">v{RELEASE_VERSION}</span><span>Discover what’s new</span><Icon name="ph:arrow-right" aria-hidden="true" /></a>
         <img class="hero-icon" src={withBase("icon.png")} alt="Pi Agent Desktop icon" width="104" height="104" />
         <h1>Pi Coding Agent<br />Desktop Workspace</h1>
-        <p class="hero-sub">Sessions, files, a shared browser, Herdr Agent fleets, managed processes, models, and messaging channels in one local-first desktop app.</p>
+        <p class="hero-sub">Code, connect tools, and create images in one local-first workspace. Let Auto choose the model, and keep every tool call in view.</p>
         <div class="hero-tags" aria-label="Product highlights">
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />Local-first</span>
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />No internal server</span>
           <span class="chip"><Icon class="chip-dot" name="ph:circle-fill" aria-hidden="true" />Cross-platform</span>
         </div>
         <div class="hero-cta">
-          <a class="btn btn-primary" data-hero-download href="https://github.com/DLYZZT/pi-desktop/releases">
+          <a class="btn btn-primary" data-hero-download href={localizedPath("en", "download/")}>
             <Icon name="ph:download-simple" aria-hidden="true" />
             <span data-hero-label>Download Pi Agent Desktop</span>
           </a>
@@ -91,10 +95,31 @@ const checks = [
           </a>
         </div>
         <p class="hero-meta">
-          Current version <span data-version>v0.3.0</span><span class="dot">·</span>macOS, Windows, and Linux<span class="dot">·</span><a href={localizedPath("en", "changelog/")}>View changelog</a>
+          Current version <span data-version>v{RELEASE_VERSION}</span><span class="dot">·</span>macOS, Windows, and Linux<span class="dot">·</span><a href={localizedPath("en", "changelog/")}>View changelog</a>
         </p>
 
         <AppPreview />
+      </div>
+    </section>
+
+    <section class="section release-section" id="whats-new" aria-labelledby="whats-new-title">
+      <div class="container">
+        <div class="section-head-center">
+          <p class="eyebrow">New in v0.4.0</p>
+          <h2 class="section-title" id="whats-new-title">More capable. More in your control.</h2>
+          <p class="section-desc">Connect your tools, route each task to the right model, and follow the work from request to result.</p>
+        </div>
+        <div class="release-grid">
+          {whatsNew.map((feature) => (
+            <article class="release-card">
+              <div class="release-card-heading"><div class="feature-icon"><Icon name={feature.icon} aria-hidden="true" /></div><h3>{feature.title}</h3></div>
+              <p>{feature.description}</p>
+              {"screenshot" in feature && <ProductScreenshot name={feature.screenshot} alt={feature.title} />}
+              <a class="release-guide-link" href={localizedPath("en", `docs/#${feature.id}`)}>Learn how to use it<Icon name="ph:arrow-right" aria-hidden="true" /></a>
+            </article>
+          ))}
+        </div>
+        <div class="release-more"><a href={localizedPath("en", "changelog/#v0-4-0")}>View changelog<Icon name="ph:arrow-right" aria-hidden="true" /></a></div>
       </div>
     </section>
 
@@ -151,7 +176,7 @@ const checks = [
           <span class="chip">No control-plane ports</span>
           <span class="chip">POSIX groups / Windows Job Objects</span>
           <span class="chip">Herdr protocol 20</span>
-          <span class="chip">Data stays in ~/.pi/agent/</span>
+          <span class="chip">Sessions and Pi settings in ~/.pi/agent/</span>
         </div>
       </div>
     </section>
@@ -178,7 +203,7 @@ const checks = [
       <div class="container">
         <div class="cta-panel">
           <h2>Ready to keep Pi Agent on your desktop?</h2>
-          <p>Pi Coding Agent 0.87.1 is included. Install the app, configure a model provider, and start working.</p>
+          <p>Pi Coding Agent 1.1.0 is included. Install the app, configure a model provider, and start working.</p>
           <a class="btn btn-primary" href={localizedPath("en", "download/")}>
             <Icon name="ph:download-simple" aria-hidden="true" />
             Download free

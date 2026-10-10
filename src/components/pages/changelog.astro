@@ -1,5 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
+import { whatsNew, advancedSettings, releaseImprovements, historyBackup } from "../../data/whats-new";
+import { RELEASE_VERSION, RELEASE_URL } from "../../data/release";
+import { localizedPath } from "../../i18n";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
@@ -14,10 +17,39 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
     <div class="container">
       <div class="cl-list">
+        <article class="cl-card" id="v0-4-0">
+          <div class="cl-head">
+            <span class="cl-tag">v{RELEASE_VERSION}</span>
+            <span class="cl-latest">Latest</span>
+            <time class="cl-date" datetime="2026-10-09T18:30:47-07:00">2026-10-09</time>
+          </div>
+          <p>Pi Coding Agent 1.1.0 powers new MCP services, Auto routing, image generation, decision models, and persistent tool execution history.</p>
+          {whatsNew.map((feature) => (
+            <>
+              <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />{feature.title}</h2>
+              <p>{feature.description}</p>
+              <a href={localizedPath("en", `docs/#${feature.id}`)}>Learn how to use it</a>
+            </>
+          ))}
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Advanced model settings</h2>
+          <ul>{advancedSettings.map((item) => <li>{item}</li>)}</ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Reliability improvements</h2>
+          <ul>{releaseImprovements.map((item) => <li>{item}</li>)}</ul>
+          <h2><Icon class="cl-heading-dot" name="ph:circle-fill" aria-hidden="true" />Notes</h2>
+          <ul>
+            <li>{whatsNew[0].steps[1]}</li>
+            <li>{whatsNew[1].steps[4]}</li>
+            <li>{whatsNew[2].steps[2]}</li>
+            <li>{whatsNew[2].steps[3]}</li>
+            <li>{historyBackup}</li>
+            <li>The Windows installer remains an Unsigned Beta, and Linux AppImage updates remain manual.</li>
+          </ul>
+          <a class="btn btn-secondary" href={RELEASE_URL} target="_blank" rel="noopener noreferrer">Full release notes on GitHub<Icon name="ph:arrow-up-right" aria-hidden="true" /></a>
+        </article>
+
         <article class="cl-card">
           <div class="cl-head">
             <span class="cl-tag">v0.3.0</span>
-            <span class="cl-latest">Latest</span>
             <time class="cl-date" datetime="2026-09-24">2026-09-24</time>
           </div>
           <p>This release extends Herdr to Windows x64, upgrades the bundled Pi Coding Agent to 0.87.1, and updates model support, dependency security, and cross-platform validation.</p>

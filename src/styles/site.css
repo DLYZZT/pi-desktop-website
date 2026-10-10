@@ -2,6 +2,7 @@
    设计令牌直接取自应用 src/renderer/globals.css 的「暖纸色 + 橙色」设计系统 */
 
 :root {
+  --anchor-offset: 84px;
   --bg: #f7f6f3;
   --bg-panel: #fcfbf9;
   --bg-hover: #f0eeea;
@@ -263,6 +264,7 @@ html.dark .icon-moon {
 }
 
 @media (max-width: 720px) {
+  :root { --anchor-offset: 124px; }
   .nav-inner {
     flex-wrap: wrap;
     height: auto;
@@ -485,6 +487,44 @@ html.dark .hero::after {
 .hero-meta .dot {
   margin: 0 8px;
   opacity: 0.6;
+}
+
+.release-announcement {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 0 auto 24px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid var(--accent-soft-border);
+  border-radius: 999px;
+  background: var(--bg-panel);
+  font-size: 12px;
+  font-weight: 550;
+}
+.release-announcement > span:first-child {
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  font-family: var(--font-mono);
+}
+.release-announcement svg, .release-guide-link svg, .release-more svg { width: 16px; height: 16px; }
+.release-section, .cl-card[id] { scroll-margin-top: var(--anchor-offset); }
+.release-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.release-card { display: flex; flex-direction: column; min-width: 0; padding: 26px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-panel); }
+.release-card-heading { display: flex; align-items: center; gap: 12px; }
+.release-card-heading .feature-icon { flex-shrink: 0; margin: 0; }
+.release-card h3 { margin: 0; font-size: 19px; line-height: 1.35; letter-spacing: -0.02em; }
+.release-card > p { margin: 16px 0 20px; color: var(--text-muted); font-size: 14px; line-height: 1.75; }
+.release-card .product-screenshot { margin: auto 0 22px; }
+.release-card .product-screenshot figcaption { display: none; }
+.release-guide-link { display: flex; align-items: center; gap: 8px; margin-top: auto; font-size: 13px; font-weight: 600; }
+.release-more { margin-top: 28px; text-align: center; }
+.release-more a { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+@media (max-width: 640px) {
+  .release-grid { grid-template-columns: 1fr; gap: 14px; }
+  .release-card { padding: 20px; }
+  .release-card h3 { font-size: 18px; }
 }
 
 /* ---------- 高清应用界面预览 ---------- */
@@ -1711,6 +1751,8 @@ html.dark .dl-badge {
 }
 
 .docs-side {
+  max-height: calc(100vh - 108px);
+  overflow-y: auto;
   position: sticky;
   top: 84px;
   align-self: start;
@@ -1753,7 +1795,7 @@ html.dark .dl-badge {
 }
 .docs-article section {
   margin-bottom: 64px;
-  scroll-margin-top: 84px;
+  scroll-margin-top: var(--anchor-offset);
 }
 .docs-article h1 {
   font-size: clamp(28px, 4vw, 36px);
